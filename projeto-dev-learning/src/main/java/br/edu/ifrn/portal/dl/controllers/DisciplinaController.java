@@ -29,7 +29,7 @@ import br.edu.ifrn.portal.dl.services.GravaImagem;
  */
 
 @Controller
-@RequestMapping(value = "/disciplinas")
+@RequestMapping(value = "/disciplinasxb")
 public class DisciplinaController {
 	
 	@Autowired
