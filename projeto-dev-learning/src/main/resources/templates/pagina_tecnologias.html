@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>DevLearning</title>
+
+<link href="/icones/usuario.png" rel="icon">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<link type="text/css" rel="stylesheet" href="/css/base.css"
+	media="screen,projection" />
+<link type="text/css" rel="stylesheet" href="/css/tecnologias.css"
+	media="screen,projection" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+
+</head>
+
+<body>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<script src="js/base.js"></script>
+
+	<!-- inicio Cabecalho -->
+
+
+	<header>
+		<nav
+			class="navbar navbar-expand-md navbar-style navbar-light fixed-top ">
+
+			<a href="index.html" class="navbar-brand"> <img
+				src="/imagens/logo.png" width="182">
+			</a>
+
+			<button class="navbar-toggler" data-toggle="collapse"
+				data-target="#nav-principal">
+				<img alt="imagem_usuario" src="/icones/cardapio.png">
+			</button>
+
+			<div class="collapse navbar-collapse" id="nav-principal">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a href=""
+						class="nav-link info-n3 text-white">Home</a></li>
+
+					<li class="nav-item">
+						<div class="d-md-flex nav-link">
+							<img alt="imagem_usuario" src="/icones/usuario.png"> <a
+								href="" class="text-white info-n3">Jose</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<!--/fim Cabecalho -->
+
+
+	<section>
+		
+		<h3 class="cbc-n3 cbc-style-primary">Administração das
+			tecnologias</h3>
+
+		<!--Inicio do form de cadastro-->
+		<div class="class-container container-fluid ">
+			<h5 class="cbc-n4 cbc-style-secundary">Nova Tecnologia</h5>
+			<form class="mb-3" action="/tecnologias/salvar" method="post"
+				th:object="${tecnologia}">
+
+				<div class="mb-3">
+					<label for="campoId" class="form-label">Id</label> <input
+						type="text" readonly="readonly" name="id"
+						class="form-control-plaintext" id="campoId" th:if="${tecnologia}"
+						th:field="*{id}"> <input type="text" readonly="readonly"
+						name="id" class="form-control-plaintext" id="campoId"
+						th:unless="${tecnologia}">
+				</div>
+
+				<div class="mb-3">
+					<label for="campoNome" class="form-label">Nome</label> <input
+						type="text" name="nome" class="form-control" id="campoNome"
+						th:if="${tecnologia}" th:field="*{nome}"> <input
+						type="text" name="nome" class="form-control" id="campoNome"
+						th:unless="${tecnologia}">
+				</div>
+
+				<input class="btn btn-primary btn-md" type="submit" value="Salvar">
+				
+				<a th:href="@{/tecnologias}" th:if="${tecnologia}">
+						<button class="btn btn-primary btn-md" type="button">Cancelar</button></a>
+			</form>
+
+			<div th:if="${erros}" th:each="erro : ${erros}"
+				class="alert alert-warning alert-dismissible fade show"
+				role="dialog">
+				<p th:text="${erro.defaultMessage}"></p>
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		</div>
+		<!--Final do form de cadastro-->
+
+		<h5 class="cbc-n4 cbc-style-primary2">Tecnologias cadastradas</h5>
+
+		<!--Inicio do fomulario de pesquisa-->
+		<form action="/tecnologias/pesquisa" method="post">
+
+			<div class="mb-3">
+				<label class="form-label">Pesquisar por nome</label>
+				<div class="input-group">
+					<input th:if="${valorPesquisa}" th:value="${valorPesquisa}"
+						type="text" name="nome" class="form-control"
+						placeholder="Insira o nome">
+						 <input th:unless="${valorPesquisa}" type="text" name="nome"
+						class="form-control" placeholder="Insira o nome"> 
+						<input class="btn btn-primary" type="submit" value="Pesquisar">
+							<a th:href="@{/tecnologias}" th:if="${valorPesquisa}">
+						<button class="btn btn-outline-secondary" type="button">Cancelar</button></a>
+				</div>
+			</div>
+		</form>
+		<!--Fim do fomulario de pesquisa-->
+
+		<!--Inicio da Tabela-->
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Nome</th>
+					<th scope="col">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="tecnologia : ${tecnologias.content}">
+					<td th:text=${tecnologia.id}>
+					<td th:text=${tecnologia.nome}>
+					<td>
+
+						<div class="content-acoes">
+							<a th:href="@{/tecnologias/editar/{id}(id=${tecnologia.id})}"><img
+								src="/icones/editar.png" alt="editar"></a> <a
+								th:href="@{/tecnologias/remover/{id}(id=${tecnologia.id})}"></a>
+
+							<a th:href="@{/tecnologias/remover/{id}(id=${tecnologia.id})}"
+								onclick="if (confirm('Deseja realmente excluir o item?')){return true;}else{event.stopPropagation(); event.preventDefault();};"><img
+								src="/icones/excluir.png" alt="remover"></a>
+						</div>
+
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+		<!--Fim da Tabela-->
+
+		<!--Inicio do componente de paginacao para quando for realizada uma pesquisa-->
+		<nav aria-label="Page navigation example" th:if="${valorPesquisa}">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:if="${tecnologias.hasPrevious()}"><a
+					class="page-link btn-pg"
+					th:href="@{/tecnologias/pesquisapag(nome=${valorPesquisa}, page=${tecnologias.number-1}, size=${tecnologias.size})}"
+					tabindex="-1">Anterior</a></li>
+				<li class="page-item disabled"
+					th:unless="${tecnologias.hasPrevious()}"><a class="page-link"
+					tabindex="-1">Anterior</a></li>
+
+				<th:block
+					th:each="i : ${#numbers.sequence(0, tecnologias.totalPages - 1)}">
+					<li class="page-item"><a class="page-link"
+						th:href="@{/tecnologias/pesquisapag(nome=${valorPesquisa}, page=${i}, size=${tecnologias.size})}">[[
+							${i} + 1]]</a></li>
+
+				</th:block>
+
+				<li class="page-item " th:if="${tecnologias.hasNext()}"><a
+					class="page-link btn-pg"
+					th:href="@{/tecnologias/pesquisapag(nome=${valorPesquisa}, page=${tecnologias.number+1}, size=${tecnologias.size})}"
+					tabindex="+1">Próximo</a></li>
+				<li class="page-item disabled" th:unless="${tecnologias.hasNext()}"><a
+					class="page-link" tabindex="-1">Próximo</a></li>
+			</ul>
+		</nav>
+		<!--Final do componente de paginacao para quando for realizada uma pesquisa-->
+
+		<!--Inicio do componente de paginacao padrão-->
+		<nav aria-label="Page navigation example" th:unless="${valorPesquisa}">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:if="${tecnologias.hasPrevious()}"><a
+					class="page-link btn-pg"
+					th:href="@{/tecnologias/tecnologiaspag(page=${tecnologias.number-1}, size=${tecnologias.size})}"
+					tabindex="-1">Anterior</a></li>
+				<li class="page-item disabled"
+					th:unless="${tecnologias.hasPrevious()}"><a class="page-link"
+					tabindex="-1">Anterior</a></li>
+
+				<th:block
+					th:each="i : ${#numbers.sequence(0, tecnologias.totalPages - 1)}">
+					<li class="page-item"><a class="page-link"
+						th:href="@{/tecnologias/tecnologiaspag(page=${i}, size=${tecnologias.size})}">[[
+							${i} + 1]]</a></li>
+
+				</th:block>
+
+				<li class="page-item " th:if="${tecnologias.hasNext()}"><a
+					class="page-link btn-pg"
+					th:href="@{/tecnologias/tecnologiaspag(page=${tecnologias.number+1}, size=${tecnologias.size})}"
+					tabindex="+1">Próximo</a></li>
+				<li class="page-item disabled" th:unless="${tecnologias.hasNext()}"><a
+					class="page-link" tabindex="-1">Próximo</a></li>
+			</ul>
+		</nav>
+		<!--Final do componente de paginacao padrão-->
+
+	</section>
+
+	<footer>
+		<div class="container">
+			<div class="row  justify-content-center">
+				<div class="col-md-5">
+					<h3>Sobre nós</h3>
+					<p>Somos um grupo de professores e alunos que tem com objetivo
+						auxiliar estudantes que têm dificuldades na aprendizagem de
+						disciplinas de programação do curso técnico em informática do
+						IFRN.</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>
