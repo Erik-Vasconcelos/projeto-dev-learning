@@ -41,6 +41,85 @@
 		</nav>
 </header>
 
+
+<!--*****************************************************************
+				COMPONENTE DE PAGINAÇÃO PADRÃO
+*****************************************************************-->
+<nav th:fragment="pagination(paginationObjectName, resourceName)">
+	<ul class="pagination justify-content-center">
+		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'disabled'}">
+			<a class="page-link btn-pg" th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
+				tabindex="-1">Anterior
+			</a>
+		</li>
+		
+		<th:block th:each="i : ${#numbers.sequence(0, [__${paginationObjectName}__].totalPages - 1)}">
+			<li class="page-item">
+				<a class="page-link" th:href="@{__${resourceName}__(page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i} + 1]]</a>
+			</li>
+		</th:block>
+
+		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'disabled'}">
+			<a class="page-link btn-pg" th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
+				tabindex="+1">Próximo
+			</a>
+		</li>
+
+	</ul>
+</nav>
+
+<!--*****************************************************************
+				COMPONENTE DE PAGINAÇÃO COM PARÂMETRO
+*****************************************************************-->
+<nav th:fragment="paginationWithParameter(paginationObjectName, resourceName, parameter)">
+	<ul class="pagination justify-content-center">
+		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'disabled'}">
+			<a class="page-link btn-pg" th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
+				tabindex="-1">Anterior
+			</a> 
+		</li>
+		
+		<th:block th:each="i : ${#numbers.sequence(0, [__${paginationObjectName}__].totalPages - 1)}">
+			<li class="page-item">
+				<a class="page-link" th:href="@{__${resourceName}__(valor=${parameter}, page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i} + 1]]</a>
+			</li>
+		</th:block>
+
+		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'disabled'}">
+			<a class="page-link btn-pg" th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
+				tabindex="+1">Próximo
+			</a>
+		</li>
+
+	</ul>
+</nav>
+
+
+		<!-- ***********************Modelo base*********************** -->
+		<!-- <nav>
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:classappend="${disciplinas.hasPrevious() ? '' : 'disabled'}">
+					<a class="page-link btn-pg" th:href="@{/admin/disciplinas(page=${disciplinas.number-1}, size=${disciplinas.size})}"
+						tabindex="-1">Anterior
+					</a>
+				</li>
+				
+				<th:block th:each="i : ${#numbers.sequence(0, disciplinas.totalPages - 1)}">
+					<li class="page-item">
+						<a class="page-link" th:href="@{/admin/disciplinas(page=${i}, size=${disciplinas.size})}">[[${i} + 1]]</a>
+					</li>
+				</th:block>
+
+				<li class="page-item" th:classappend="${disciplinas.hasNext() ? '' : 'disabled'}">
+					<a class="page-link btn-pg" th:href="@{/admin/disciplinas(page=${disciplinas.number+1}, size=${disciplinas.size})}"
+						tabindex="+1">Próximo
+					</a>
+				</li>
+
+			</ul>
+		</nav> -->
+
+
 <!--*****************************************************************
 							RODAPÉ DO BLOG
 *****************************************************************-->

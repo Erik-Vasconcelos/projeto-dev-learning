@@ -19,11 +19,6 @@
 			<!-- th:object -> diz que um objeto está atrelado a um determinado componente html -->
 			<form class="mb-3" action="/admin/disciplinas/salvar" method="POST" enctype="multipart/form-data" th:object="${disciplinaFormDTO}">
 
-				<!-- <div class="mb-3" th:if="${id}">
-					<label for="campoId" class="form-label">Id</label> 
-					<input id="campoId" type="text" name="id" readonly="readonly" class="form-control-plaintext" th:field="*{id}">
-				</div> -->
-
 				<div class="mb-3">
 					<label class="form-label">Nome</label>
 					<input id="campoNome" type="text" name="nome" class="form-control" th:field="*{nome}" th:errorclass="is-invalid">
@@ -45,6 +40,8 @@
 						<label for="inputImagemBanner" style="background-color: transparent" class="custom-file-label" >Escolha uma imagem</label>
 						<div class="invalid-feedback" th:errors="*{imagem}"></div>
 					</div>
+					
+					
 				</div>
 
 				<input class="btn btn-primary btn-md" type="submit" value="Salvar">
@@ -59,9 +56,34 @@
 
 		<h5 class="cbc-n4 cbc-style-primary2">Disciplinas cadastradas</h5>
 
-		<!--Inicio do fomulario de pesquisa
-		<form action="/admin/disciplinas/pesquisa" method="post">
+		<!--Inicio do fomulario de pesquisa-->
+		<form action="/admin/disciplinas/pesquisa" method="GET" th:object="${pesquisa}">
+			<div class="mb-3">
 
+				<div class="row">
+					<div class="col-md-12">
+						<label class="form-label">Pesquisar por nome</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md">
+						<input type="search" name="nome" placeholder="Insira o nome" class="form-control" th:field="*{valor}" th:errorclass="is-invalid">
+						<div class="invalid-feedback" th:errors="*{valor}"></div>
+
+					</div>
+					<div class="col-md-auto">
+						<input class="btn btn-primary" type="submit" value="Pesquisar"> 
+						<a th:href="@{/admin/disciplinas}" th:if="${pesquisa.valor}">
+							<button class="btn btn-outline-secondary" type="button">Cancelar</button>
+						</a>
+					</div>
+				</div>
+				
+			</div> 
+
+		</form>
+		<!-- <form action="/admin/disciplinas/pesquisa" method="POST">
 			<div class="mb-3">
 				<label class="form-label">Pesquisar por nome</label>
 				<div class="input-group">
@@ -74,36 +96,37 @@
 					</a>
 				</div>
 			</div>
-		</form>-->
+		</form> -->
 		<!--Fim do fomulario de pesquisa-->
 
 		<!--*****************************************************************
 								INICIO DA TABELA
 		*****************************************************************-->
+		<div class="table-responsive-md">
 		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">Id</th>
 					<th scope="col">Nome</th>
-					<th scope="col">Resumo</th>
+					<th scope="col">Descrição dos objetivos</th>
 					<th scope="col">Ações</th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr th:each="disciplina : ${disciplinas.content}"> 
-					<td th:text=${disciplina.id}>
-					<td th:text=${disciplina.nome}>
-					<td th:text=${disciplina.descricaoObjetivos}>
+					<td th:text="${disciplina.id}">
+					<td th:text="${disciplina.nome}">
+					<!-- <td th:text="${#strings.substring(disciplina.descricaoObjetivos,0,25) + '...'}"> -->
+					<td th:text="${#strings.abbreviate(disciplina.descricaoObjetivos, 25)}">
 
 					<td>
 						<div class="content-acoes">
-							<a th:href="@{/admin/disciplinas/editar/{id}(id=${disciplina.id})}">
+							<a th:href="@{/admin/disciplinas/{id}/editar(id=${disciplina.id})}">
 								<img src="/icones/editar.png" alt="editar">
 							</a>
-							<!-- <a th:href="@{/admin/disciplinas/remover/{id}(id=${disciplina.id})}"></a> -->
 
-							<a th:href="@{/admin/disciplinas/remover/{id}(id=${disciplina.id})}"
+							<a th:href="@{/admin/disciplinas/{id}/remover(id=${disciplina.id})}"
 								onclick="if (confirm('Deseja realmente excluir o item?')){return true;}else{event.stopPropagation(); event.preventDefault();};">
 								<img src="/icones/excluir.png" alt="remover">
 							</a>
@@ -112,8 +135,8 @@
 
 				</tr>
 			</tbody>
-
 		</table>
+		</div>
 		<!-------------FINAL DA TABELA---------------->
 
 		<!--Inicio do componente de paginacao para quando for realizada uma pesquisa
@@ -141,8 +164,64 @@
 		</nav>-->
 		<!--Final do componente de paginacao para quando for realizada uma pesquisa-->
 
-		<!--Inicio do componente de paginacao padrão
-		<nav aria-label="Page navigation example" th:unless="${valorPesquisa}">
+		<!--Inicio do componente de paginacao padrão-->
+		
+		
+		
+		<nav th:if="${#httpServletRequest.getRequestURI().equals('/admin/disciplinas/pesquisa')}">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:classappend="${disciplinas.hasPrevious() ? '' : 'disabled'}">
+					<a class="page-link btn-pg" th:href="@{/admin/disciplinas/pesquisa(valor=${pesquisa.valor}, page=${disciplinas.number-1}, size=${disciplinas.size})}"
+						tabindex="-1">Anterior
+					</a>
+				</li>
+				
+				<th:block th:each="i : ${#numbers.sequence(0, disciplinas.totalPages - 1)}">
+					<li class="page-item">
+						<a class="page-link" th:href="@{/admin/disciplinas/pesquisa(valor=${pesquisa.valor}, page=${i}, size=${disciplinas.size})}">[[${i} + 1]]</a>
+					</li>
+				</th:block>
+
+				<li class="page-item" th:classappend="${disciplinas.hasNext() ? '' : 'disabled'}">
+					<a class="page-link btn-pg" th:href="@{/admin/disciplinas/pesquisa(valor=${pesquisa.valor}, page=${disciplinas.number+1}, size=${disciplinas.size})}"
+						tabindex="+1">Próximo
+					</a>
+				</li>
+
+			</ul>
+		</nav>
+	<!-- 
+		<div th:if="${#httpServletRequest.getRequestURI().equals('/admin/disciplinas/pesquisa')}">
+			<nav th:replace="~{fragmentos :: paginationWithParameter('disciplinas', '/admin/disciplinas/pesquisa', ${pesquisa.valor})}"></nav>
+		</div>
+		
+		<div th:unless="${#httpServletRequest.getRequestURI().equals('/admin/disciplinas/pesquisa')}">
+			<nav th:replace="~{fragmentos :: pagination('disciplinas', '/admin/disciplinas')}"></nav>
+		</div> -->
+		
+	<nav th:unless="${#httpServletRequest.getRequestURI().equals('/admin/disciplinas/pesquisa')}">
+			<ul class="pagination justify-content-center">
+				<li class="page-item" th:classappend="${disciplinas.hasPrevious() ? '' : 'disabled'}">
+					<a class="page-link btn-pg" th:href="@{/admin/disciplinas(page=${disciplinas.number-1}, size=${disciplinas.size})}"
+						tabindex="-1">Anterior
+					</a>
+				</li>
+				
+				<th:block th:each="i : ${#numbers.sequence(0, disciplinas.totalPages - 1)}">
+					<li class="page-item">
+						<a class="page-link" th:href="@{/admin/disciplinas(page=${i}, size=${disciplinas.size})}">[[${i} + 1]]</a>
+					</li>
+				</th:block>
+
+				<li class="page-item" th:classappend="${disciplinas.hasNext() ? '' : 'disabled'}">
+					<a class="page-link btn-pg" th:href="@{/admin/disciplinas(page=${disciplinas.number+1}, size=${disciplinas.size})}"
+						tabindex="+1">Próximo
+					</a>
+				</li>
+
+			</ul>
+		</nav>
+<!-- 		<nav aria-label="Page navigation example" th:unless="${valorPesquisa}">
 			<ul class="pagination justify-content-center">
 				<li class="page-item" th:if="${disciplinas.hasPrevious()}"><a class="page-link btn-pg"
 						th:href="@{/admin/disciplinas/disciplinaspag(page=${disciplinas.number-1}, size=${disciplinas.size})}"
@@ -163,7 +242,7 @@
 				<li class="page-item disabled" th:unless="${disciplinas.hasNext()}"><a class="page-link"
 						tabindex="-1">Próximo</a></li>
 			</ul>
-		</nav>-->
+		</nav> -->
 		<!--Final do componente de paginacao padrão-->
 
 	</section>

@@ -1,7 +1,5 @@
 package br.edu.ifrn.portal.dl.services;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +40,14 @@ public class DisciplinaService {
 				.orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
 	}
 	
-	public List<Disciplina> getDisciplinasAsc() {
-		return disciplinaRepository.findAllAsc();
+	public Page<Disciplina> getDisciplinasPaginadas(Pageable pageable) {
+		return disciplinaRepository.findAllAsc(pageable);
 	}
-
+	
+	public Page<Disciplina> obterDisciplinasPorNomePaginadas(String nome, Pageable pageable){
+		return disciplinaRepository.findByNomePagined(nome, pageable);
+	}
+	
 	public Page<Disciplina> getDisciplinasPaginadas() {
 		return getDisciplinasPaginadas(0, 10);
 	}
@@ -58,10 +60,10 @@ public class DisciplinaService {
 		return disciplinaRepository.findAll(PageRequest.of(page, size, Sort.by("id")));
 	}
 
-	public Page<Disciplina> getDisciplinasPaginadas(Pageable pageable) {
-		return getDisciplinasPaginadas(pageable.getPageNumber(), pageable.getPageSize());
-	}
-	
+	/*
+	 * public Page<Disciplina> getDisciplinasPaginadas(Pageable pageable) { return
+	 * getDisciplinasPaginadas(pageable.getPageNumber(), pageable.getPageSize()); }
+	 */
 	public String getImage(long id) {
 		return disciplinaRepository.obterImagem(id);
 	}

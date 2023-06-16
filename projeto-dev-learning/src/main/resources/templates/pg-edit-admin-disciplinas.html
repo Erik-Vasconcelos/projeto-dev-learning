@@ -1,101 +1,59 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-	<meta charset="UTF-8">
-	<title>DevLearning</title>
-
-	<link href="/icones/usuario.png" rel="icon">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-	<link type="text/css" rel="stylesheet" href="/css/base.css" media="screen,projection" />
-	<link type="text/css" rel="stylesheet" href="/css/disciplinas-style" media="screen,projection" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-</head>
+<head th:replace="~{fragmentos :: head('DevLearning', 'disciplinas-style')}"></head>
 
 <body>
 
-	<!-- inicio Cabecalho -->
-
-	<header>
-		<nav class="navbar navbar-expand-md navbar-style navbar-light fixed-top ">
-
-			<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="182">
-			</a>
-
-			<button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
-				<img alt="imagem_usuario" src="/icones/cardapio.png">
-			</button>
-
-			<div class="collapse navbar-collapse" id="nav-principal">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a href="" class="nav-link info-n3 text-white">Home</a></li>
-
-					<li class="nav-item">
-						<div class="d-md-flex nav-link">
-							<img alt="imagem_usuario" src="/icones/usuario.png"> <a href=""
-								class="text-white info-n3">Jose</a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<!--/fim Cabecalho -->
-
+	<header th:replace="~{fragmentos :: header}"></header>
 
 	<section>
+		<h3 class="cbc-n3 cbc-style-primary">Administração das disciplinas</h3>
 
-		<h3 class="cbc-n3 cbc-style-primary">Administração das
-			disciplinas</h3>
-
-		<!--Inicio do form de cadastro-->
+		<!--*****************************************************************
+							 	FORM DE CADASTRO
+		*****************************************************************-->
 		<div class="class-container container-fluid ">
 			<h5 class="cbc-n4 cbc-style-secundary">Nova Disciplina</h5>
 
 			<!-- th:object -> diz que um objeto está atrelado a um determinado componente html -->
-			<form class="mb-3" action="/admin/disciplinas/salvar" method="POST" enctype="multipart/form-data" th:object="${disciplinaDTO}">
-				<div class="mb-3">
+			<form class="mb-3" action="/admin/disciplinas/salvar" method="POST" enctype="multipart/form-data" th:object="${disciplinaFormDTO}">
+
+				<!-- <div class="mb-3" th:if="${id}">
 					<label for="campoId" class="form-label">Id</label> 
-					<!-- <input id="campoId" type="text" name="id" readonly="readonly" class="form-control-plaintext" th:if="${disciplina}" th:field="*{id}">
-					<input id="campoId" type="text" name="id" readonly="readonly" class="form-control-plaintext" th:unless="${disciplina}"> -->
-				</div>
+					<input id="campoId" type="text" name="id" readonly="readonly" class="form-control-plaintext" th:field="*{id}">
+				</div> -->
 
 				<div class="mb-3">
-					<label for="campoNome" class="form-label">Nome</label>
-					<!-- <input id="campoNome" type="text" name="nome" class="form-control" th:if="${disciplina}" th:field="*{nome}">
-					<input id="campoNome" type="text" name="nome" class="form-control" th:unless="${disciplina}"> -->
-					<input id="campoNome" type="text" name="nome" class="form-control" th:text="${nome}">
+					<label class="form-label">Nome</label>
+					<input id="campoNome" type="text" name="nome" class="form-control" th:field="*{nome}" th:errorclass="is-invalid">
+					<div class="invalid-feedback" th:errors="*{nome}">Nome invalido</div> <!--se tiver um erro associado ao nome-->
 				</div>
 
 				<div class="mb-3">
 					<label for="descricaoObjetivos" class="form-label">Objetivos</label>
-					<!-- <textarea id="descricaoObjetivos" name="descricaoObjetivos" rows="6" class="form-control" th:if="${disciplina}" th:field="*{descricaoObjetivos}"></textarea>
-					<textarea id="descricaoObjetivos" name="descricaoObjetivos" rows="6" class="form-control" th:unless="${disciplina}"></textarea>
-					<textarea id="descricaoObjetivos" name="descricaoObjetivos" rows="6" class="form-control" th:text="*{descricaoObjetivos}"></textarea> -->
+					<textarea id="descricaoObjetivos" name="descricaoObjetivos" rows="6" class="form-control" th:field="*{descricaoObjetivos}" th:errorclass="is-invalid"></textarea> 
+					<div class="invalid-feedback" th:errors="*{descricaoObjetivos}"></div>
 				</div>
 				
-				<!--Inicio do agrupador de dos componentes de imagem-->
 				<div class="input-group mb-3">
-
+					<label class="form-label" for="imagemBanner">Imagem de banner da disciplina</label>
+					<img id="imagemBanner" src="/imagens/semimagem.svg" alt="Imagem da disciplina" class="img-fluid" width="100%"> 					
+					
+					<div class="custom-file">
+						<input id="inputImagemBanner" type="file" name="imagem" accept="image/*" th:field="*{imagem}" th:errorclass="is-invalid">
+						<label for="inputImagemBanner" style="background-color: transparent" class="custom-file-label" >Escolha uma imagem</label>
+						<div class="invalid-feedback" th:errors="*{imagem}"></div>
+					</div>
 				</div>
-				<!--Final do agrupador de dos componentes de imagem-->
 
 				<input class="btn btn-primary btn-md" type="submit" value="Salvar">
 
-				<a th:href="@{/admin/disciplinas}" th:if="${disciplina}">
+				<a th:href="@{/admin/disciplinas}" th:if="${disciplinaFormDTO}">
 					<button class="btn btn-primary btn-md" type="button">Cancelar</button>
 				</a>
 			</form>
 
-			<div th:if="${erros}" th:each="erro : ${erros}" class="alert alert-warning alert-dismissible fade show"
-				role="dialog">
-				<p th:text="${erro.defaultMessage}"></p>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
 		</div>
 		<!--Final do form de cadastro-->
 
@@ -119,8 +77,10 @@
 		</form>-->
 		<!--Fim do fomulario de pesquisa-->
 
-		<!-------------INICIO DA TABELA---------------->
-		<!--<table class="table">
+		<!--*****************************************************************
+								INICIO DA TABELA
+		*****************************************************************-->
+		<table class="table">
 			<thead>
 				<tr>
 					<th scope="col">Id</th>
@@ -130,20 +90,18 @@
 				</tr>
 			</thead>
 
-			<tbody>-->
-				<!-- /<tr th:each="disciplina : ${disciplinas.content}"> 
-				<tr th:each="disciplina : ${disciplinas}">
+			<tbody>
+				<tr th:each="disciplina : ${disciplinas.content}"> 
 					<td th:text=${disciplina.id}>
 					<td th:text=${disciplina.nome}>
-					<td th:text=${disciplina.descricaoObjetivos}>-->
+					<td th:text=${disciplina.descricaoObjetivos}>
 
-						<!-- Coluna das acoes: editar e remover
 					<td>
 						<div class="content-acoes">
-							<a th:href="@{/admin/disciplinas/editar/{id}(id=${disciplina.id})}">
+							<a th:href="@{/admin/disciplinas/{id}/editar(id=${disciplina.id})}">
 								<img src="/icones/editar.png" alt="editar">
 							</a>
-							<a th:href="@{/admin/disciplinas/remover/{id}(id=${disciplina.id})}"></a>
+							<!-- <a th:href="@{/admin/disciplinas/remover/{id}(id=${disciplina.id})}"></a> -->
 
 							<a th:href="@{/admin/disciplinas/remover/{id}(id=${disciplina.id})}"
 								onclick="if (confirm('Deseja realmente excluir o item?')){return true;}else{event.stopPropagation(); event.preventDefault();};">
@@ -155,7 +113,7 @@
 				</tr>
 			</tbody>
 
-		</table> -->
+		</table>
 		<!-------------FINAL DA TABELA---------------->
 
 		<!--Inicio do componente de paginacao para quando for realizada uma pesquisa
@@ -210,21 +168,7 @@
 
 	</section>
 
-	<footer>
-		<div class="container">
-			<div class="row  justify-content-center">
-				<div class="col-md-5">
-					<h3>Sobre nós</h3>
-					<p>Somos um grupo de professores e alunos que tem com objetivo
-						auxiliar estudantes que têm dificuldades na aprendizagem de
-						disciplinas de programação do curso técnico em informática do
-						IFRN.</p>
-				</div>
-			</div>
-		</div>
-		<h1>Teste2</h1>
-	</footer>
-
+	<footer th:replace="~{fragmentos :: footer}"></footer>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
