@@ -1,11 +1,11 @@
-package br.edu.ifrn.portal.dl.services;
+package br.edu.ifrn.portal.dl.utils;
 
 import java.io.IOException;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.web.multipart.MultipartFile;
 
-public class GravaImagem {
+public class ConversorImagem {
 	public static String imagemString;
 	
 	public static String encodeImagem(byte[] imageByteArray) {

@@ -15,10 +15,12 @@ import br.edu.ifrn.portal.dl.models.Disciplina;
 import br.edu.ifrn.portal.dl.repositories.DisciplinaRepository;
 
 /**
+ * Classe responsável por encapsular o objeto de acesso a dados da <strong>entidade 
+ * Disciplina<strong> e disponibilizar os serviços ofertados pela mesma.
  * 
- * @author erikv
- * @since 13/06/2023
- * 
+ * @author Erik Vasconcelos
+ * @since 2023-06-13
+ * @version A0.2
  */
 
 @Service
@@ -27,7 +29,20 @@ public class DisciplinaService {
 	@Autowired
 	private DisciplinaRepository disciplinaRepository;
 
-	public List<Disciplina> getDisciplinas() {
+	/*---------------CREATE and UPDATE---------------*/
+	
+	public Disciplina salvar(@Valid Disciplina disciplina) {
+		return disciplinaRepository.save(disciplina);
+	}
+
+	/*---------------READ---------------*/
+	
+	public Disciplina obterPorId(Long id) {
+		return disciplinaRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
+	}
+	
+	public List<Disciplina> getDisciplinasAsc() {
 		return disciplinaRepository.findAllAsc();
 	}
 
@@ -46,30 +61,12 @@ public class DisciplinaService {
 	public Page<Disciplina> getDisciplinasPaginadas(Pageable pageable) {
 		return getDisciplinasPaginadas(pageable.getPageNumber(), pageable.getPageSize());
 	}
-
-	public Disciplina obterPorId(Long id) {
-		return disciplinaRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
-	}
 	
 	public String getImage(long id) {
 		return disciplinaRepository.obterImagem(id);
 	}
 
-	/*
-	 * public Page<Disciplina> obterPorParteNome(String nome){ return
-	 * disciplinaRepository.findByNameLimited(nome, PageRequest.of(0, 10)); }
-	 * 
-	 * public Page<Disciplina> obterPorParteNome(String nome, int page, int size){
-	 * if(page < 0)page = 0; if(size > 10) size = 10; if(size < 5) size = 5;
-	 * 
-	 * return disciplinaRepository.findByNameLimited(nome, PageRequest.of(page,
-	 * size)); }
-	 */
-
-	public Disciplina salvar(@Valid Disciplina disciplina) {
-		return disciplinaRepository.save(disciplina);
-	}
+	/*---------------DELETE---------------*/
 
 	public void remover(Long id) {
 		disciplinaRepository.deleteById(id);

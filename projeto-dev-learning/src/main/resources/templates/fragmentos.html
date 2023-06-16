@@ -1,0 +1,62 @@
+<!--*****************************************************************
+						CABEÇA DO HTML
+*****************************************************************-->
+<head th:fragment="head(titulo, nomeArquivoCss)">
+	<meta charset="UTF-8">
+	<title th:text="${titulo}"></title>
+
+	<link href="/icones/usuario.png" rel="icon">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link type="text/css" rel="stylesheet" href="/css/base.css" media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss} + '.css'" media="screen,projection"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+</head>
+
+<!--*****************************************************************
+				CABEÇALHO BASE DO ADMINISTRATIVO
+*****************************************************************-->
+<header th:fragment="header">
+		<nav class="navbar navbar-expand-md navbar-style navbar-light fixed-top ">
+
+			<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="182"></a>
+
+			<button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
+				<img alt="imagem_usuario" src="/icones/cardapio.png">
+			</button>
+
+			<div class="collapse navbar-collapse" id="nav-principal">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a href="" class="nav-link info-n3 text-white">Home</a></li>
+
+					<li class="nav-item">
+						<div class="d-md-flex nav-link">
+							<img alt="imagem_usuario" src="/icones/usuario.png"> <a href=""
+								class="text-white info-n3">Jose</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+</header>
+
+<!--*****************************************************************
+							RODAPÉ DO BLOG
+*****************************************************************-->
+<footer th:fragment="footer">
+		<div class="container">
+			<div class="row  justify-content-center">
+				<div class="col-md-5">
+					<h3>Sobre nós</h3>
+					<p>Somos um grupo de professores e alunos que tem com objetivo
+						auxiliar estudantes que têm dificuldades na aprendizagem de
+						disciplinas de programação do curso técnico em informática do
+						IFRN.</p>
+				</div>
+			</div>
+		</div>
+</footer>
+
+<!--th:classappend="nome" -> adiciona uma classe a um componente   -->
+
