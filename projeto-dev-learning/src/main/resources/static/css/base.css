@@ -132,6 +132,18 @@ header nav .info-n3 {
 	
 }
 
+.success-message{
+	color: #1d942c;
+	font-family: Agency FB;
+	font-size: 22px;
+}
+
+.error-message{
+	color: #dc3545;
+	font-family: Agency FB;
+	font-size: 22px;
+}
+
 .content-acoes{
 	display: flex;
 	justify-content: space-around;

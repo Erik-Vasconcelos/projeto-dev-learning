@@ -4,9 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifrn.portal.dl.models.Disciplina;
@@ -35,7 +33,7 @@ public class DisciplinaService {
 
 	/*---------------READ---------------*/
 	
-	public Disciplina obterPorId(Long id) {
+	public Disciplina obterPorId(Long id) throws IllegalArgumentException{
 		return disciplinaRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
 	}
@@ -47,18 +45,17 @@ public class DisciplinaService {
 	public Page<Disciplina> obterDisciplinasPorNomePaginadas(String nome, Pageable pageable){
 		return disciplinaRepository.findByNomePagined(nome, pageable);
 	}
-	
-	public Page<Disciplina> getDisciplinasPaginadas() {
-		return getDisciplinasPaginadas(0, 10);
-	}
-
-	public Page<Disciplina> getDisciplinasPaginadas(int page, int size) {
-		if (page < 0) page = 0;
-		if (size > 10) size = 10;
-		if (size < 5) size = 5;
-
-		return disciplinaRepository.findAll(PageRequest.of(page, size, Sort.by("id")));
-	}
+	/*
+	 * public Page<Disciplina> getDisciplinasPaginadas() { return
+	 * getDisciplinasPaginadas(0, 10); }
+	 */
+	/*
+	 * public Page<Disciplina> getDisciplinasPaginadas(int page, int size) { if
+	 * (page < 0) page = 0; if (size > 10) size = 10; if (size < 5) size = 5;
+	 * 
+	 * return disciplinaRepository.findAll(PageRequest.of(page, size,
+	 * Sort.by("id"))); }
+	 */
 
 	/*
 	 * public Page<Disciplina> getDisciplinasPaginadas(Pageable pageable) { return

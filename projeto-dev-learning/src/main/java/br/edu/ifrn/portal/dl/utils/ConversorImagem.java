@@ -28,6 +28,5 @@ public class ConversorImagem {
 		gravarImagemBase64(file);
 		imagemString = "data:image/png;base64," + imagemString;
 		return imagemString;
-		
 	}
 }

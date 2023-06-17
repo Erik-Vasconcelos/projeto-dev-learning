@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.portal.dl.dtos.DisciplinaFormDTO;
 import br.edu.ifrn.portal.dl.models.Disciplina;
 import br.edu.ifrn.portal.dl.services.DisciplinaService;
+import br.edu.ifrn.portal.dl.utils.Mensagem;
 import br.edu.ifrn.portal.dl.utils.Pesquisa;
 
 /**
@@ -40,13 +42,7 @@ public class DisciplinaAdminController {
 
 	/*---------------READ---------------*/
 
-	/*
-	 * @GetMapping public ModelAndView getIndex() {
-	 *  OK return getIndexComDados(); 
-	 * }
-	 */
-
-	@GetMapping /* CONSERTAR A URL */
+	@GetMapping /* OK */
 	public ModelAndView disciplinasPaginadas(@PageableDefault(page = 0, size = 10) Pageable pageable) {
 		Page<Disciplina> disciplinasPaginadas = disciplinaService.getDisciplinasPaginadas(pageable);
 		ModelAndView mv = getIndexTemplate();
@@ -58,15 +54,12 @@ public class DisciplinaAdminController {
 	@GetMapping("/pesquisa")
 	public ModelAndView pesquisarDisciplinas(@PageableDefault(page = 0, size = 10) Pageable pageable,
 			@Valid Pesquisa pesquisa, BindingResult result) {
-
 		if (result.hasErrors()) {
-			System.out.println("***********************Erros********************");
-			return getIndexComDados();
+			return getIndexComDados(); /* TODO */
 
 		} else {
 			Page<Disciplina> disciplinasPaginadas = disciplinaService
 					.obterDisciplinasPorNomePaginadas(pesquisa.getValor(), pageable);
-
 			ModelAndView mv = getIndexTemplate();
 			mv.addObject("disciplinas", disciplinasPaginadas);
 
@@ -74,62 +67,63 @@ public class DisciplinaAdminController {
 		}
 	}
 
-	/*
-	 * @GetMapping("/disciplinaspag") public ModelAndView
-	 * disciplinasPorPaginacao(@PageableDefault(page = 0, size = 10) Pageable
-	 * pageable, ModelAndView model) { Page<Disciplina> pageDisciplina =
-	 * disciplinaService.getDisciplinasPaginadas(pageable);
-	 * model.addObject("disciplinas", pageDisciplina);
-	 * model.setViewName("pg-admin-disciplinas"); return model; }
-	 */
 	/*---------------CREATE and UPDATE---------------*/
 
-	/*
-	 * Web parameter tampering - É quando você expõe o seu objeto final para os
-	 * usuários e você "esconde" um campo/atributo e o usuário pode fazer um ataque
-	 * criando um campo e informando uma valor para ser enviado ao servidor do
-	 * atributo que você escondeu
-	 */
-	/*
-	 * O binding result 're o resultado da estado da enpocotamento da requisicao, se
-	 * ela é válida ou tem erros
-	 */
-
-	@PostMapping(value = { "/salvar" }) /* OK */
-	public ModelAndView salvar(@Valid DisciplinaFormDTO disciplinaDTO, BindingResult result) {
+	@PostMapping(value = { "/salvar" })
+	public ModelAndView salvar(@Valid DisciplinaFormDTO disciplinaDTO, BindingResult result,
+			RedirectAttributes redirect) {
 		if (result.hasErrors()) {
-			System.out.println("**************Tem erros!!*************");
 			ModelAndView mv = getIndexComDados();
+			mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
 
-			System.out.println(disciplinaDTO.getImagem() == null);
 			System.out.println(disciplinaDTO.getImagem().isEmpty());
 			return mv;
 		} else {
 			Disciplina disciplina = disciplinaDTO.toDisciplina();
 			disciplinaService.salvar(disciplina);
+			redirect.addFlashAttribute("mensagem", new Mensagem("Disciplina inserida com sucesso!"));
 
-			return getIndexComDados();
+			return new ModelAndView("redirect:/admin/disciplinas");
 		}
 	}
 
-	@GetMapping("/{id}/editar") /* OK */
-	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, DisciplinaFormDTO disciplinaDTO) {
-		Disciplina disciplina = disciplinaService.obterPorId(id);
-		disciplinaDTO.fromDisciplinaDTO(disciplina);
-
-		ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
-		Page<Disciplina> pageDisciplinas = disciplinaService.getDisciplinasPaginadas();
-		mv.addObject("disciplinas", pageDisciplinas);
-		mv.addObject("id", disciplina.getId());
-
-		return mv;
+	@GetMapping("/{id}/editar")
+	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, DisciplinaFormDTO disciplinaDTO,
+			@PageableDefault(page = 0, size = 10) Pageable pageable) {
+		try {
+			Disciplina disciplina = disciplinaService.obterPorId(id);
+			disciplinaDTO.fromDisciplinaDTO(disciplina);
+	
+			ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
+			Page<Disciplina> pageDisciplinas = disciplinaService.getDisciplinasPaginadas(pageable);
+			mv.addObject("disciplinas", pageDisciplinas);
+			mv.addObject("id", disciplina.getId());
+			mv.addObject("mensagem", new Mensagem("Disciplina #" + id + " foi atualizada com sucesso!"));
+	
+			return mv;
+		}catch (IllegalArgumentException e) {
+			ModelAndView mv = disciplinasPaginadas(pageable);
+			mv.addObject("mensagem", 
+					new Mensagem("A disciplina #" + id + " não foi enconstrada no banco!", true));
+			
+			return mv;
+		}
 	}
 
 	/*---------------DELETE---------------*/
 	@GetMapping("/{id}/remover") /* OK */
-	public String removerDisciplina(@PathVariable("id") Long id) {
-		disciplinaService.remover(id);
-		return "redirect:/admin/disciplinas";
+	public String removerDisciplina(@PathVariable("id") Long id, RedirectAttributes redirect) {
+		try {
+			disciplinaService.remover(id);
+			redirect.addFlashAttribute("mensagem", new Mensagem("Disicplina #" + id + " foi removida com sucesso!"));
+
+			return "redirect:/admin/disciplinas";
+		} catch (RuntimeException e) {
+			redirect.addFlashAttribute("mensagem",
+					new Mensagem("A disciplina #" + id + " não foi enconstrada no banco!", true));
+
+			return "redirect:/admin/disciplinas";
+		}
 	}
 
 	/*---------------AXILIARES---------------*/
