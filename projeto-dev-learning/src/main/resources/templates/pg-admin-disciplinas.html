@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragmentos :: head('DevLearning', 'disciplinas-style')}"></head>
+<head th:replace="~{fragmentos :: head('DevLearning', 'base-admin', 'disciplinas-style')}"></head>
 
 <body>
 
@@ -14,35 +14,38 @@
 			<span th:classappend="${mensagem.isError ? 'error-message' : 'success-message'}" th:text="${mensagem.msg}"></span>
 		</div>
 
+		<!--  th:text="${param.mensagem}" -> pega o valor do parametro que vem na url
+			th:styleappend="${param.errp != null ? 'display: none;' : ''}  -> adiciona um estilo ao componente"
+		 -->
 		<!--*****************************************************************
 							 INICIO DO FORM DE CADASTRO
 		*****************************************************************-->
 		<div class="class-container container-fluid ">
 			<h5 class="cbc-n4 cbc-style-secundary">Nova Disciplina</h5>
 
-			<!-- th:object -> diz que um objeto está atrelado a um determinado componente html -->
 			<form class="mb-3" action="/admin/disciplinas/salvar" method="POST" enctype="multipart/form-data" th:object="${disciplinaFormDTO}">
 
 				<div class="mb-3">
 					<label class="form-label">Nome</label>
 					<input id="campoNome" type="text" name="nome" class="form-control" th:field="*{nome}" th:errorclass="is-invalid">
-					<div class="invalid-feedback" th:errors="*{nome}">Nome invalido</div> <!--se tiver um erro associado ao nome-->
+					<div class="invalid-feedback" th:errors="*{nome}"></div>
 				</div>
 
 				<div class="mb-3">
-					<label for="descricaoObjetivos" class="form-label">Objetivos</label>
+					<label for="descricaoObjetivos" class="form-label">Descrição dos objetivos</label>
 					<textarea id="descricaoObjetivos" name="descricaoObjetivos" rows="6" class="form-control" th:field="*{descricaoObjetivos}" th:errorclass="is-invalid"></textarea> 
 					<div class="invalid-feedback" th:errors="*{descricaoObjetivos}"></div>
 				</div>
 				
 				<div class="input-group mb-3">
 					<label class="form-label" for="imagemBanner">Imagem de banner da disciplina</label>
-					<img id="imagemBanner" src="/imagens/semimagem.svg" alt="Imagem da disciplina" class="img-fluid" width="100%"> 					
+					<!-- <img id="imagemBanner" alt="Imagem da disciplina" class="img-fluid" width="100%" th:if="${disciplinaFormDTO.imagem}" th:src="*{imagem}"> --> 					
+					<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da disciplina" class="img-fluid" width="100%"> 					
 					
 					<div class="custom-file">
-						<input id="inputImagemBanner" type="file" name="imagem" accept="image/*" th:field="*{imagem}" th:errorclass="is-invalid">
-						<label for="inputImagemBanner" style="background-color: transparent" class="custom-file-label" >Escolha uma imagem</label>
-						<div class="invalid-feedback" th:errors="*{imagem}"></div>
+						<input id="inputImagemBanner" type="file" name="imagemFile" accept="image/*" th:errorclass="is-invalid"> 
+						<label for="inputImagemBanner" class="custom-file-label" >Escolha uma imagem</label>
+						<div class="invalid-feedback" th:errors="*{imagemFile}"></div>
 					</div>
 				</div>
 				
@@ -50,7 +53,7 @@
 					<div class="col-md-auto">
 						<input class="btn btn-primary btn-md" type="submit" value="Salvar">
 						
-						<a th:href="@{/admin/disciplinas}" th:if="${disciplinaFormDTO}">
+						<a th:href="@{/admin/disciplinas}" th:if="${!disciplinaFormDTO.isEmpty()}">
 							<button class="btn btn-primary btn-md" type="button">Cancelar</button>
 						</a>
 					</div>

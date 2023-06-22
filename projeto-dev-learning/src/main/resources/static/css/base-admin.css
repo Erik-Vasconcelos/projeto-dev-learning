@@ -1,0 +1,63 @@
+/**************************** FORM ****************************/
+.form-label {
+	color: #ffffff;
+	font-family: Agency FB;
+	font-size: 22px;
+}
+
+.form-control {
+	border: #7C23F0 solid 2px;
+	background-color: transparent;
+	border-radius: 5px;
+	color: #ffffff;
+}
+
+.form-control:hover {
+	border: #4F26B5 solid 2px;
+}
+
+.form-control:focus {
+	background-color: transparent;
+	color: #ffffff;
+	border: #4F26B5 solid 2px;
+	box-shadow: 2px 1px 2px 2px #4F26B5;
+}
+
+.form-control-plaintext {
+	border: #7C23F0 solid 2px;
+	background-color: transparent;
+	border-radius: 5px;
+	color: #ffffff;
+}
+
+/**************************** TABELA ****************************/
+table {
+	border: #7C23F0 solid 2px;
+	color: #ffffff;
+}
+
+tbody td {
+	border: #7C23F0 solid 1px;
+}
+
+thead tr {
+	background-color: #7C23F0;
+}
+
+.content-acoes {
+	display: flex;
+	justify-content: space-around;
+}
+
+/**************************** MENSAGENS ****************************/
+.success-message {
+	color: #1d942c;
+	font-family: Agency FB;
+	font-size: 22px;
+}
+
+.error-message {
+	color: #dc3545;
+	font-family: Agency FB;
+	font-size: 22px;
+}

@@ -1,7 +1,6 @@
 package br.edu.ifrn.portal.dl.dtos;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -42,18 +41,54 @@ public class DisciplinaFormDTO {
 	@Size(min = 30, max = 1000, message = "A descrição dos objetivo deve ter no minímo {min} e no máximo {max} caracteres")
 	private String descricaoObjetivos;
 
+	private MultipartFile imagemFile;
+	
 	@NonNull
-	@NotNull(message = "A Imagem da disciplina é obrigatória!")
-	private MultipartFile imagem;
+	private String imagem;
 	
 	public Disciplina toDisciplina() {
-		return new Disciplina(this.nome, this.descricaoObjetivos, ConversorImagem.getImagemEncoded(this.imagem));
+		Disciplina disciplina = new Disciplina();
+		disciplina.setNome(this.nome);
+		disciplina.setDescricaoObjetivos(this.descricaoObjetivos);
+		
+		if(imagemFile.getSize() > 0) {
+			disciplina.setImagem(ConversorImagem.getImagemEncoded(imagemFile));
+		}
+		
+		return disciplina;
+	}
+	
+	public Disciplina configAttibutes(Disciplina disciplina) {
+		disciplina.setNome(this.nome);
+		disciplina.setDescricaoObjetivos(this.descricaoObjetivos);
+		
+		if(imagemFile.getSize() > 0) {
+			disciplina.setImagem(ConversorImagem.getImagemEncoded(imagemFile));
+		}
+		
+		return disciplina;
 	}
 	
 	public void fromDisciplinaDTO(Disciplina disciplina) {
 		this.nome = disciplina.getNome();
 		this.descricaoObjetivos = disciplina.getDescricaoObjetivos();
-//		this.imagem = disciplina.getImagem();
+		this.imagem = disciplina.getImagem();
+	}
+	
+	public boolean isEmpty() {
+		try {
+			boolean containsNome = nome == null ? false : !nome.isBlank();
+			boolean containsDescricao = descricaoObjetivos == null ? false : !descricaoObjetivos.isBlank();
+			boolean containsImage = imagemFile == null ? false : !imagemFile.isEmpty();
+			
+			if(containsNome || containsDescricao || containsImage) {
+				return false;
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 
 	/*messages.properties define as mensagem de erros das validacoes

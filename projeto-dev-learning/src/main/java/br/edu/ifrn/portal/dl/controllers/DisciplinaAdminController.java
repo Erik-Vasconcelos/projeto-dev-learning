@@ -1,8 +1,11 @@
 package br.edu.ifrn.portal.dl.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,15 +54,15 @@ public class DisciplinaAdminController {
 		return mv;
 	}
 
-	@GetMapping("/pesquisa")
+	@GetMapping("/pesquisa") /* OK */
 	public ModelAndView pesquisarDisciplinas(@PageableDefault(page = 0, size = 10) Pageable pageable,
 			@Valid Pesquisa pesquisa, BindingResult result) {
 		if (result.hasErrors()) {
-			return getIndexComDados(); /* TODO */
+			return getIndexComDados();
 
 		} else {
 			Page<Disciplina> disciplinasPaginadas = disciplinaService
-					.obterDisciplinasPorNomePaginadas(pesquisa.getValor(), pageable);
+					.getDisciplinasPorNomePaginadas(pesquisa.getValor(), pageable);
 			ModelAndView mv = getIndexTemplate();
 			mv.addObject("disciplinas", disciplinasPaginadas);
 
@@ -67,19 +70,53 @@ public class DisciplinaAdminController {
 		}
 	}
 
-	/*---------------CREATE and UPDATE---------------*/
+	@GetMapping("/{id}/editar") /* OK */
+	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, DisciplinaFormDTO disciplinaDTO,
+			@PageableDefault(page = 0, size = 10) Pageable pageable) {
 
-	@PostMapping(value = { "/salvar" })
-	public ModelAndView salvar(@Valid DisciplinaFormDTO disciplinaDTO, BindingResult result,
+		Optional<Disciplina> optional = disciplinaService.obterPorId(id);
+		if (optional.isPresent()) {
+
+			Disciplina disciplina = optional.get();
+			disciplinaDTO.fromDisciplinaDTO(disciplina);
+			Page<Disciplina> pageDisciplinas = disciplinaService.getDisciplinasPaginadas(pageable);
+			ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
+			mv.addObject("disciplinas", pageDisciplinas);
+			mv.addObject("id", disciplina.getId());
+
+			return mv;
+
+		} else {
+			ModelAndView mv = disciplinasPaginadas(pageable);
+			mv.addObject("mensagem", new Mensagem("A disciplina #" + id + " não foi enconstrada no banco!", true));
+
+			return mv;
+		}
+	}
+
+	/*---------------CREATE---------------*/
+
+	@PostMapping(value = { "/salvar" }) /* OK */
+	public ModelAndView criar(@Valid DisciplinaFormDTO disciplinaDTO, BindingResult result,
 			RedirectAttributes redirect) {
+
+		ModelAndView mv = getIndexComDados();
 		if (result.hasErrors()) {
-			ModelAndView mv = getIndexComDados();
 			mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
 
-			System.out.println(disciplinaDTO.getImagem().isEmpty());
 			return mv;
 		} else {
+			if (disciplinaService.nameExists(disciplinaDTO.getNome())) {
+				mv.addObject("mensagem", new Mensagem("O nome informado já existe no banco de dados!", true));
+				return mv;
+			}
+
 			Disciplina disciplina = disciplinaDTO.toDisciplina();
+
+			if (disciplina.getImagem() == null) {
+				disciplina.setImagem("");
+			}
+
 			disciplinaService.salvar(disciplina);
 			redirect.addFlashAttribute("mensagem", new Mensagem("Disciplina inserida com sucesso!"));
 
@@ -87,30 +124,53 @@ public class DisciplinaAdminController {
 		}
 	}
 
-	@GetMapping("/{id}/editar")
-	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, DisciplinaFormDTO disciplinaDTO,
-			@PageableDefault(page = 0, size = 10) Pageable pageable) {
-		try {
-			Disciplina disciplina = disciplinaService.obterPorId(id);
-			disciplinaDTO.fromDisciplinaDTO(disciplina);
-	
-			ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
-			Page<Disciplina> pageDisciplinas = disciplinaService.getDisciplinasPaginadas(pageable);
-			mv.addObject("disciplinas", pageDisciplinas);
-			mv.addObject("id", disciplina.getId());
-			mv.addObject("mensagem", new Mensagem("Disciplina #" + id + " foi atualizada com sucesso!"));
-	
+	/*---------------UPDATE---------------*/
+
+	@PostMapping(value = { "/{id}" })
+	public ModelAndView editar(@PathVariable Long id, @Valid DisciplinaFormDTO disciplinaDTO, BindingResult result,
+			RedirectAttributes redirect) {
+
+		ModelAndView mv = getIndexComDados();
+		if (result.hasErrors()) {
+			mv = getEditComDados();
+			mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
+			disciplinaDTO.setImagem(disciplinaService.getImage(id));
+
 			return mv;
-		}catch (IllegalArgumentException e) {
-			ModelAndView mv = disciplinasPaginadas(pageable);
-			mv.addObject("mensagem", 
-					new Mensagem("A disciplina #" + id + " não foi enconstrada no banco!", true));
-			
-			return mv;
+		} else {
+			Optional<Disciplina> optional = disciplinaService.obterPorId(id);
+			if (optional.isPresent()) {
+				Disciplina disciplina = disciplinaDTO.configAttibutes(optional.get());
+
+				if (disciplina.getImagem() == null || disciplina.getImagem().isBlank()) {
+					disciplina.setImagem(disciplinaService.getImage(id));
+				}
+
+				if (disciplinaService.nameIsDuplicate(id, disciplina.getNome())) {
+					mv = getEditComDados();
+					mv.addObject("mensagem", new Mensagem("O nome informado já existe no banco de dados!", true));
+					disciplinaDTO.setImagem(disciplinaService.getImage(id));
+					return mv;
+				}
+
+				disciplinaService.salvar(disciplina);
+
+				redirect.addFlashAttribute("mensagem",
+						new Mensagem("Disciplina #" + id + " foi atualizada com sucesso!"));
+				mv = new ModelAndView("redirect:/admin/disciplinas");
+
+				return mv;
+			} else {
+				mv = new ModelAndView("redirect:/admin/disciplinas");
+				redirect.addFlashAttribute("mensagem",
+						new Mensagem("Disciplina #" + id + " não foi encontrada no banco!", true));
+				return mv;
+			}
 		}
 	}
 
 	/*---------------DELETE---------------*/
+
 	@GetMapping("/{id}/remover") /* OK */
 	public String removerDisciplina(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		try {
@@ -118,7 +178,7 @@ public class DisciplinaAdminController {
 			redirect.addFlashAttribute("mensagem", new Mensagem("Disicplina #" + id + " foi removida com sucesso!"));
 
 			return "redirect:/admin/disciplinas";
-		} catch (RuntimeException e) {
+		} catch (EmptyResultDataAccessException e) {
 			redirect.addFlashAttribute("mensagem",
 					new Mensagem("A disciplina #" + id + " não foi enconstrada no banco!", true));
 
@@ -127,6 +187,7 @@ public class DisciplinaAdminController {
 	}
 
 	/*---------------AXILIARES---------------*/
+
 	@ModelAttribute(value = "disciplinaFormDTO")
 	public DisciplinaFormDTO getNovaDisciplina() {
 		return new DisciplinaFormDTO();
@@ -148,6 +209,15 @@ public class DisciplinaAdminController {
 
 	private ModelAndView getIndexTemplate() {
 		ModelAndView mv = new ModelAndView("pg-admin-disciplinas");
+		return mv;
+	}
+
+	private ModelAndView getEditComDados() {
+		ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
+		Page<Disciplina> pageDisciplinas = disciplinaService
+				.getDisciplinasPaginadas(PageRequest.of(0, 10, Sort.by("id")));
+		mv.addObject("disciplinas", pageDisciplinas);
+
 		return mv;
 	}
 

@@ -1,5 +1,7 @@
 package br.edu.ifrn.portal.dl.services;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,36 +35,16 @@ public class DisciplinaService {
 
 	/*---------------READ---------------*/
 	
-	public Disciplina obterPorId(Long id) throws IllegalArgumentException{
-		return disciplinaRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Disciplina não encontrada"));
+	public Optional<Disciplina> obterPorId(Long id) throws IllegalArgumentException{
+		return disciplinaRepository.findById(id);
 	}
 	
 	public Page<Disciplina> getDisciplinasPaginadas(Pageable pageable) {
 		return disciplinaRepository.findAllAsc(pageable);
 	}
 	
-	public Page<Disciplina> obterDisciplinasPorNomePaginadas(String nome, Pageable pageable){
+	public Page<Disciplina> getDisciplinasPorNomePaginadas(String nome, Pageable pageable){
 		return disciplinaRepository.findByNomePagined(nome, pageable);
-	}
-	/*
-	 * public Page<Disciplina> getDisciplinasPaginadas() { return
-	 * getDisciplinasPaginadas(0, 10); }
-	 */
-	/*
-	 * public Page<Disciplina> getDisciplinasPaginadas(int page, int size) { if
-	 * (page < 0) page = 0; if (size > 10) size = 10; if (size < 5) size = 5;
-	 * 
-	 * return disciplinaRepository.findAll(PageRequest.of(page, size,
-	 * Sort.by("id"))); }
-	 */
-
-	/*
-	 * public Page<Disciplina> getDisciplinasPaginadas(Pageable pageable) { return
-	 * getDisciplinasPaginadas(pageable.getPageNumber(), pageable.getPageSize()); }
-	 */
-	public String getImage(long id) {
-		return disciplinaRepository.obterImagem(id);
 	}
 
 	/*---------------DELETE---------------*/
@@ -70,4 +52,18 @@ public class DisciplinaService {
 	public void remover(Long id) {
 		disciplinaRepository.deleteById(id);
 	}
+	
+	/*---------------AUXILIARES---------------*/
+	public String getImage(Long id) {
+		return disciplinaRepository.findImagem(id);
+	}
+	
+	public boolean nameExists(String name) {
+		return disciplinaRepository.countByName(name) > 0 ? true : false;
+	}
+	
+	public boolean nameIsDuplicate(Long id, String name) {
+		return disciplinaRepository.countOccurrenceName(id, name) > 0 ? true : false;
+	}
+	
 }

@@ -1,3 +1,8 @@
+/*#########################################################
+					ESTILIZAÇÃO DA PÁGINA
+#########################################################*/
+
+/**************************** IMPORTAÇÕES ****************************/
 @font-face {
 	font-family: Orbitron;
 	src: url(../fontes/orbitron/static/Orbitron-Regular.ttf);
@@ -19,6 +24,7 @@
 	border: 0;
 }
 
+/**************************** COMPONENTES PRICIPAIS ****************************/
 body {
 	display: flex;
 	flex-direction: column;
@@ -26,29 +32,9 @@ body {
 	margin-top: 6em;
 }
 
-nav.navbar-style{
-	justify-content: space-between;
-	background-color: #121212;
-	padding: 1em;
-	border-bottom: #303030 solid 2px;
-}
-
 section {
 	padding: 4em;
 	box-sizing: border-box;
-}
-
-.class-container {
-	background-color: #212125;
-	border-radius: 15px;
-	box-sizing: border-box;
-	padding: 1em 2.5em 1em 2.5em;
-	margin: 3rem 0 4rem 0;
-	
-}
-
-textarea{
-	resize: none;
 }
 
 footer {
@@ -58,20 +44,27 @@ footer {
 	color: #ffffff;
 }
 
-.col-md-5{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+.class-container {
+	background-color: #212125;
+	border-radius: 15px;
+	box-sizing: border-box;
+	padding: 1em 2.5em 1em 2.5em;
+	margin: 3rem 0 4rem 0;
 }
 
-footer h3{
-	font-family: Orbitron;
-	font-size: 1.8em;
-}
-
-footer p{
+/**************************** CABEÇALHO ****************************/
+header nav a {
+	color: #ffffff;
 	font-family: Agency FB;
-	font-size: 1.2em;
+	font-size: 1.4em;
+	text-decoration: none;
+}
+
+header nav .info-n3 {
+	font-family: Agency FB;
+	font-size: 24px;
+	color: #ffffff;
+	text-decoration: none;
 }
 
 .cbc-n3, .cbc-n4 {
@@ -103,137 +96,75 @@ footer p{
 	border-bottom: #303030 solid 2px;
 }
 
-header nav a {
-	color: #ffffff;
+/**************************** RODAPÉ ****************************/
+footer h3 {
+	font-family: Orbitron;
+	font-size: 1.8em;
+}
+
+footer p {
 	font-family: Agency FB;
-	font-size: 1.4em;
-	text-decoration: none;
+	font-size: 1.2em;
 }
 
-header nav .info-n3 {
-	font-family: Agency FB; 
-	font-size: 24px;
-	color: #ffffff;
-	text-decoration: none;
-} 
-
-.campo {
-	border: #7C23F0 solid 2px;
-	background-color: transparent;
-	border-radius : 5px;
-	color: #ffffff;
-	border-radius: 5px;
-}
-
-.botao{
+/**************************** COMPONENTES ****************************/
+.botao {
 	background-color: #7C23F0;
 	border-radius: 5px;
 	color: #ffffff;
-	
 }
 
-.success-message{
-	color: #1d942c;
-	font-family: Agency FB;
-	font-size: 22px;
+textarea {
+	resize: none;
 }
 
-.error-message{
-	color: #dc3545;
-	font-family: Agency FB;
-	font-size: 22px;
+/*#########################################################
+						BOOTSTRAP
+#########################################################*/
+
+/*----------- MUDANÇA EM CLASSES -------------*/
+nav.navbar-style {
+	justify-content: space-between;
+	background-color: #121212;
+	padding: 1em;
+	border-bottom: #303030 solid 2px;
 }
 
-.content-acoes{
+.col-md-5 {
 	display: flex;
-	justify-content: space-around;
-}
-/*bootstrap*/
-
-
-table{
-	border: #7C23F0 solid 2px;
-	color: #ffffff;
+	flex-direction: column;
+	align-items: center;
 }
 
-tbody td{
-	border: #7C23F0 solid 1px;
-}
-
-thead tr{
-	background-color: #7C23F0;
-}
- 
-/* table thread tr{
- background-color: #7C23F0;
-	color: #ffffff;
-} */
-.form-label{
-	color: #ffffff;
-	font-family: Agency FB;
-	font-size: 22px;
-}
-
-.form-control{
-	border: #7C23F0 solid 2px;
-	background-color: transparent;
-	border-radius : 5px;
-	color: #ffffff;
-}
-
-.form-control-plaintext {
-	border: #7C23F0 solid 2px;
-	background-color: transparent;
-	border-radius : 5px;
-	color: #ffffff;
-	
-}
-
-.form-control:hover{
-	border: #4F26B5 solid 2px;
-}
-
-.form-control:focus{
-	background-color: transparent;
-	color: #ffffff;
-	border: #4F26B5 solid 2px;
-	box-shadow: 2px 1px 2px 2px #4F26B5;
-}
-
-.btn{
+/**************************** BOTÕES ****************************/
+.btn {
 	font-family: Goldman Regular;
 }
 
-.btn-primary{
-	background-color: #7C23F0;	
+.btn-primary {
+	background-color: #7C23F0;
 	border: 0;
 	width: 8em;
 }
 
-.class-container .btn-primary {
-	margin-bottom: 0.5em;
+.btn-primary:hover {
+	background-color: #4F26B5;
 }
 
-.btn-primary:hover{
-	background-color: #4F26B5;	
-}
-
+/*----------- PAGINAÇÃO -------------*/
 .page-link {
 	background-color: #212125;
 	border: #7C23F0 solid 1px;
 	color: #fff;
 	font-family: Goldman Regular;
-	
 }
+
 .page-link:hover {
 	background-color: #4F26B5;
 	border: #4F26B5 solid 1px;
 	color: #fff;
-	
 }
 
-.btn-pg{
+.btn-pg {
 	background-color: rgb(124, 35, 240, 0.7);
-	
 }
-

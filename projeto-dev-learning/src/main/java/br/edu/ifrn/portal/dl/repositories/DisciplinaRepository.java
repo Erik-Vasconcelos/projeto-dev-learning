@@ -32,6 +32,12 @@ public interface DisciplinaRepository extends JpaRepository<Disciplina, Long>{
 	 public Page<Disciplina> findAllAsc(Pageable pageable);
 	
 	@Query("SELECT d.imagem FROM Disciplina d WHERE d.id = :id") 
-	public String obterImagem(@Param("id") long id);
+	public String findImagem(@Param("id") Long id);
+	
+	@Query("SELECT count(d.id) FROM Disciplina d WHERE d.nome = :nome") 
+	public Long countByName(@Param("nome") String nome);
+	
+	@Query("SELECT count(d.id) FROM Disciplina d WHERE d.nome = :nome AND d.id <> :id") 
+	public Long countOccurrenceName(@Param("id") Long id, @Param("nome") String nome);
 	 
 }
