@@ -88,7 +88,7 @@ public class DisciplinaAdminController {
 
 		} else {
 			ModelAndView mv = disciplinasPaginadas(pageable);
-			mv.addObject("mensagem", new Mensagem("A disciplina #" + id + " não foi enconstrada no banco!", true));
+			mv.addObject("mensagem", new Mensagem("A disciplina #" + id + " não foi encontrada no banco!", true));
 
 			return mv;
 		}

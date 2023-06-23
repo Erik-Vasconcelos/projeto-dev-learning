@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Classe reponsável por montar o objeto de tranferência de dados para uma nova
+ * Classe reponsável por montar o objeto de tranferência de dados para o form de uma 
  * <strong>Disciplina<strong>. O padrão de DTO vai garantir que não haverá
  * inserções maliciosas em formulários.
  * 

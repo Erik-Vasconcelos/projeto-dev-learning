@@ -1,24 +1,24 @@
 package br.edu.ifrn.portal.dl.services;
 
-import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.repositories.TecnologiaRepository;
 
 /**
+ * Classe responsável por encapsular o objeto de acesso a dados da <strong>entidade 
+ * Tecnologia<strong> e disponibilizar os serviços ofertados pela mesma.
  * 
- * @author erikv
- * @since 08/06/2023
- * 
+ * @author Erik Vasconcelos
+ * @since 2023-06-22
+ * @version A0.2 2023-06-13
  */
 
 @Service
@@ -27,51 +27,40 @@ public class TecnologiaService {
 	@Autowired
 	private TecnologiaRepository tecnologiaRepository;
 
+	/*---------------CREATE and UPDATE---------------*/
+	
+	public Tecnologia salvar(@Valid Tecnologia tecnologia) {
+		return tecnologiaRepository.save(tecnologia);
+	}
 
-	public List<Tecnologia> getTecnologias() {
-		return tecnologiaRepository.findAllAsc();
-	}
+	/*---------------READ---------------*/
 	
-	
-	public Page<Tecnologia> getTecnologiasPaginadas() {
-		return getTecnologiasPaginadas(0, 10);
-	}
-	
-	public Page<Tecnologia> getTecnologiasPaginadas(int page, int size) {
-		if(page < 0)page = 0;
-		if(size > 10) size = 10;
-		if(size < 5) size = 5;
-		
-		return tecnologiaRepository.findAll(PageRequest.of(page, size, Sort.by("id")));
+	public Optional<Tecnologia> obterPorId(Long id) throws IllegalArgumentException{
+		return tecnologiaRepository.findById(id);
 	}
 	
 	public Page<Tecnologia> getTecnologiasPaginadas(Pageable pageable) {
-		return getTecnologiasPaginadas(pageable.getPageNumber(), pageable.getPageSize());
+		return tecnologiaRepository.findAllAsc(pageable);
 	}
 	
-	public Tecnologia obterPorId(Long id) {
-		return tecnologiaRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Tecnologia não encontrada"));
-	}
-	
-	public Page<Tecnologia> obterPorParteNome(String nome){
-		return tecnologiaRepository.findByNameLimited(nome, PageRequest.of(0, 10));
-	}
-	
-	public Page<Tecnologia> obterPorParteNome(String nome, int page, int size){
-		if(page < 0)page = 0;
-		if(size > 10) size = 10;
-		if(size < 5) size = 5;
-		
-		return tecnologiaRepository.findByNameLimited(nome, PageRequest.of(page, size));
+	public Page<Tecnologia> getTecnologiasPorNomePaginadas(String nome, Pageable pageable){
+		return tecnologiaRepository.findByNomePagined(nome, pageable);
 	}
 
-	public Tecnologia salvar(@Valid Tecnologia tecnologia) {
-		
-		return tecnologiaRepository.save(tecnologia);
-	}
-	
+	/*---------------DELETE---------------*/
+
 	public void remover(Long id) {
 		tecnologiaRepository.deleteById(id);
 	}
+	
+	/*---------------AUXILIARES---------------*/
+	
+	public boolean nameExists(String name) {
+		return tecnologiaRepository.countByName(name) > 0 ? true : false;
+	}
+	
+	public boolean nameIsDuplicate(Long id, String name) {
+		return tecnologiaRepository.countOccurrenceName(id, name) > 0 ? true : false;
+	}
+	
 }
