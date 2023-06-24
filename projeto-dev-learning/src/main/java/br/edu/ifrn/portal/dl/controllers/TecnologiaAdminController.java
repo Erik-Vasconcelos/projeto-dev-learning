@@ -32,7 +32,7 @@ import br.edu.ifrn.portal.dl.utils.Pesquisa;
  * relacionados à <strong>entidade Tecnologia<strong>.
  * 
  * @author Erik Vasconcelos
- * @since 2023-06-13
+ * @since 2023-06-22
  * @version A0.2
  */
 

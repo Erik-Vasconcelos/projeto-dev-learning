@@ -90,7 +90,7 @@
 			<tbody>
 				<tr th:each="tecnologia : ${tecnologias.content}"> 
 					<td th:text="${tecnologia.id}">
-					<td th:text="${tecnologia.nome}">
+					<td th:text="${#strings.abbreviate(tecnologia.nome, 15)}">
 
 					<td>
 						<div class="content-acoes">

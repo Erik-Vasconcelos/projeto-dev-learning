@@ -113,8 +113,8 @@
 			<tbody>
 				<tr th:each="disciplina : ${disciplinas.content}"> 
 					<td th:text="${disciplina.id}">
-					<td th:text="${disciplina.nome}">
-					<td th:text="${#strings.abbreviate(disciplina.descricaoObjetivos, 25)}">
+					<td th:text="${#strings.abbreviate(disciplina.nome, 25)}">
+					<td th:text="${#strings.abbreviate(disciplina.descricaoObjetivos, 30)}">
 
 					<td>
 						<div class="content-acoes">
