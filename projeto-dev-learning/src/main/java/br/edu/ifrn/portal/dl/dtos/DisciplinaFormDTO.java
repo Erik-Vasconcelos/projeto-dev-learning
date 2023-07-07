@@ -16,7 +16,7 @@ import lombok.ToString;
 
 /**
  * Classe reponsável por montar o objeto de tranferência de dados para o form de uma 
- * <strong>Disciplina<strong>. O padrão de DTO vai garantir que não haverá
+ * <strong>Disciplina<strong>. O padrão de DTO vai criar uma camada de proteção para não haver
  * inserções maliciosas em formulários.
  * 
  * @author Erik Vasconcelos
@@ -31,6 +31,9 @@ import lombok.ToString;
 @ToString
 public class DisciplinaFormDTO {
 
+	@NonNull
+	private Long id;
+	
 	@NonNull
 	@NotBlank(message = "O nome é obrigatório!")
 	@Size(min = 3, max = 100, message = "O tamanho do nome deve ser entre {min} e {max} caracteres")
@@ -59,6 +62,7 @@ public class DisciplinaFormDTO {
 	}
 	
 	public Disciplina configAttibutes(Disciplina disciplina) {
+		
 		disciplina.setNome(this.nome);
 		disciplina.setDescricaoObjetivos(this.descricaoObjetivos);
 		

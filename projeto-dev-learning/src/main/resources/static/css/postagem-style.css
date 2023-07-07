@@ -1,0 +1,45 @@
+.referencia-tecnologia{
+	height: 1.6em;
+	padding: 8px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #303030;
+	color: #8963E1;
+	border-radius: 15px;
+	font-family: Agency-FB;
+	
+}
+.referencia-tecnologia label{
+	margin: 0;
+}
+.referencia-tecnologia button {
+	background-color: transparent;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+/*Editor de texto*/
+.ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: #fff;
+}
+
+.ql-toolbar .ql-fill {
+    fill: #fff;
+    stroke: none;
+}
+
+.ql-toolbar .ql-picker {
+    color: #fff;
+}
+
+.ql-editor p{
+    color: #fff;
+}
+.ql-editor p::placeholder{
+    color: #fff;
+}

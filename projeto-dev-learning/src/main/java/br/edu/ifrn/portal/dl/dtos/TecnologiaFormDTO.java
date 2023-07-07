@@ -13,7 +13,7 @@ import lombok.ToString;
 
 /**
  * Classe reponsável por montar o objeto de tranferência de dados para o form de
- * uma <strong>Tecnologia<strong>. O padrão de DTO vai garantir que não haverá
+ * uma <strong>Tecnologia<strong>. O padrão de DTO vai criar uma camada de proteção para não haver
  * inserções maliciosas em formulários.
  * 
  * @author Erik Vasconcelos
@@ -30,8 +30,12 @@ public class TecnologiaFormDTO {
 
 	@NonNull
 	@NotBlank(message = "O nome é obrigatório!")
-	@Size(min = 3, max = 30, message = "O tamanho do nome deve ser entre {min} e {max} caracteres")
+	@Size(min = 3, max = 50, message = "O tamanho do nome deve ser entre {min} e {max} caracteres")
 	private String nome;
+	
+	public TecnologiaFormDTO(Tecnologia tecnologia) {
+		this.nome = tecnologia.getNome();
+	}
 
 	public Tecnologia toTecnologia() {
 		Tecnologia tecnologia = new Tecnologia(this.nome);

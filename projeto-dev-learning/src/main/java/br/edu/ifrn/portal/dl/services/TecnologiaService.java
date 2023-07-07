@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -34,6 +35,10 @@ public class TecnologiaService {
 	}
 
 	/*---------------READ---------------*/
+	
+	public List<Tecnologia> getListTecnologias() {
+		return tecnologiaRepository.findAll();
+	}
 	
 	public Optional<Tecnologia> obterPorId(Long id) throws IllegalArgumentException{
 		return tecnologiaRepository.findById(id);

@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -34,6 +35,10 @@ public class DisciplinaService {
 	}
 
 	/*---------------READ---------------*/
+	
+	public List<Disciplina> getListDisciplinas() {
+		return disciplinaRepository.findAll();
+	}
 	
 	public Optional<Disciplina> obterPorId(Long id) throws IllegalArgumentException{
 		return disciplinaRepository.findById(id);

@@ -12,6 +12,14 @@
 	<link type="text/css" rel="stylesheet" href="/css/base.css" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss} + '.css'" media="screen,projection"/>
 	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss2} + '.css'" media="screen,projection"/>
+	
+	<!--Quill-->
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
 </head>
 
@@ -29,7 +37,7 @@
 
 			<div class="collapse navbar-collapse" id="nav-principal">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a href="" class="nav-link info-n3 text-white">Home</a></li>
+					<li class="nav-item"><a href="" class="nav-link info-n3 text-white">Painel administrativo</a></li>
 
 					<li class="nav-item">
 						<div class="d-md-flex nav-link">
@@ -46,7 +54,7 @@
 <!--*****************************************************************
 				COMPONENTE DE PAGINAÇÃO PADRÃO
 *****************************************************************-->
-<nav th:fragment="pagination(paginationObjectName, resourceName)">
+<nav th:fragment="pagination(paginationObjectName, resourceName)" th:if="${[__${paginationObjectName}__].totalPages > 0}">
 	<ul class="pagination justify-content-center">
 		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'disabled'}">
 			<a class="page-link btn-pg" th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
