@@ -45,18 +45,86 @@ function setExplicitDim(images1) {
 
 // Funcões para manipular as ações de envio do formulário para o servidor
 function adicionarTecnologia() {
-    $('#inputAcao').val('addTecnologia');
-    window.location.href = "/admin/tecnologias";
-    //submitForm();
+    var select = document.getElementById("tecnologias");
+
+    let idTecnologia = select.options[select.selectedIndex].value;
+    let nomeTecnologia = select.options[select.selectedIndex].text;
+    let tecnologiaAdd = '{"id": "' + idTecnologia + '", "nome": "' + nomeTecnologia + '"}';
+    let tecnologiaTemp = document.getElementById("tecnologiaTemp").value.replace("[", "").replace("]", "");
+
+    let containsTecnologia = 'false';
+
+    let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+    $.each(tecnologias, function (key, tecnologiaItem) {
+        let tecnologiaJson = JSON.parse(tecnologiaAdd);
+
+        if (JSON.stringify(tecnologiaItem) === JSON.stringify(tecnologiaJson)) {
+            containsTecnologia = 'true';
+        }
+    });
+
+    if (containsTecnologia === 'false') {
+        if (tecnologiaTemp == '' || tecnologiaTemp == null) {
+            tecnologiaTemp = tecnologiaAdd;
+        } else {
+            tecnologiaTemp += ", " + tecnologiaAdd;
+        }
+
+        tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+        let listaTecnologias = '';
+        $.each(tecnologias, function (key, tecnologia) {
+            listaTecnologias += '<div class="referencia-tecnologia">';
+            listaTecnologias += '<button type="button" onclick="removerTecnologia('
+                + JSON.stringify(tecnologia).replaceAll("\"", "\'").replaceAll("\"", "\'") + ')"><img alt="remover" src="/icones/remover.png"></button>';
+            listaTecnologias += '<label>' + tecnologia.nome + '</label>';
+            listaTecnologias += '</div>';
+        });
+
+        document.getElementById("divTecnologias").innerHTML = listaTecnologias;
+        document.getElementById("tecnologiaTemp").value = tecnologiaTemp;
+    }
 }
 
-function removerTecnologia(id) {
-    $('#inputIdItem').val(id);
-    submitForm()
+function removerTecnologia(tecnologiaRemover) {
+    tecnologiaRemover = JSON.stringify(tecnologiaRemover);
+    let tecnologiaTemp = document.getElementById("tecnologiaTemp").value.replace("[", "").replace("]", "");
+
+    let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+    $.each(tecnologias, function (key, tecnologiaItem) {
+
+        if (JSON.stringify(tecnologiaItem) === tecnologiaRemover) {
+
+            let tecnologiaTemp = "";
+            let listaTecnologias = "";
+            //Montando o json novamente sem a tecnologia removida
+            $.each(tecnologias, function (key, tecnologia) {
+
+                if (JSON.stringify(tecnologia) != JSON.stringify(tecnologiaItem)) {
+                    if (tecnologiaTemp == '' || tecnologiaTemp == null) {
+                        tecnologiaTemp = JSON.stringify(tecnologia);
+                    } else {
+                        tecnologiaTemp += ", " + JSON.stringify(tecnologia);
+                    }
+
+                    listaTecnologias += '<div class="referencia-tecnologia">';
+                    listaTecnologias += '<button type="button" onclick="removerTecnologia('
+                        + JSON.stringify(tecnologia).replaceAll("\"", "\'").replaceAll("\"", "\'") + ')"><img alt="remover" src="/icones/remover.png"></button>';
+                    listaTecnologias += '<label>' + tecnologia.nome + '</label>';
+                    listaTecnologias += '</div>';
+                }
+            });
+
+            document.getElementById("divTecnologias").innerHTML = listaTecnologias;
+            document.getElementById("tecnologiaTemp").value = tecnologiaTemp;
+
+            //para a execução do each caso a tecnologia tenha sido achada e removida
+            return false;
+        }
+    });
 }
 
 function salvarPostagem() {
-    $('#inputAcao').val('salvarPostagem');
+    // $('#inputAcao').val('salvarPostagem');
     submitForm();
 }
 
@@ -64,9 +132,9 @@ function mostarImagem() {
     let srcImage = document.getElementById('itemImagem');
     let previewImagem = document.getElementById('imagemBanner');
 
-    if(srcImage.getText() != ''){
+    if (srcImage.getText() != '') {
         previewImagem.src = srcImage.getText();
-    }else{
+    } else {
         previewImagem.src = '/imagens/sem-imagem.jpg';
     }
 }

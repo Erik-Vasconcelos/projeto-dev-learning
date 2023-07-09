@@ -30,63 +30,61 @@
 
 				<div class="mb-3">
 					<label class="form-label">Título da postagem</label>
-					<input id="campoNome" type="text" name="titulo" placeholder="Insira o título" class="form-control" th:field="*{titulo}"
-						th:errorclass="is-invalid">
+					<input id="campoNome" type="text" name="titulo" placeholder="Insira o título" class="form-control"
+						th:field="*{titulo}" th:errorclass="is-invalid">
 					<div class="invalid-feedback" th:errors="*{titulo}"></div>
 				</div>
 
 				<div class="mb-3">
 					<div class="form-group">
 						<label for="tipo" class="form-label">Tipo da postagem</label>
-						<select id="tipo" class="form-control" name="tipoPostagem" th:field="*{tipoPostagem}">
-							<option th:each="tipo : ${tipoPostagem}" th:value="${tipo}" th:text="${tipo.descricao}"></option>
+						<select id="tipo" class="form-control" name="tipoPostagem" th:field="*{tipoPostagem}"
+							th:classappend="${#fields.hasErrors('tipoPostagem') ? 'is-invalid' : ''}">
+							<option value="" hidden>--Selecione--</option>
+							<option th:each="tipo : ${tipoPostagem}" th:value="${tipo}" th:text="${tipo.descricao}">
+							</option>
 						</select>
+						<div class="invalid-feedback" th:errors="*{tipoPostagem}"></div>
 					</div>
 				</div>
 
 				<div class="mb-3">
 					<div class="form-group">
 						<label for="disciplina" class="form-label">Disciplina</label>
-						<select id="disciplina" class="form-control" name="disciplina" th:field="*{disciplina}">
+						<select id="disciplina" class="form-control" name="disciplina" th:field="*{disciplina}"
+							th:classappend="${#fields.hasErrors('disciplina') ? 'is-invalid' : ''}">
+							<option value="" hidden>--Selecione--</option>
 							<option th:each="disciplina : ${listaDisciplinas}" th:value="${disciplina.id}"
 								th:text="${disciplina.nome}"></option>
 						</select>
+						<div class="invalid-feedback" th:errors="*{disciplina}"></div>
 					</div>
 				</div>
 
 				<div class="form-row mb-3">
 					<div class="col-md-10">
 						<label for="tecnologias" class="form-label">Tecnologias</label>
-						<select id="tecnologias" class="form-control" name="tecnologia" th:object="${tecnologia}" >
+						<select id="tecnologias" class="form-control"
+							th:classappend="${#fields.hasErrors('tecnologiaTemp') ? 'is-invalid' : ''}">
 							<option th:each="tecnologia : ${listaTecnologias}" th:value="${tecnologia.id}"
 								th:text="${tecnologia.nome}"></option>
 						</select>
-						<div class="invalid-feedback" style="display: inline;" th:errors="*{tecnologias}"></div>
+						<div class="invalid-feedback" th:errors="*{tecnologiaTemp}"></div>
+
+						<input id="tecnologiaTemp" type="hidden" name="tecnologiaTemp" th:field="*{tecnologiaTemp}">
 					</div>
 
 					<div class="col-md-2">
-						<button id="add" type="submit" class="btn btn-primary btn-md" 
+						<button id="add" type="button" class="btn btn-primary btn-md"
 							th:onclick="adicionarTecnologia()">Adicionar tecnologia</button>
 					</div>
 				</div>
 
 				<!--Tecnologias adicionadas-->
 				<div class="form-row mb-3">
-					<div th:each="tecnologia : ${listaTecnologiasPostagem}">
-						<div class="referencia-tecnologia">
-							<button type="submit" th:onclick="removerTecnologia([[${tecnologia.id}]])">
-								<img alt="remover" src="/icones/remover.png">
-							</button>
-							<label th:text="${tecnologia.nome}"></label>
-						</div>
-					</div>
-				</div>
+					<div id="divTecnologias" class="containerTecnologias"></div>
 
-				<!--Componentes ocultos para injeção dos valores necessários no objeto request-->
-				<div th:object="${request}">
-					<input id="inputAcao" type="text" class="form-control" value="removeTecnologia" style="display:none"
-						name="acao" />
-					<input id="inputIdItem" type="number" class="form-control" style="display:none" name="idItem" />
+
 				</div>
 
 				<div class="input-group mb-3">
@@ -105,7 +103,7 @@
 				<!-- ***************INICIO DO EDITOR DE TEXTO ************************-->
 				<div class="form-group">
 					<div class="col-sm-10">
-						<input type="text" style="display:none" th:field="*{corpo}" class="form-control" 
+						<input type="text" style="display:none" th:field="*{corpo}" class="form-control"
 							id="inputItemCorpo" />
 					</div>
 				</div>
@@ -123,14 +121,15 @@
 						id="inputItemHtml" />
 					<label for="editor" class="form-label">Corpo da postagem</label>
 					<div id="editor" class=""></div>
-					<div class="invalid-feedback" style="display: inline;"  th:errors="*{corpo}"></div>
+					<div class="invalid-feedback" style="display: inline;" th:errors="*{corpo}"></div>
 				</div>
 
 				<!--*************** FIM DO EDITOR DE TEXTO ***************-->
 
 				<div class="row mt-4">
 					<div class="col-md-auto">
-						<input id="submitBtn" type="submit" value="Salvar" onclick="salvarPostagem()" class="btn btn-primary btn-md" >
+						<input id="submitBtn" type="submit" value="Salvar" onclick="salvarPostagem()"
+							class="btn btn-primary btn-md">
 
 						<a th:href="@{/admin/postagens}" th:if="${!postagemFormDTO.isEmpty()}">
 							<button class="btn btn-primary btn-md" type="button">Cancelar</button>
@@ -170,7 +169,6 @@
 						</a>
 					</div>
 				</div>
-
 			</div>
 
 		</form>
@@ -235,28 +233,29 @@
 
 	<footer th:replace="~{fragmentos :: footer}"></footer>
 
-<style>
-.ql-toolbar .ql-stroke {
-    fill: none;
-    stroke: #fff;
-}
+	<style>
+		.ql-toolbar .ql-stroke {
+			fill: none;
+			stroke: #fff;
+		}
 
-.ql-toolbar .ql-fill {
-    fill: #fff;
-    stroke: none;
-}
+		.ql-toolbar .ql-fill {
+			fill: #fff;
+			stroke: none;
+		}
 
-.ql-toolbar .ql-picker {
-    color: red;
-}
+		.ql-toolbar .ql-picker {
+			color: red;
+		}
 
-.ql-editor p{
-    color: #fff;
-}
-.ql-editor p::placeholder{
-    color: #fff;
-}
-</style>
+		.ql-editor p {
+			color: #fff;
+		}
+
+		.ql-editor p::placeholder {
+			color: #fff;
+		}
+	</style>
 
 	<script>
 		var editor;
@@ -307,12 +306,25 @@
 			var imageArquive = $("#itemImagem").text();
 			var imageContainer = document.getElementById("imagemBanner");
 
-			if(imageArquive != ''){
+			if (imageArquive != '') {
 				imageContainer.src = imageArquive;
 			}
-				/*else{
-					 imageContainer.src = '../imagens/sem-imagem.jpg'; 
-				}*/
+		});
+
+		$(document).ready(function () {
+			let tecnologiaTemp = document.getElementById("tecnologiaTemp").value;
+			let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+
+			let listaTecnologias = '';
+			$.each(tecnologias, function (key, tecnologia) {
+				listaTecnologias += '<div class="referencia-tecnologia">';
+				listaTecnologias += '<button type="button" onclick="removerTecnologia('
+					+ JSON.stringify(tecnologia).replaceAll("\"", "\'").replaceAll("\"", "\'") + ')"><img alt="remover" src="/icones/remover.png"></button>';
+				listaTecnologias += '<label>' + tecnologia.nome + '</label>';
+				listaTecnologias += '</div>';
+			});
+
+			document.getElementById("divTecnologias").innerHTML = listaTecnologias;
 		});
 
 	</script>

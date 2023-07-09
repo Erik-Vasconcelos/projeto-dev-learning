@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -46,17 +47,18 @@ public class PostagemFormDTO {
 	@NotNull(message = "O tipo da postagem é obrigatório!")
 	private TipoPostagem tipoPostagem;
 	
-	private MultipartFile imagemFile;
-	
 	@NonNull
 	private String imagemBanner;
+	
+	private MultipartFile imagemFile;
 
-	@NonNull
-	@NotNull(message = "A disciplina relacionada a postagem é obrigatória!")
+	@NotNull(message = "A disciplina é obrigatória!")
 	private Disciplina disciplina;
 	
+	@NotBlank(message = "Insira ao menos uma tecnologia para ser relacionada a postagem")
+	private String tecnologiaTemp;
+	
 	@NotNull(message = "A(s) tecnologia(s) relacionada(s) a postagem é/são obrigatória(s)!")
-	@Size(min = 1, message = "Insira ao menos {min} tecnologia para ser relacionada a postagem")
 	private List<Tecnologia> tecnologias = new ArrayList<>();
 	
 	@NonNull

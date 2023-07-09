@@ -1,6 +1,5 @@
 package br.edu.ifrn.portal.dl.controllers;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+
 import br.edu.ifrn.portal.dl.dtos.PostagemFormDTO;
 import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.models.Tecnologia;
@@ -32,7 +33,6 @@ import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.ConversorImagem;
 import br.edu.ifrn.portal.dl.utils.Mensagem;
 import br.edu.ifrn.portal.dl.utils.Pesquisa;
-import br.edu.ifrn.portal.dl.utils.Requests;
 
 /**
  * Classe responsável por interceptar e gerenciar o fluxo de requisições
@@ -57,13 +57,10 @@ public class PostagemAdminController {
 	@Autowired
 	private TecnologiaService tecnologiaService;
 
-	private PostagemFormDTO postagemFormDTO = new PostagemFormDTO();
-
 	/*---------------READ---------------*/
 
 	@GetMapping /* OK */
-	public ModelAndView postagensPaginadas(PostagemFormDTO postagemFormDTO, Tecnologia tecnologia,
-			@PageableDefault(page = 0, size = 10) Pageable pageable, Mensagem mensagem) {
+	public ModelAndView postagensPaginadas(@PageableDefault(page = 0, size = 10) Pageable pageable) {
 		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
 		ModelAndView mv = getIndexTemplate();
 		mv.addObject("listaPostagens", postagensPaginadas);
@@ -73,14 +70,15 @@ public class PostagemAdminController {
 		mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
 		// Adicionando a lista de tecnologias relacionadas na postagem
 		// mv.addObject("listaTecnologiasPostagem", this.listaTecnologiasPostagem);
-		mv.addObject("listaTecnologiasPostagem", this.postagemFormDTO.getTecnologias());
+		// mv.addObject("listaTecnologiasPostagem",
+		// this.postagemFormDTO.getTecnologias());
 		// Objeto modelo do form
-		mv.addObject("postagemFormDTO", postagemFormDTO);
+		/*
+		 * mv.addObject("postagemFormDTO", postagemFormDTO);
+		 * 
+		 * if (mensagem != null) { mv.addObject("mensagem", mensagem); }
+		 */
 
-		if(mensagem != null) {
-			mv.addObject("mensagem", mensagem);
-		}
-		
 		return mv;
 	}
 	/*
@@ -137,87 +135,53 @@ public class PostagemAdminController {
 	 */
 
 	/*---------------CREATE---------------*/
-	
-	private void teste(@Valid PostagemFormDTO postagemDTO, BindingResult result) {
-		if (result.hasErrors()) {
-			
-		}
-	}
 
 	@PostMapping(value = "/salvar")
-	public ModelAndView criar(Requests request, @Valid PostagemFormDTO postagemDTO, BindingResult result,
-			Tecnologia tecnologia, RedirectAttributes redirect) {
-
+	public ModelAndView criar(@Valid PostagemFormDTO postagemDTO, BindingResult result, RedirectAttributes redirect) {
+		
 		if (result.hasErrors()) {
-			 return postagensPaginadas(postagemDTO, tecnologia, null, new Mensagem("Verifique os campos de entrada!", true));
-		} else {
+			ModelAndView mv = getIndexComDados();
+			if (result.hasErrors()) {
+				mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
+			}
+			return mv;
 
-			if (!postagemFormDTO.getImagemFile().isEmpty()) {
+			
+		} else {
+			if (!postagemDTO.getImagemFile().isEmpty()) {
 				postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));
 			}
 
-			if (request.getAcao().equals("addTecnologia")) {
-				if (!this.postagemFormDTO.getTecnologias().contains(tecnologia)) {
-					postagemDTO.getTecnologias().add(tecnologia);
-					this.postagemFormDTO = postagemDTO;
-				}
+			if (postagemService.titleExists(postagemDTO.getTitulo())) {
+				ModelAndView mv = getIndexComDados();
 
-			} else if (request.getAcao().equals("removeTecnologia")) {
-				Optional<Tecnologia> optionalTecnologia = this.postagemFormDTO.getTecnologias().stream()
-						.filter(t -> t.getId().equals(request.getIdItem())).findFirst();
+				mv.addObject("mensagem", new Mensagem("O título informado já existe no banco de dados!", true));
+				return mv;
 
-				if (optionalTecnologia.isPresent()) {
-					this.postagemFormDTO.getTecnologias().remove(optionalTecnologia.get());
-				}
+			} else {
+				Tecnologia[] tecnologiasRecebidas = new Gson().fromJson("[" + postagemDTO.getTecnologiaTemp() + "]",
+						Tecnologia[].class);
 
-			} else if (request.getAcao().equals("salvarPostagem")) {
-
-				if (postagemService.titleExists(postagemDTO.getTitulo())) {
-					/*
-					 * mv.addObject("mensagem", new
-					 * Mensagem("O título informado já existe no banco de dados!", true)); return
-					 * mv;
-					 */
-				} else {
-
-					Postagem postagem = postagemDTO.toPostagem();
-
-					if (postagem.getImagem() == null) {
-						postagem.setImagem("");
+				for (Tecnologia t : tecnologiasRecebidas) {
+					Optional<Tecnologia> optional = tecnologiaService.obterPorId(t.getId());
+					if (optional.isPresent()) {
+						postagemDTO.getTecnologias().add(optional.get());
 					}
-
-					postagemService.salvar(postagem);
-					redirect.addFlashAttribute("mensagem", new Mensagem("Postagem inserida com sucesso!"));
-
-					return new ModelAndView("redirect:/admin/postagens");
-
-					// return postagensPaginadas(new PostagemFormDTO(), new Tecnologia(), null);
 				}
 
+				Postagem postagem = postagemDTO.toPostagem();
+
+				if (postagem.getImagem() == null) {
+					postagem.setImagem("");
+				}
+
+				postagemService.salvar(postagem);
+				redirect.addFlashAttribute("mensagem", new Mensagem("Postagem inserida com sucesso!"));
+
+				return new ModelAndView("redirect:/admin/postagens");
 			}
 
-			return postagensPaginadas(postagemDTO, tecnologia, null, null);
-
 		}
-		/*
-		 * ModelAndView mv = getIndexComDados(); if (result.hasErrors()) {
-		 * mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!",
-		 * true));
-		 * 
-		 * return mv; } else { if (postagemService.nameExists(postagemDTO.getTitulo()))
-		 * { mv.addObject("mensagem", new
-		 * Mensagem("O título informado já existe no banco de dados!", true)); return
-		 * mv; }
-		 * 
-		 * Postagem postagem = postagemDTO.toPostagem();
-		 * 
-		 * if (postagem.getImagem() == null) { postagem.setImagem(""); }
-		 * 
-		 * postagemService.salvar(postagem); redirect.addFlashAttribute("mensagem", new
-		 * Mensagem("Postagem inserida com sucesso!"));
-		 * 
-		 * return new ModelAndView("redirect:/admin/postagens"); }
-		 */
 	}
 
 	/*---------------UPDATE---------------*/
@@ -286,7 +250,7 @@ public class PostagemAdminController {
 
 	@ModelAttribute(value = "postagemFormDTO")
 	public PostagemFormDTO getNovaPostagem() {
-		return this.postagemFormDTO;
+		return new PostagemFormDTO();
 	}
 
 	@ModelAttribute(value = "pesquisa")
@@ -295,9 +259,13 @@ public class PostagemAdminController {
 	}
 
 	private ModelAndView getIndexComDados() {
+		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(PageRequest.of(0, 10, Sort.by("id")));
 		ModelAndView mv = getIndexTemplate();
-		Page<Postagem> pagePostagens = postagemService.getPostagensPaginadas(PageRequest.of(0, 10, Sort.by("id")));
-		mv.addObject("postagens", pagePostagens);
+		mv.addObject("listaPostagens", postagensPaginadas);
+
+		mv.addObject("tipoPostagem", TipoPostagem.values());
+		mv.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
+		mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
 
 		return mv;
 	}

@@ -34,7 +34,7 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long>{
 	@Query("SELECT d.imagem FROM Postagem d WHERE d.id = :id") 
 	public String findImagem(@Param("id") Long id);
 	
-	@Query("SELECT count(d.id) FROM Postagem d WHERE d.titulo = :titulo") 
+	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo") 
 	public Long countByTitulo(@Param("titulo") String titulo);
 	
 	@Query("SELECT count(d.id) FROM Postagem d WHERE d.titulo = :titulo AND d.id <> :id") 
