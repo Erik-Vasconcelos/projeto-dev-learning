@@ -1,8 +1,83 @@
+
+//Função para criar o editor de texto
+var editor;
+$(document).ready(function () {
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+        
+        ['clean']                                         // remove formatting button
+    ];
+
+    var options = {
+        modules: {
+            toolbar: toolbarOptions
+        },
+        theme: 'snow',
+        placeholder: 'Isira o texto aqui...',
+    };
+
+    editor = new Quill('#editor', options);
+
+    // *** SET EDITOR CONTENT
+    var ic = $("#itemContent").html();
+    var delta = editor.clipboard.convert(ic); // convert escaped html
+    editor.setContents(delta);
+    delta = editor.clipboard.convert(editor.getText(0)); // convert html
+    editor.setContents(delta);
+
+    // *** PROCESS FORM SUBMISSION
+    $("#submitBtn").on("click", submitForm);
+
+});
+
+//Função para mostrar a imagem quando ela vier do servidor 
+$(document).ready(function () {
+    // var imageArquive = $("#itemImagem").text();
+    var imageArquive = document.getElementById("itemImagem").value;
+    var imageContainer = document.getElementById("imagemBanner");
+
+    console.log(imageArquive)
+    if (imageArquive != "") {
+        imageContainer.src = imageArquive;
+    }
+});
+
+//Função para renderizar as tecnologias relacionadas com a postagem
+$(document).ready(function () {
+    let tecnologiaTemp = document.getElementById("tecnologiaTemp").value;
+    let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+
+    let listaTecnologias = '';
+    $.each(tecnologias, function (key, tecnologia) {
+        listaTecnologias += '<div class="referencia-tecnologia">';
+        listaTecnologias += '<button type="button" onclick="removerTecnologia('
+            + JSON.stringify(tecnologia).replaceAll("\"", "\'").replaceAll("\"", "\'") + ')"><img alt="remover" src="/icones/remover.png"></button>';
+        listaTecnologias += '<label>' + tecnologia.nome + '</label>';
+        listaTecnologias += '</div>';
+    });
+
+    document.getElementById("divTecnologias").innerHTML = listaTecnologias;
+});
+
 // Funções para salvar o form com o texto inserido no rich text
 function submitForm() {
     var delta = editor.getContents();
     var deltaJson = JSON.stringify(delta);
-    var corpo = editor.getText(); //TExto puro
+    var corpo = editor.getText();
 
     images1 = $("#editor img")
     setExplicitDim(images1);
@@ -10,6 +85,10 @@ function submitForm() {
     // Copy HTML content in hidden form
     $('#inputItemCorpo').val(corpo.replaceAll('\n', ' '));
     $('#inputItemHtml').val(justHtml);
+
+    console.log('valor: '+document.getElementById('imagemBanner').innerText)
+
+
 
     // prepare htmlSnippet
     editor.deleteText(100, editor.getLength())
@@ -20,7 +99,6 @@ function submitForm() {
 
     // Post form
     $("#formPostagem").submit();
-    console.log('Passoi!!!')
 }
 
 function scaleImages(images1, minHeight) {
@@ -49,39 +127,45 @@ function adicionarTecnologia() {
 
     let idTecnologia = select.options[select.selectedIndex].value;
     let nomeTecnologia = select.options[select.selectedIndex].text;
-    let tecnologiaAdd = '{"id": "' + idTecnologia + '", "nome": "' + nomeTecnologia + '"}';
-    let tecnologiaTemp = document.getElementById("tecnologiaTemp").value.replace("[", "").replace("]", "");
 
-    let containsTecnologia = 'false';
+    if (idTecnologia != 'null') {
 
-    let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
-    $.each(tecnologias, function (key, tecnologiaItem) {
-        let tecnologiaJson = JSON.parse(tecnologiaAdd);
 
-        if (JSON.stringify(tecnologiaItem) === JSON.stringify(tecnologiaJson)) {
-            containsTecnologia = 'true';
-        }
-    });
 
-    if (containsTecnologia === 'false') {
-        if (tecnologiaTemp == '' || tecnologiaTemp == null) {
-            tecnologiaTemp = tecnologiaAdd;
-        } else {
-            tecnologiaTemp += ", " + tecnologiaAdd;
-        }
+        let tecnologiaAdd = '{"id": "' + idTecnologia + '", "nome": "' + nomeTecnologia + '"}';
+        let tecnologiaTemp = document.getElementById("tecnologiaTemp").value.replace("[", "").replace("]", "");
 
-        tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
-        let listaTecnologias = '';
-        $.each(tecnologias, function (key, tecnologia) {
-            listaTecnologias += '<div class="referencia-tecnologia">';
-            listaTecnologias += '<button type="button" onclick="removerTecnologia('
-                + JSON.stringify(tecnologia).replaceAll("\"", "\'").replaceAll("\"", "\'") + ')"><img alt="remover" src="/icones/remover.png"></button>';
-            listaTecnologias += '<label>' + tecnologia.nome + '</label>';
-            listaTecnologias += '</div>';
+        let containsTecnologia = 'false';
+
+        let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+        $.each(tecnologias, function (key, tecnologiaItem) {
+            let tecnologiaJson = JSON.parse(tecnologiaAdd);
+
+            if (JSON.stringify(tecnologiaItem) === JSON.stringify(tecnologiaJson)) {
+                containsTecnologia = 'true';
+            }
         });
 
-        document.getElementById("divTecnologias").innerHTML = listaTecnologias;
-        document.getElementById("tecnologiaTemp").value = tecnologiaTemp;
+        if (containsTecnologia === 'false') {
+            if (tecnologiaTemp == '' || tecnologiaTemp == null) {
+                tecnologiaTemp = tecnologiaAdd;
+            } else {
+                tecnologiaTemp += ", " + tecnologiaAdd;
+            }
+
+            tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+            let listaTecnologias = '';
+            $.each(tecnologias, function (key, tecnologia) {
+                listaTecnologias += '<div class="referencia-tecnologia">';
+                listaTecnologias += '<button type="button" onclick="removerTecnologia('
+                    + JSON.stringify(tecnologia).replaceAll("\"", "\'").replaceAll("\"", "\'") + ')"><img alt="remover" src="/icones/remover.png"></button>';
+                listaTecnologias += '<label>' + tecnologia.nome + '</label>';
+                listaTecnologias += '</div>';
+            });
+
+            document.getElementById("divTecnologias").innerHTML = listaTecnologias;
+            document.getElementById("tecnologiaTemp").value = tecnologiaTemp;
+        }
     }
 }
 
@@ -123,18 +207,20 @@ function removerTecnologia(tecnologiaRemover) {
     });
 }
 
-function salvarPostagem() {
+/*function salvarPostagem() {
     // $('#inputAcao').val('salvarPostagem');
     submitForm();
-}
+}*/
 
-function mostarImagem() {
-    let srcImage = document.getElementById('itemImagem');
+/*function mostarImagem() {
+    let srcImage = document.getElementById('itemImagem').value;
     let previewImagem = document.getElementById('imagemBanner');
 
-    if (srcImage.getText() != '') {
-        previewImagem.src = srcImage.getText();
+    let contentImage = srcImage;
+    console.log('Value: ' + srcImage.value);
+    if (contentImage != "") {
+        previewImagem.src = contentImage;
     } else {
         previewImagem.src = '/imagens/sem-imagem.jpg';
     }
-}
+}*/

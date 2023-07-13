@@ -54,9 +54,10 @@ public class Postagem implements Serializable {
 	@Column(nullable = false, columnDefinition = "TEXT", length = 4194304) /*TODO*/
 	private String corpo;
 	
+	@Column(nullable = false, columnDefinition = "TEXT", length = 4194304)
 	private String html;
 	
-	private String trechoHtml;
+	//private String trechoHtml;
 	
 	@ManyToOne(optional = false)
 	private Disciplina disciplina;
@@ -71,7 +72,7 @@ public class Postagem implements Serializable {
 		this.imagem = imagem;
 		this.corpo = corpo;
 		this.html = html;
-		this.trechoHtml = trechoHtml;
+		//this.trechoHtml = trechoHtml;
 		this.disciplina = disciplina;
 	}
 	

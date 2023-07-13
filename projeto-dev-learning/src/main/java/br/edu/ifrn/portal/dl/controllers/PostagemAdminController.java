@@ -39,8 +39,8 @@ import br.edu.ifrn.portal.dl.utils.Pesquisa;
  * relacionados à <strong>entidade Postagem<strong>.
  * 
  * @author Erik Vasconcelos
- * @since 2023-06-13
- * @version A0.2
+ * @since 2023-06-28
+ * @version A0.1
  */
 
 //@SessionAttributes
@@ -68,31 +68,9 @@ public class PostagemAdminController {
 		mv.addObject("tipoPostagem", TipoPostagem.values());
 		mv.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
 		mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
-		// Adicionando a lista de tecnologias relacionadas na postagem
-		// mv.addObject("listaTecnologiasPostagem", this.listaTecnologiasPostagem);
-		// mv.addObject("listaTecnologiasPostagem",
-		// this.postagemFormDTO.getTecnologias());
-		// Objeto modelo do form
-		/*
-		 * mv.addObject("postagemFormDTO", postagemFormDTO);
-		 * 
-		 * if (mensagem != null) { mv.addObject("mensagem", mensagem); }
-		 */
 
 		return mv;
 	}
-	/*
-	 * @GetMapping public ModelAndView postagensPaginadas(@PageableDefault(page = 0,
-	 * size = 10) Pageable pageable) { Page<Postagem> postagensPaginadas =
-	 * postagemService.getPostagensPaginadas(pageable); ModelAndView mv =
-	 * getIndexTemplate(); mv.addObject("postagens", postagensPaginadas);
-	 * mv.addObject("tipos", TipoPostagem.values()); mv.addObject("disciplinas",
-	 * disciplinaService.getListDisciplinas());
-	 * 
-	 * mv.addObject("tecnologias", tecnologiaService.getListTecnologias());
-	 * 
-	 * return mv; }
-	 */
 
 	@GetMapping("/pesquisa") /* OK */
 	public ModelAndView pesquisarPostagens(@PageableDefault(page = 0, size = 10) Pageable pageable,
@@ -138,15 +116,16 @@ public class PostagemAdminController {
 
 	@PostMapping(value = "/salvar")
 	public ModelAndView criar(@Valid PostagemFormDTO postagemDTO, BindingResult result, RedirectAttributes redirect) {
-		
 		if (result.hasErrors()) {
 			ModelAndView mv = getIndexComDados();
 			if (result.hasErrors()) {
+				if (!postagemDTO.getImagemFile().isEmpty()) {
+					postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));
+				}
 				mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
 			}
 			return mv;
 
-			
 		} else {
 			if (!postagemDTO.getImagemFile().isEmpty()) {
 				postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));

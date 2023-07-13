@@ -3,6 +3,34 @@
 
 <head th:replace="~{fragmentos :: head('DevLearning', 'base-admin', 'postagem-style')}"></head>
 
+<style>
+	.ql-toolbar .ql-stroke {
+		fill: none;
+		stroke: #fff;
+	}
+
+	.ql-toolbar .ql-fill {
+		fill: #fff;
+		stroke: none;
+	}
+
+	.ql-toolbar .ql-picker {
+		color: #7C23F0;
+	}
+	
+	.ql-toolbar .ql-picker-item .ql-stroke{
+		stroke: #7C23F0;
+	}
+
+	.ql-editor p {
+		color: #656565;
+	}
+
+	.ql-editor p::placeholder {
+		color: #fff;
+	}
+</style>
+
 <body>
 	<header th:replace="~{fragmentos :: header}"></header>
 
@@ -26,8 +54,9 @@
 				<!-- Componentes para armazenamentos temporário dos dados. Servem para guardar as informações para serem
 					 configuradas em outros componentes que não possuem a configuração automática pelo thymeleaf-->
 				<span id="itemContent" th:text="*{html}" style="display:none"></span>
-				<span id="itemImagem" th:text="*{imagemBanner}" style="display:none"></span>
-
+				<!-- <span id="itemImagem" th:text="*{imagemBanner}" style="display:none"></span>  -->
+				<input id="itemImagem" type="hidden" name="imagemBanner" th:value="${imagemBanner}" th:field="*{imagemBanner}">
+				
 				<div class="mb-3">
 					<label class="form-label">Título da postagem</label>
 					<input id="campoNome" type="text" name="titulo" placeholder="Insira o título" class="form-control"
@@ -66,6 +95,7 @@
 						<label for="tecnologias" class="form-label">Tecnologias</label>
 						<select id="tecnologias" class="form-control"
 							th:classappend="${#fields.hasErrors('tecnologiaTemp') ? 'is-invalid' : ''}">
+							<option value="null" hidden>--Selecione--</option>
 							<option th:each="tecnologia : ${listaTecnologias}" th:value="${tecnologia.id}"
 								th:text="${tecnologia.nome}"></option>
 						</select>
@@ -83,8 +113,6 @@
 				<!--Tecnologias adicionadas-->
 				<div class="form-row mb-3">
 					<div id="divTecnologias" class="containerTecnologias"></div>
-
-
 				</div>
 
 				<div class="input-group mb-3">
@@ -110,8 +138,10 @@
 
 				<div class="form-group">
 					<div class="col-sm-10">
-						<input type="text" style="display:none" th:field="*{trechoHtml}" class="form-control"
+						<input type="text" style="display:none" class="form-control"
 							id="trechoHtml" />
+						<!--  <input type="text" style="display:none" th:field="*{trechoHtml}" class="form-control"
+							id="trechoHtml" />-->
 					</div>
 				</div>
 
@@ -120,8 +150,10 @@
 					<input type="text" style="display:none" th:field="*{html}" class="form-control"
 						id="inputItemHtml" />
 					<label for="editor" class="form-label">Corpo da postagem</label>
-					<div id="editor" class=""></div>
-					<div class="invalid-feedback" style="display: inline;" th:errors="*{corpo}"></div>
+					<div id="editor" class=""
+						th:styleappend="${#fields.hasErrors('corpo') ? 'border: 2px solid #dc3545;' : ''}"></div>
+					<div class="invalid-feedback" th:errors="*{corpo}"
+						th:styleappend="${#fields.hasErrors('corpo') ? 'display:block;' : ''}"></div>
 				</div>
 
 				<!--*************** FIM DO EDITOR DE TEXTO ***************-->
@@ -232,102 +264,6 @@
 	</section>
 
 	<footer th:replace="~{fragmentos :: footer}"></footer>
-
-	<style>
-		.ql-toolbar .ql-stroke {
-			fill: none;
-			stroke: #fff;
-		}
-
-		.ql-toolbar .ql-fill {
-			fill: #fff;
-			stroke: none;
-		}
-
-		.ql-toolbar .ql-picker {
-			color: red;
-		}
-
-		.ql-editor p {
-			color: #fff;
-		}
-
-		.ql-editor p::placeholder {
-			color: #fff;
-		}
-	</style>
-
-	<script>
-		var editor;
-		$(document).ready(function () {
-			var toolbarOptions = [
-				['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-				['blockquote', 'code-block'],
-
-				[{ 'header': 1 }, { 'header': 2 }],               // custom button values
-				[{ 'list': 'ordered' }, { 'list': 'bullet' }],
-				[{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-				[{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-				[{ 'direction': 'rtl' }],                         // text direction
-
-				[{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-				[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-				[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-				[{ 'font': [] }],
-				[{ 'align': [] }],
-
-				['clean']                                         // remove formatting button
-			];
-
-			var options = {
-				modules: {
-					toolbar: toolbarOptions
-				},
-				theme: 'snow',
-				placeholder: 'Isira o texto aqui...',
-			};
-
-			editor = new Quill('#editor', options);
-
-			// *** SET EDITOR CONTENT
-			var ic = $("#itemContent").html();
-			var delta = editor.clipboard.convert(ic); // convert escaped html
-			editor.setContents(delta);
-			delta = editor.clipboard.convert(editor.getText(0)); // convert html
-			editor.setContents(delta);
-
-			// *** PROCESS FORM SUBMISSION
-			$("#submitBtn").on("click", submitForm);
-
-		});
-
-		$(document).ready(function () {
-			var imageArquive = $("#itemImagem").text();
-			var imageContainer = document.getElementById("imagemBanner");
-
-			if (imageArquive != '') {
-				imageContainer.src = imageArquive;
-			}
-		});
-
-		$(document).ready(function () {
-			let tecnologiaTemp = document.getElementById("tecnologiaTemp").value;
-			let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
-
-			let listaTecnologias = '';
-			$.each(tecnologias, function (key, tecnologia) {
-				listaTecnologias += '<div class="referencia-tecnologia">';
-				listaTecnologias += '<button type="button" onclick="removerTecnologia('
-					+ JSON.stringify(tecnologia).replaceAll("\"", "\'").replaceAll("\"", "\'") + ')"><img alt="remover" src="/icones/remover.png"></button>';
-				listaTecnologias += '<label>' + tecnologia.nome + '</label>';
-				listaTecnologias += '</div>';
-			});
-
-			document.getElementById("divTecnologias").innerHTML = listaTecnologias;
-		});
-
-	</script>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

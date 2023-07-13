@@ -63,14 +63,14 @@ public class PostagemFormDTO {
 	
 	@NonNull
 	@NotBlank(message = "O corpo da postagem é obrigatório!")
-	@Size(min = 30, max = 5000, message = "O corpo da postagem deve ter no minímo {min} e no máximo {max} caracteres")
+	@Size(min = 30, max = 20000, message = "O corpo da postagem deve ter no minímo {min} e no máximo {max} caracteres")
 	private String corpo;
 	
 	@NonNull
 	private String html;
 	
-	@NonNull
-	private String trechoHtml;
+	/*@NonNull
+	private String trechoHtml;*/
 	
 	public Postagem toPostagem() {
 		Postagem postagem = new Postagem();
@@ -85,7 +85,7 @@ public class PostagemFormDTO {
 		postagem.setTecnologias(tecnologias);
 		postagem.setCorpo(corpo);
 		postagem.setHtml(html);
-		postagem.setTrechoHtml(trechoHtml);
+		//postagem.setTrechoHtml(trechoHtml);
 		
 		return postagem;
 	}
@@ -102,7 +102,7 @@ public class PostagemFormDTO {
 		postagem.setTecnologias(tecnologias);
 		postagem.setCorpo(corpo);
 		postagem.setHtml(html);
-		postagem.setTrechoHtml(trechoHtml);
+		//postagem.setTrechoHtml(trechoHtml);
 		
 		return postagem;
 	}
@@ -117,7 +117,7 @@ public class PostagemFormDTO {
 		
 		this.corpo = postagem.getCorpo();
 		this.html = postagem.getHtml();
-		this.trechoHtml = postagem.getTrechoHtml();
+		//this.trechoHtml = postagem.getTrechoHtml();
 	}
 	
 	public boolean isEmpty() {
@@ -125,10 +125,8 @@ public class PostagemFormDTO {
 			boolean containsTitulo = titulo == null ? false : !titulo.isBlank();
 			boolean containsTipo = tipoPostagem == null ? false : true;
 			boolean containsImage = imagemFile == null ? false : !imagemFile.isEmpty();
-			//boolean containsDisciplina = disciplina == null ? false : !disciplina.isEmpty();
 			boolean containsDisciplina = disciplina == null ? false : true;
-//			boolean containsTecnologias = tecnologiasDTO == null ? false : tecnologia.stream().anyMatch(t -> !t.isEmpty());;
-			boolean containsTecnologias = null == null ? false : true;
+			boolean containsTecnologias = tecnologiaTemp == null || tecnologiaTemp.isBlank() ? false : true;
 			boolean containsCorpo = corpo == null ? false : !corpo.isBlank();
 			
 			if(containsTitulo || containsTipo || containsImage || containsDisciplina || containsTecnologias || containsCorpo) {
