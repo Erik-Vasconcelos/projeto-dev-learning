@@ -30,6 +30,22 @@
 	color: #ffffff;
 }
 
+.custom-file-label {
+	background-color: #7C23F0;
+	border: #7C23F0 solid 1px;
+	color: #ffffff;
+}
+
+select option {
+	color: #7C23F0;
+	background-color: #303030;
+}
+
+.preview-img-banner {
+	border: 2px solid #7C23F0;
+	border-radius: 10px;
+}
+
 /**************************** TABELA ****************************/
 table {
 	border: #7C23F0 solid 2px;
@@ -60,4 +76,12 @@ thead tr {
 	color: #dc3545;
 	font-family: Agency FB;
 	font-size: 22px;
+}
+
+/*#########################################################
+						BOOTSTRAP
+#########################################################*/
+.btn {
+	min-width: 10vw;
+	width: auto;
 }

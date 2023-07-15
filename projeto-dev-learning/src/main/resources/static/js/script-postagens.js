@@ -18,7 +18,6 @@ $(document).ready(function () {
         [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
         [{ 'font': [] }],
         [{ 'align': [] }],
-        
         ['clean']                                         // remove formatting button
     ];
 
@@ -60,6 +59,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     let tecnologiaTemp = document.getElementById("tecnologiaTemp").value;
     let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
+    var agrupador = document.getElementById("agrupadorAddTecnologias");
 
     let listaTecnologias = '';
     $.each(tecnologias, function (key, tecnologia) {
@@ -71,6 +71,10 @@ $(document).ready(function () {
     });
 
     document.getElementById("divTecnologias").innerHTML = listaTecnologias;
+
+    if (agrupador.style.display == "none" && tecnologiaTemp != "") {
+        agrupador.style.display = "block";
+    }
 });
 
 // Funções para salvar o form com o texto inserido no rich text
@@ -86,9 +90,7 @@ function submitForm() {
     $('#inputItemCorpo').val(corpo.replaceAll('\n', ' '));
     $('#inputItemHtml').val(justHtml);
 
-    console.log('valor: '+document.getElementById('imagemBanner').innerText)
-
-
+    console.log('valor: ' + document.getElementById('imagemBanner').innerText)
 
     // prepare htmlSnippet
     editor.deleteText(100, editor.getLength())
@@ -124,16 +126,16 @@ function setExplicitDim(images1) {
 // Funcões para manipular as ações de envio do formulário para o servidor
 function adicionarTecnologia() {
     var select = document.getElementById("tecnologias");
+    var agrupador = document.getElementById("agrupadorAddTecnologias");
 
     let idTecnologia = select.options[select.selectedIndex].value;
     let nomeTecnologia = select.options[select.selectedIndex].text;
 
     if (idTecnologia != 'null') {
-
-
-
         let tecnologiaAdd = '{"id": "' + idTecnologia + '", "nome": "' + nomeTecnologia + '"}';
         let tecnologiaTemp = document.getElementById("tecnologiaTemp").value.replace("[", "").replace("]", "");
+        let listaTecnologias = '';
+
 
         let containsTecnologia = 'false';
 
@@ -154,7 +156,6 @@ function adicionarTecnologia() {
             }
 
             tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
-            let listaTecnologias = '';
             $.each(tecnologias, function (key, tecnologia) {
                 listaTecnologias += '<div class="referencia-tecnologia">';
                 listaTecnologias += '<button type="button" onclick="removerTecnologia('
@@ -166,12 +167,18 @@ function adicionarTecnologia() {
             document.getElementById("divTecnologias").innerHTML = listaTecnologias;
             document.getElementById("tecnologiaTemp").value = tecnologiaTemp;
         }
+
+        if (agrupador.style.display == "none" && listaTecnologias != "") {
+            console.log("temp" + tecnologiaTemp)
+            agrupador.style.display = "block";
+        }
     }
 }
 
 function removerTecnologia(tecnologiaRemover) {
     tecnologiaRemover = JSON.stringify(tecnologiaRemover);
     let tecnologiaTemp = document.getElementById("tecnologiaTemp").value.replace("[", "").replace("]", "");
+    var agrupador = document.getElementById("agrupadorAddTecnologias");
 
     let tecnologias = JSON.parse("[" + tecnologiaTemp + "]");
     $.each(tecnologias, function (key, tecnologiaItem) {
@@ -201,26 +208,14 @@ function removerTecnologia(tecnologiaRemover) {
             document.getElementById("divTecnologias").innerHTML = listaTecnologias;
             document.getElementById("tecnologiaTemp").value = tecnologiaTemp;
 
+            if (listaTecnologias == "") {
+                agrupador.style.display = "none";
+            }
             //para a execução do each caso a tecnologia tenha sido achada e removida
             return false;
         }
     });
+
+
+
 }
-
-/*function salvarPostagem() {
-    // $('#inputAcao').val('salvarPostagem');
-    submitForm();
-}*/
-
-/*function mostarImagem() {
-    let srcImage = document.getElementById('itemImagem').value;
-    let previewImagem = document.getElementById('imagemBanner');
-
-    let contentImage = srcImage;
-    console.log('Value: ' + srcImage.value);
-    if (contentImage != "") {
-        previewImagem.src = contentImage;
-    } else {
-        previewImagem.src = '/imagens/sem-imagem.jpg';
-    }
-}*/

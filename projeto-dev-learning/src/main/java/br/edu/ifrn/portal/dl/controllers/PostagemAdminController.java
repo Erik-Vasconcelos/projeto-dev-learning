@@ -82,7 +82,7 @@ public class PostagemAdminController {
 			Page<Postagem> postagensPaginadas = postagemService.getPostagensPorTituloPaginadas(pesquisa.getValor(),
 					pageable);
 			ModelAndView mv = getIndexTemplate();
-			mv.addObject("postagens", postagensPaginadas);
+			mv.addObject("listaPostagens", postagensPaginadas);
 
 			return mv;
 		}

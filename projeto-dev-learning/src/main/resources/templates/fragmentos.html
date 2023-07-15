@@ -1,25 +1,40 @@
 <!--*****************************************************************
 						CABEÇA DO HTML
 *****************************************************************-->
+
 <head th:fragment="head(titulo, nomeArquivoCss, nomeArquivoCss2)">
 	<meta charset="UTF-8">
 	<title th:text="${titulo}"></title>
 
 	<link href="/icones/usuario.png" rel="icon">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-	<link type="text/css" rel="stylesheet" href="/css/base.css" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss} + '.css'" media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss2} + '.css'" media="screen,projection"/>
-	
+	<link type="text/css" rel="stylesheet" href="/css/base.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss} + '.css'" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss2} + '.css'" media="screen,projection" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+</head>
+
+<head th:fragment="headPostagem(titulo, nomeArquivoCss, nomeArquivoCss2)">
+	<meta charset="UTF-8">
+	<title th:text="${titulo}"></title>
+
+	<link href="/icones/usuario.png" rel="icon">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link type="text/css" rel="stylesheet" href="/css/base.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss} + '.css'" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" th:href="'/css/' + ${nomeArquivoCss2} + '.css'" media="screen,projection" />
+
 	<!--Quill-->
 	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-	
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
 </head>
 
@@ -27,49 +42,54 @@
 				CABEÇALHO BASE DO ADMINISTRATIVO
 *****************************************************************-->
 <header th:fragment="header">
-		<nav class="navbar navbar-expand-md navbar-style navbar-light fixed-top">
+	<nav class="navbar navbar-expand-md navbar-style navbar-light fixed-top">
 
-			<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="182"></a>
+		<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="182"></a>
 
-			<button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
-				<img alt="imagem_usuario" src="/icones/cardapio.png">
-			</button>
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
+			<img alt="imagem_usuario" src="/icones/cardapio.png">
+		</button>
 
-			<div class="collapse navbar-collapse" id="nav-principal">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a href="" class="nav-link info-n3 text-white">Painel administrativo</a></li>
+		<div class="collapse navbar-collapse" id="nav-principal">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a href="" class="nav-link info-n3 text-white">Painel administrativo</a></li>
 
-					<li class="nav-item">
-						<div class="d-md-flex nav-link">
-							<img alt="imagem_usuario" src="/icones/usuario.png"> <a href=""
-								class="text-white info-n3">Jose</a>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</nav>
+				<li class="nav-item">
+					<div class="d-md-flex nav-link">
+						<img alt="imagem_usuario" src="/icones/usuario.png"> <a href=""
+							class="text-white info-n3">Jose</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
 </header>
 
 
 <!--*****************************************************************
 				COMPONENTE DE PAGINAÇÃO PADRÃO
 *****************************************************************-->
-<nav th:fragment="pagination(paginationObjectName, resourceName)" th:if="${[__${paginationObjectName}__].totalPages > 0}">
+<nav th:fragment="pagination(paginationObjectName, resourceName)"
+	th:if="${[__${paginationObjectName}__].totalPages > 0}">
 	<ul class="pagination justify-content-center">
 		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'disabled'}">
-			<a class="page-link btn-pg" th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
+			<a class="page-link btn-pg"
+				th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
 				tabindex="-1">Anterior
 			</a>
 		</li>
-		
+
 		<th:block th:each="i : ${#numbers.sequence(0, [__${paginationObjectName}__].totalPages - 1)}">
 			<li class="page-item">
-				<a class="page-link" th:href="@{__${resourceName}__(page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i} + 1]]</a>
+				<a class="page-link"
+					th:href="@{__${resourceName}__(page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i} +
+					1]]</a>
 			</li>
 		</th:block>
 
 		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'disabled'}">
-			<a class="page-link btn-pg" th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
+			<a class="page-link btn-pg"
+				th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
 				tabindex="+1">Próximo
 			</a>
 		</li>
@@ -80,22 +100,27 @@
 <!--*****************************************************************
 				COMPONENTE DE PAGINAÇÃO COM PARÂMETRO
 *****************************************************************-->
-<nav th:fragment="paginationWithParameter(paginationObjectName, resourceName, parameter)"  th:if="${[__${paginationObjectName}__].totalPages > 0}">
+<nav th:fragment="paginationWithParameter(paginationObjectName, resourceName, parameter)"
+	th:if="${[__${paginationObjectName}__].totalPages > 0}">
 	<ul class="pagination justify-content-center">
 		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'disabled'}">
-			<a class="page-link btn-pg" th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
+			<a class="page-link btn-pg"
+				th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
 				tabindex="-1">Anterior
-			</a> 
+			</a>
 		</li>
-		
+
 		<th:block th:each="i : ${#numbers.sequence(0, [__${paginationObjectName}__].totalPages - 1)}">
 			<li class="page-item">
-				<a class="page-link" th:href="@{__${resourceName}__(valor=${parameter}, page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i} + 1]]</a>
+				<a class="page-link"
+					th:href="@{__${resourceName}__(valor=${parameter}, page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i}
+					+ 1]]</a>
 			</li>
 		</th:block>
 
 		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'disabled'}">
-			<a class="page-link btn-pg" th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
+			<a class="page-link btn-pg"
+				th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
 				tabindex="+1">Próximo
 			</a>
 		</li>
@@ -103,8 +128,8 @@
 	</ul>
 </nav>
 
-		<!-- *********************** Modelo base *********************** -->
-		<!-- <nav>
+<!-- *********************** Modelo base *********************** -->
+<!-- <nav>
 			<ul class="pagination justify-content-center">
 				<li class="page-item" th:classappend="${disciplinas.hasPrevious() ? '' : 'disabled'}">
 					<a class="page-link btn-pg" th:href="@{/admin/disciplinas(page=${disciplinas.number-1}, size=${disciplinas.size})}"
@@ -131,17 +156,17 @@
 							RODAPÉ DO BLOG
 *****************************************************************-->
 <footer th:fragment="footer">
-		<div class="container">
-			<div class="row  justify-content-center">
-				<div class="col-md-5">
-					<h3>Sobre nós</h3>
-					<p>Somos um grupo de professores e alunos que tem com objetivo
-						auxiliar estudantes que têm dificuldades na aprendizagem de
-						disciplinas de programação do curso técnico em informática do
-						IFRN.</p>
-				</div>
+	<div class="container">
+		<div class="row  justify-content-center">
+			<div class="col-md-5">
+				<h3>Sobre nós</h3>
+				<p>Somos um grupo de professores e alunos que tem com objetivo
+					auxiliar estudantes que têm dificuldades na aprendizagem de
+					disciplinas de programação do curso técnico em informática do
+					IFRN.</p>
 			</div>
 		</div>
+	</div>
 </footer>
 
 <!--th:classappend="nome" -> adiciona uma classe a um componente   -->

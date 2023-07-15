@@ -1,23 +1,45 @@
-.containerTecnologias{
-	display: flex;
-	flex-direction: row;
+/*#########################################################
+					ESTILIZAÇÃO DA PÁGINA
+#########################################################*/
+
+/**************************** IMPORTAÇÕES ****************************/
+@font-face {
+	font-family: Agency FB;
+	src: url(../fontes/agency-fb/agency_fb.ttf);
 }
 
-.referencia-tecnologia{
+@font-face {
+	font-family: Goldman Regular;
+	src: url(../fontes/goldman/Goldman-Regular.ttf);
+}
+
+/**************************** COMPONENTES PRICIPAIS ****************************/
+
+/*----------- CONTAINER DE TECNOLOGIA ADICIONADA -------------*/
+.containerTecnologias {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	flex-wrap: wrap;
+	grid-gap: 5px 8px;
+}
+
+.referencia-tecnologia {
 	height: 1.6em;
-	padding: 8px;
+	padding: 10px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	background-color: #303030;
 	color: #8963E1;
 	border-radius: 15px;
-	font-family: Agency-FB;
-	
+	font-family: Goldman Regular;
 }
-.referencia-tecnologia label{
+
+.referencia-tecnologia label {
 	margin: 0;
 }
+
 .referencia-tecnologia button {
 	background-color: transparent;
 	cursor: pointer;
@@ -26,24 +48,20 @@
 	align-items: center;
 }
 
-/*Editor de texto*/
-.ql-toolbar .ql-stroke {
-    fill: none;
-    stroke: #fff;
+/*----------- COMPONENTES AXILIARES DA TECNOLOGIA ADICIONADA -------------*/
+.info-tecnologias {
+	color: #fff;
+	font-size: 20px;
+	font-family: Agency FB;
 }
 
-.ql-toolbar .ql-fill {
-    fill: #fff;
-    stroke: none;
+hr {
+	background-color: #7C23F0;
+	padding: 0px 5px 0px 5px;
+	margin-top: 0;
 }
 
-.ql-toolbar .ql-picker {
-    color: #fff;
-}
-
-.ql-editor p{
-    color: #fff;
-}
-.ql-editor p::placeholder{
-    color: #fff;
+.content-button {
+	display: flex;
+	flex-direction: column;
 }

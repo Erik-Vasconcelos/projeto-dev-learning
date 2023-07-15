@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragmentos :: head('DevLearning', 'base-admin', 'postagem-style')}"></head>
+<head th:replace="~{fragmentos :: headPostagem('DevLearning', 'base-admin', 'postagem-style')}"></head>
 
 <style>
 	.ql-toolbar .ql-stroke {
@@ -17,8 +17,8 @@
 	.ql-toolbar .ql-picker {
 		color: #7C23F0;
 	}
-	
-	.ql-toolbar .ql-picker-item .ql-stroke{
+
+	.ql-toolbar .ql-picker-item .ql-stroke {
 		stroke: #7C23F0;
 	}
 
@@ -54,9 +54,9 @@
 				<!-- Componentes para armazenamentos temporário dos dados. Servem para guardar as informações para serem
 					 configuradas em outros componentes que não possuem a configuração automática pelo thymeleaf-->
 				<span id="itemContent" th:text="*{html}" style="display:none"></span>
-				<!-- <span id="itemImagem" th:text="*{imagemBanner}" style="display:none"></span>  -->
-				<input id="itemImagem" type="hidden" name="imagemBanner" th:value="${imagemBanner}" th:field="*{imagemBanner}">
-				
+				<input id="itemImagem" type="hidden" name="imagemBanner" th:value="${imagemBanner}"
+					th:field="*{imagemBanner}">
+
 				<div class="mb-3">
 					<label class="form-label">Título da postagem</label>
 					<input id="campoNome" type="text" name="titulo" placeholder="Insira o título" class="form-control"
@@ -90,8 +90,8 @@
 					</div>
 				</div>
 
-				<div class="form-row mb-3">
-					<div class="col-md-10">
+				<div class="form-row mb-3 justify-content-between">
+					<div class="col-md-9">
 						<label for="tecnologias" class="form-label">Tecnologias</label>
 						<select id="tecnologias" class="form-control"
 							th:classappend="${#fields.hasErrors('tecnologiaTemp') ? 'is-invalid' : ''}">
@@ -104,22 +104,33 @@
 						<input id="tecnologiaTemp" type="hidden" name="tecnologiaTemp" th:field="*{tecnologiaTemp}">
 					</div>
 
-					<div class="col-md-2">
+					<div class="col-auto content-button">
+						<label for="teste" class="form-label">Ação</label>
+
 						<button id="add" type="button" class="btn btn-primary btn-md"
 							th:onclick="adicionarTecnologia()">Adicionar tecnologia</button>
 					</div>
 				</div>
 
 				<!--Tecnologias adicionadas-->
-				<div class="form-row mb-3">
-					<div id="divTecnologias" class="containerTecnologias"></div>
+				<div id="agrupadorAddTecnologias" class="form-row mb-3" style="display: none">
+					<div class="col-md-12">
+						<label for="divTecnologias" class="info-tecnologias">Tecnologias adicionadas</label>
+						<hr>
+					</div>
+
+					<div class="col-md-12">
+						<div id="divTecnologias" class="containerTecnologias"></div>
+					</div>
 				</div>
 
 				<div class="input-group mb-3">
 					<label class="form-label" for="imagemBanner">Imagem de banner da postagem</label>
-					<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da disciplina" class="img-fluid"
-						width="100%">
+					<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da disciplina" width="100%"
+						height="400vh" class="preview-img-banner">
 
+				</div>
+				<div class="input-group mb-3">
 					<div class="custom-file">
 						<input id="inputImagemBanner" type="file" name="imagemFile" accept="image/*"
 							th:errorclass="is-invalid">
@@ -138,10 +149,7 @@
 
 				<div class="form-group">
 					<div class="col-sm-10">
-						<input type="text" style="display:none" class="form-control"
-							id="trechoHtml" />
-						<!--  <input type="text" style="display:none" th:field="*{trechoHtml}" class="form-control"
-							id="trechoHtml" />-->
+						<input type="text" style="display:none" class="form-control" id="trechoHtml" />
 					</div>
 				</div>
 
@@ -168,7 +176,6 @@
 						</a>
 					</div>
 				</div>
-
 			</form>
 
 		</div>

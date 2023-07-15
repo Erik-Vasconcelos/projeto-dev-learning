@@ -67,7 +67,8 @@ header nav .info-n3 {
 	text-decoration: none;
 }
 
-.cbc-n3, .cbc-n4 {
+.cbc-n3,
+.cbc-n4 {
 	margin: 5px;
 	padding: 8px 8px 8px 0px;
 	font-family: Orbitron;
@@ -139,6 +140,8 @@ nav.navbar-style {
 /**************************** BOTÕES ****************************/
 .btn {
 	font-family: Goldman Regular;
+	min-width: 10vw;
+	width: auto;
 }
 
 .btn-primary {
