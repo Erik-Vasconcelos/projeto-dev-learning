@@ -71,4 +71,8 @@ public class DisciplinaService {
 		return disciplinaRepository.countOccurrenceName(id, name) > 0 ? true : false;
 	}
 	
+	public Long getQuantityRelatedPosts(Long id) {
+		return disciplinaRepository.countRelatedPosts(id);
+	}
+	
 }

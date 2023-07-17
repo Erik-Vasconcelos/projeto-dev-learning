@@ -164,10 +164,26 @@ public class TecnologiaAdminController {
 	@GetMapping("/{id}/remover") /* OK */
 	public String removerTecnologia(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		try {
-			tecnologiaService.remover(id);
-			redirect.addFlashAttribute("mensagem", new Mensagem("Tecnologia #" + id + " foi removida com sucesso!"));
+			Long qtdPostagensRelacionadas = tecnologiaService.getQuantityRelatedPosts(id);
+			boolean temPostagensRelacionadas = qtdPostagensRelacionadas > 0 ? true : false;
 
+			if (!temPostagensRelacionadas) {
+				tecnologiaService.remover(id);
+				redirect.addFlashAttribute("mensagem",
+						new Mensagem("Tecnologia #" + id + " foi removida com sucesso!"));
+			} else {
+				Optional<Tecnologia> optional = tecnologiaService.obterPorId(id);
+				if (optional.isPresent()) {
+					Tecnologia disciplina = optional.get();
+
+					redirect.addFlashAttribute("mensagem", new Mensagem("A tecnologia <" + disciplina.getNome()
+							+ "> possui " + qtdPostagensRelacionadas
+							+ " postagen(s) relacionada(s)! Remova ela(s) antes para poder apagar a tecnologia!",
+							true));
+				}
+			}
 			return "redirect:/admin/tecnologias";
+
 		} catch (EmptyResultDataAccessException e) {
 			redirect.addFlashAttribute("mensagem",
 					new Mensagem("A tecnologia #" + id + " não foi enconstrada no banco!", true));

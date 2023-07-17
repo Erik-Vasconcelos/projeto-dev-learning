@@ -1,5 +1,7 @@
 package br.edu.ifrn.portal.dl.repositories;
 
+import javax.persistence.NamedNativeQuery;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,5 +34,8 @@ public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long>{
 	
 	@Query("SELECT count(t.id) FROM Tecnologia t WHERE t.nome = :nome AND t.id <> :id") 
 	public Long countOccurrenceName(@Param("id") Long id, @Param("nome") String nome);
+	
+	//@Query("SELECT count(pt.postagem_id) FROM postagens_tecnologias pt WHERE pt.tecnologias_id = :id)") 
+	public Long countRelatedPosts(Long id);
 	
 }

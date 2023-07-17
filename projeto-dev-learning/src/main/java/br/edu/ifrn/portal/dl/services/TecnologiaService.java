@@ -68,4 +68,8 @@ public class TecnologiaService {
 		return tecnologiaRepository.countOccurrenceName(id, name) > 0 ? true : false;
 	}
 	
+	public Long getQuantityRelatedPosts(Long id) {
+		return tecnologiaRepository.countRelatedPosts(id);
+	}
+
 }

@@ -88,29 +88,39 @@ public class PostagemAdminController {
 		}
 	}
 
-	/*
-	 * @GetMapping("/{id}/editar") public ModelAndView
-	 * getPaginaEdicao(@PathVariable("id") Long id, PostagemFormDTO postagemDTO,
-	 * 
-	 * @PageableDefault(page = 0, size = 10) Pageable pageable) {
-	 * 
-	 * Optional<Postagem> optional = postagemService.obterPorId(id); if
-	 * (optional.isPresent()) {
-	 * 
-	 * Postagem postagem = optional.get(); postagemDTO.fromPostagemDTO(postagem);
-	 * Page<Postagem> pagePostagens =
-	 * postagemService.getPostagensPaginadas(pageable); ModelAndView mv = new
-	 * ModelAndView("pg-edit-admin-postagens"); mv.addObject("postagens",
-	 * pagePostagens); mv.addObject("id", postagem.getId());
-	 * 
-	 * return mv;
-	 * 
-	 * } else { ModelAndView mv = postagensPaginadas(pageable);
-	 * mv.addObject("mensagem", new Mensagem("A postagem #" + id +
-	 * " não foi encontrada no banco!", true));
-	 * 
-	 * return mv; } }
-	 */
+	@GetMapping("/{id}/editar") /* OK */
+	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, PostagemFormDTO postagemDTO,
+			@PageableDefault(page = 0, size = 10) Pageable pageable) {
+
+		Optional<Postagem> optional = postagemService.obterPorId(id);
+		if (optional.isPresent()) {
+			Postagem postagem = optional.get();
+			postagemDTO.fromPostagemDTO(postagem);
+
+			if (postagem.getTecnologias().size() > 0) {
+				String tecnologiasJson = new Gson().toJson(postagem.getTecnologias()).replace("[", "").replace("]", "");
+				postagemDTO.setTecnologiaTemp(tecnologiasJson);
+			}
+
+			Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
+			ModelAndView mv = new ModelAndView("pg-edit-admin-postagens");
+			;
+			mv.addObject("listaPostagens", postagensPaginadas);
+
+			mv.addObject("tipoPostagem", TipoPostagem.values());
+			mv.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
+			mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
+			mv.addObject("id", postagem.getId());
+
+			return mv;
+
+		} else {
+			ModelAndView mv = postagensPaginadas(pageable);
+			mv.addObject("mensagem", new Mensagem("A postagem #" + id + " não foi encontrada no banco!", true));
+
+			return mv;
+		}
+	}
 
 	/*---------------CREATE---------------*/
 
@@ -168,41 +178,45 @@ public class PostagemAdminController {
 	@PostMapping(value = "/{id}")
 	public ModelAndView editar(@PathVariable Long id, @Valid PostagemFormDTO postagemDTO, BindingResult result,
 			RedirectAttributes redirect) {
-
-		ModelAndView mv = getIndexComDados();
 		if (result.hasErrors()) {
-			mv = getEditComDados();
-			mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
-			postagemDTO.setImagemBanner(postagemService.getImage(id));
+			ModelAndView mv = getEditComDados();
 
+			if (postagemDTO.getImagemFile() != null) {
+				if (!postagemDTO.getImagemFile().isEmpty()) {
+					postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));
+				}
+			}
+			mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
 			return mv;
+
 		} else {
 			Optional<Postagem> optional = postagemService.obterPorId(id);
 			if (optional.isPresent()) {
+
 				Postagem postagem = postagemDTO.configAttibutes(optional.get());
 
-				if (postagem.getImagem() == null || postagem.getImagem().isBlank()) {
-					postagem.setImagem(postagemService.getImage(id));
-				}
-
 				if (postagemService.nameIsDuplicate(id, postagem.getTitulo())) {
-					mv = getEditComDados();
-					mv.addObject("mensagem", new Mensagem("O nome informado já existe no banco de dados!", true));
-					postagemDTO.setImagemBanner(postagemService.getImage(id));
+					ModelAndView mv = getEditComDados();
+					mv.addObject("mensagem", new Mensagem("O título informado já existe no banco de dados!", true));
 					return mv;
+
+				} else {
+					carregarTecnologiasDoBanco(postagemDTO);
+
+					postagem.setTecnologias(postagemDTO.getTecnologias());
+
+					postagemService.salvar(postagem);
+					redirect.addFlashAttribute("mensagem",
+							new Mensagem("Postagem #" + id + " foi atualizada com sucesso!"));
+
+					return new ModelAndView("redirect:/admin/postagens");
 				}
 
-				postagemService.salvar(postagem);
-
-				redirect.addFlashAttribute("mensagem",
-						new Mensagem("Postagem #" + id + " foi atualizada com sucesso!"));
-				mv = new ModelAndView("redirect:/admin/postagens");
-
-				return mv;
 			} else {
-				mv = new ModelAndView("redirect:/admin/postagens");
+				ModelAndView mv = new ModelAndView("redirect:/admin/postagens");
 				redirect.addFlashAttribute("mensagem",
 						new Mensagem("Postagem #" + id + " não foi encontrada no banco!", true));
+
 				return mv;
 			}
 		}
@@ -238,13 +252,8 @@ public class PostagemAdminController {
 	}
 
 	private ModelAndView getIndexComDados() {
-		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(PageRequest.of(0, 10, Sort.by("id")));
 		ModelAndView mv = getIndexTemplate();
-		mv.addObject("listaPostagens", postagensPaginadas);
-
-		mv.addObject("tipoPostagem", TipoPostagem.values());
-		mv.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
-		mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
+		configDadosDaTela(mv);
 
 		return mv;
 	}
@@ -256,10 +265,32 @@ public class PostagemAdminController {
 
 	private ModelAndView getEditComDados() {
 		ModelAndView mv = new ModelAndView("pg-edit-admin-postagens");
-		Page<Postagem> pagePostagens = postagemService.getPostagensPaginadas(PageRequest.of(0, 10, Sort.by("id")));
-		mv.addObject("postagens", pagePostagens);
+		configDadosDaTela(mv);
 
 		return mv;
+	}
+
+	private void configDadosDaTela(ModelAndView modelAndView) {
+		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(PageRequest.of(0, 10, Sort.by("id")));
+		modelAndView.addObject("listaPostagens", postagensPaginadas);
+		modelAndView.addObject("tipoPostagem", TipoPostagem.values());
+		modelAndView.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
+		modelAndView.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
+	}
+
+	private void carregarTecnologiasDoBanco(PostagemFormDTO postagemFormDTO) {
+		Tecnologia[] tecnologiasRecebidas = new Gson().fromJson("[" + postagemFormDTO.getTecnologiaTemp() + "]",
+				Tecnologia[].class);
+
+		Optional<Tecnologia> optionalTecnologia = Optional.of(new Tecnologia());
+
+		for (Tecnologia t : tecnologiasRecebidas) {
+			optionalTecnologia = tecnologiaService.obterPorId(t.getId());
+			// Se a tecnologia existir no banco
+			if (optionalTecnologia.isPresent()) {
+				postagemFormDTO.getTecnologias().add(optionalTecnologia.get());
+			}
+		}
 	}
 
 }

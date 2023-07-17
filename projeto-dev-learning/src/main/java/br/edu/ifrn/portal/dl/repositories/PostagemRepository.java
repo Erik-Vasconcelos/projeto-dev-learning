@@ -37,7 +37,7 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long>{
 	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo") 
 	public Long countByTitulo(@Param("titulo") String titulo);
 	
-	@Query("SELECT count(d.id) FROM Postagem d WHERE d.titulo = :titulo AND d.id <> :id") 
+	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo AND p.id <> :id") 
 	public Long countOccurrenceName(@Param("id") Long id, @Param("titulo") String titulo);
 	 
 }

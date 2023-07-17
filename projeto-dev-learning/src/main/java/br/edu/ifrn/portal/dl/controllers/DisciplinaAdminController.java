@@ -174,10 +174,26 @@ public class DisciplinaAdminController {
 	@GetMapping("/{id}/remover") /* OK */
 	public String removerDisciplina(@PathVariable("id") Long id, RedirectAttributes redirect) {
 		try {
-			disciplinaService.remover(id);
-			redirect.addFlashAttribute("mensagem", new Mensagem("Disicplina #" + id + " foi removida com sucesso!"));
+			Long qtdPostagensRelacionadas = disciplinaService.getQuantityRelatedPosts(id);
+			boolean temPostagensRelacionadas = qtdPostagensRelacionadas > 0 ? true : false;
+
+			if (!temPostagensRelacionadas) {
+				disciplinaService.remover(id);
+				redirect.addFlashAttribute("mensagem",
+						new Mensagem("Disciplina #" + id + " foi removida com sucesso!"));
+			} else {
+				Optional<Disciplina> optional = disciplinaService.obterPorId(id);
+				if (optional.isPresent()) {
+					Disciplina disciplina = optional.get();
+
+					redirect.addFlashAttribute("mensagem",
+							new Mensagem("A disicplina <" + disciplina.getNome() + "> possui " + qtdPostagensRelacionadas
+									+ " postagen(s) relacionada(s)! Remova ela(s) antes para poder apagar a disciplina!", true));
+				}
+			}
 
 			return "redirect:/admin/disciplinas";
+
 		} catch (EmptyResultDataAccessException e) {
 			redirect.addFlashAttribute("mensagem",
 					new Mensagem("A disciplina #" + id + " não foi enconstrada no banco!", true));

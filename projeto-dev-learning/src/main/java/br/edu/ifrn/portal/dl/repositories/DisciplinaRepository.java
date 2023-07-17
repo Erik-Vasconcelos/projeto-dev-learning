@@ -39,5 +39,8 @@ public interface DisciplinaRepository extends JpaRepository<Disciplina, Long>{
 	
 	@Query("SELECT count(d.id) FROM Disciplina d WHERE d.nome = :nome AND d.id <> :id") 
 	public Long countOccurrenceName(@Param("id") Long id, @Param("nome") String nome);
+	
+	@Query("SELECT count(p.id) FROM Disciplina d INNER JOIN Postagem p on d.id = p.disciplina.id WHERE d.id = :id") 
+	public Long countRelatedPosts(@Param("id") Long id);
 	 
 }

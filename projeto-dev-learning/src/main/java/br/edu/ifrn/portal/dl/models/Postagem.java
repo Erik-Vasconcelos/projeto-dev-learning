@@ -1,11 +1,12 @@
 package br.edu.ifrn.portal.dl.models;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,13 +58,11 @@ public class Postagem implements Serializable {
 	@Column(nullable = false, columnDefinition = "TEXT", length = 4194304)
 	private String html;
 	
-	//private String trechoHtml;
-	
 	@ManyToOne(optional = false)
 	private Disciplina disciplina;
 	
-	@ManyToMany
-	private List<Tecnologia> tecnologias = new LinkedList<>();
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Tecnologia> tecnologias = new ArrayList<>();
 
 	public Postagem(TipoPostagem tipo, String titulo, String imagem, String corpo, String html, String trechoHtml,
 			Disciplina disciplina) {
@@ -72,7 +71,6 @@ public class Postagem implements Serializable {
 		this.imagem = imagem;
 		this.corpo = corpo;
 		this.html = html;
-		//this.trechoHtml = trechoHtml;
 		this.disciplina = disciplina;
 	}
 	
