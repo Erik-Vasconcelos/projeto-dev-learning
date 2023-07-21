@@ -62,13 +62,14 @@ header nav a {
 
 header nav .info-n3 {
 	font-family: Agency FB;
-	font-size: 24px;
+	font-size: 20px;
 	color: #ffffff;
 	text-decoration: none;
 }
 
 .cbc-n3,
-.cbc-n4 {
+.cbc-n4,
+.cbc-n5 {
 	margin: 5px;
 	padding: 8px 8px 8px 0px;
 	font-family: Orbitron;
@@ -80,6 +81,10 @@ header nav .info-n3 {
 
 .cbc-n4 {
 	font-size: 26px;
+}
+
+.cbc-n5 {
+	font-size: 20px;
 }
 
 .cbc-style-primary {
@@ -128,7 +133,7 @@ nav.navbar-style {
 	justify-content: space-between;
 	background-color: #121212;
 	padding: 1em;
-	border-bottom: #303030 solid 2px;
+	border-bottom: #303030 solid 1px;
 }
 
 .col-md-5 {

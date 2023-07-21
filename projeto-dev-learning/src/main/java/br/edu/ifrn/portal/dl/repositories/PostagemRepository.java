@@ -10,10 +10,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.edu.ifrn.portal.dl.models.Postagem;
+import br.edu.ifrn.portal.dl.utils.InfoDisciplina;
+import br.edu.ifrn.portal.dl.utils.InfoPostagens;
 
 /**
- * Interface responsável pela comunicação com o banco de dados referente aos processos 
- * da <strong>entidade Postagem<strong>.
+ * Interface responsável pela comunicação com o banco de dados referente aos
+ * processos da <strong>entidade Postagem<strong>.
  * 
  * @author Erik Vasconcelos
  * @since 2023-06-29
@@ -21,23 +23,29 @@ import br.edu.ifrn.portal.dl.models.Postagem;
  */
 
 @Repository
-public interface PostagemRepository extends JpaRepository<Postagem, Long>{
-	
+public interface PostagemRepository extends JpaRepository<Postagem, Long> {
+
 	public List<Postagem> findByTituloContainingIgnoreCase(String titulo);
-	
+
 	@Query("SELECT d FROM Postagem d WHERE lower(d.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY d.id ASC")
 	public Page<Postagem> findByTituloPagined(@Param("titulo") String titulo, Pageable pageable);
-			
-	@Query("SELECT d FROM Postagem d ORDER BY d.id ASC") 
-	 public Page<Postagem> findAllAsc(Pageable pageable);
-	
-	@Query("SELECT d.imagem FROM Postagem d WHERE d.id = :id") 
+
+	@Query("SELECT d FROM Postagem d ORDER BY d.id ASC")
+	public Page<Postagem> findAllAsc(Pageable pageable);
+
+	@Query("SELECT d.imagem FROM Postagem d WHERE d.id = :id")
 	public String findImagem(@Param("id") Long id);
-	
-	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo") 
+
+	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo")
 	public Long countByTitulo(@Param("titulo") String titulo);
-	
-	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo AND p.id <> :id") 
+
+	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo AND p.id <> :id")
 	public Long countOccurrenceName(@Param("id") Long id, @Param("titulo") String titulo);
-	 
+
+	@Query(nativeQuery = true)
+	public List<InfoPostagens> countPostsByType();
+
+	@Query(nativeQuery = true)
+	public List<InfoDisciplina> countPostByDisciplinas();
+
 }

@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.repositories.PostagemRepository;
+import br.edu.ifrn.portal.dl.utils.InfoDisciplina;
+import br.edu.ifrn.portal.dl.utils.InfoPostagens;
 
 /**
  * Classe responsável por encapsular o objeto de acesso a dados da <strong>entidade 
@@ -66,4 +69,11 @@ public class PostagemService {
 		return postagemRepository.countOccurrenceName(id, name) > 0 ? true : false;
 	}
 	
+	public List<InfoPostagens> countPostsByType() {
+		return postagemRepository.countPostsByType();
+	}
+	
+	public List<InfoDisciplina> countPostByDisciplinas(){
+		return postagemRepository.countPostByDisciplinas();
+	}
 }

@@ -1,6 +1,6 @@
 package br.edu.ifrn.portal.dl.dtos;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -58,7 +58,7 @@ public class PostagemFormDTO {
 	private String tecnologiaTemp;
 
 	@NotNull(message = "A(s) tecnologia(s) relacionada(s) a postagem é/são obrigatória(s)!")
-	private List<Tecnologia> tecnologias = new ArrayList<>();
+	private List<Tecnologia> tecnologias = new LinkedList<>();
 
 	@NonNull
 	@NotBlank(message = "O corpo da postagem é obrigatório!")
