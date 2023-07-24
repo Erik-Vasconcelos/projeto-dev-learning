@@ -18,10 +18,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
+//@EnableWebMvc //habilita todos os recursos de MVC do spring
 public class ProjetoDevLearningApplication {
 
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoDevLearningApplication.class, args);
 	}
-
+	
 }

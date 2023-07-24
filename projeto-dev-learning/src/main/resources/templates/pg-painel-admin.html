@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{fragmentos :: head('DevLearning', 'base-admin', 'painel-admin-style')}"></head>
 
@@ -25,7 +25,9 @@
 						</button>
 					</a>
 
-					<a th:href="@{/admin/disciplinas}" class="btn-link">
+					<!-- Irá mostrar o botão de disciplinas se o usuário for do tipo admin -->
+					<!-- sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_ESCRITOR')" -->
+					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/disciplinas}" class="btn-link">
 						<button class="btn btn-menu">
 							<img src="/icones/educacao.png" alt="disciplinas">
 							<label for="">Dsciplinas</label>
