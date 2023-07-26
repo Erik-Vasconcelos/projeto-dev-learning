@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -7,10 +8,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +27,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
+import br.edu.ifrn.portal.dl.dtos.GerenciadorDTO;
 import br.edu.ifrn.portal.dl.dtos.PostagemFormDTO;
+import br.edu.ifrn.portal.dl.models.Gerenciador;
 import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.models.Tecnologia;
+import br.edu.ifrn.portal.dl.models.enuns.TipoGerencidor;
 import br.edu.ifrn.portal.dl.models.enuns.TipoPostagem;
 import br.edu.ifrn.portal.dl.services.DisciplinaService;
+import br.edu.ifrn.portal.dl.services.GerenciadorService;
 import br.edu.ifrn.portal.dl.services.PostagemService;
 import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.ConversorImagem;
@@ -40,13 +48,16 @@ import br.edu.ifrn.portal.dl.utils.Pesquisa;
  * 
  * @author Erik Vasconcelos
  * @since 2023-06-28
- * @version A0.1
+ * @version 0.2
  */
 
 //@SessionAttributes
 @Controller
 @RequestMapping(value = "admin/postagens")
 public class PostagemAdminController {
+
+	@Autowired
+	private GerenciadorService gerenciadorService;
 
 	@Autowired
 	private PostagemService postagemService;
@@ -56,12 +67,16 @@ public class PostagemAdminController {
 
 	@Autowired
 	private TecnologiaService tecnologiaService;
+	
+	private static final int REGISTROS_POR_PAGINA = 10;
+	
+	private static final int PAGINA_PADRAO = 0;
 
 	/*---------------READ---------------*/
 
 	@GetMapping /* OK */
-	public ModelAndView postagensPaginadas(@PageableDefault(page = 0, size = 10) Pageable pageable) {
-		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
+	public ModelAndView postagensPaginadas(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
+		Page<Postagem> postagensPaginadas = carregarListaPostagens(pageable);
 		ModelAndView mv = getIndexTemplate();
 		mv.addObject("listaPostagens", postagensPaginadas);
 
@@ -73,7 +88,7 @@ public class PostagemAdminController {
 	}
 
 	@GetMapping("/pesquisa") /* OK */
-	public ModelAndView pesquisarPostagens(@PageableDefault(page = 0, size = 10) Pageable pageable,
+	public ModelAndView pesquisarPostagens(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable,
 			@Valid Pesquisa pesquisa, BindingResult result) {
 		if (result.hasErrors()) {
 			return getIndexComDados();
@@ -90,7 +105,7 @@ public class PostagemAdminController {
 
 	@GetMapping("/{id}/editar") /* OK */
 	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, PostagemFormDTO postagemDTO,
-			@PageableDefault(page = 0, size = 10) Pageable pageable) {
+			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
 
 		Optional<Postagem> optional = postagemService.obterPorId(id);
 		if (optional.isPresent()) {
@@ -104,7 +119,7 @@ public class PostagemAdminController {
 
 			Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
 			ModelAndView mv = new ModelAndView("pg-edit-admin-postagens");
-			;
+			
 			mv.addObject("listaPostagens", postagensPaginadas);
 
 			mv.addObject("tipoPostagem", TipoPostagem.values());
@@ -158,6 +173,25 @@ public class PostagemAdminController {
 					}
 				}
 
+				SecurityContext context = SecurityContextHolder.getContext();
+				if (context != null) {
+
+					Object principal = context.getAuthentication().getPrincipal();
+
+					Long id = 0L;
+					if (principal instanceof GerenciadorDTO) {
+						id = ((GerenciadorDTO) principal).getId();
+					}
+
+					Optional<Gerenciador> autor = gerenciadorService.obterPorId(id);
+
+					if (autor.isPresent()) {
+						postagemDTO.setAutor(autor.get());
+					}
+					System.out.println(context.getAuthentication().toString());
+
+				}
+
 				Postagem postagem = postagemDTO.toPostagem();
 
 				if (postagem.getImagem() == null) {
@@ -194,6 +228,7 @@ public class PostagemAdminController {
 			if (optional.isPresent()) {
 
 				Postagem postagem = postagemDTO.configAttibutes(optional.get());
+				postagem.setAutor(optional.get().getAutor());
 
 				if (postagemService.nameIsDuplicate(id, postagem.getTitulo())) {
 					ModelAndView mv = getEditComDados();
@@ -271,7 +306,7 @@ public class PostagemAdminController {
 	}
 
 	private void configDadosDaTela(ModelAndView modelAndView) {
-		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(PageRequest.of(0, 10, Sort.by("id")));
+		Page<Postagem> postagensPaginadas = carregarListaPostagens(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
 		modelAndView.addObject("listaPostagens", postagensPaginadas);
 		modelAndView.addObject("tipoPostagem", TipoPostagem.values());
 		modelAndView.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
@@ -291,6 +326,38 @@ public class PostagemAdminController {
 				postagemFormDTO.getTecnologias().add(optionalTecnologia.get());
 			}
 		}
+	}
+
+	private Page<Postagem> carregarListaPostagens(Pageable pageable) {
+		// Busca as postagens que o gerenciador tem acesso de acordo com o seu tipo:
+		// ADMIN ou ESCRITOR
+
+		SecurityContext context = SecurityContextHolder.getContext();
+		if (context != null) {
+
+			Object principal = context.getAuthentication().getPrincipal();
+
+			GerenciadorDTO autor = null;
+			if (principal instanceof GerenciadorDTO) {
+				autor = ((GerenciadorDTO) principal);
+			}
+
+			if (autor != null) {
+				Page<Postagem> postagensPaginadas;
+
+				TipoGerencidor tipo = autor.getTipoGerenciador();
+				if (tipo.equals(TipoGerencidor.ADMIN_MASTER) || tipo.equals(TipoGerencidor.ADMIN)) {
+					postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
+				} else {
+					postagensPaginadas = postagemService.getPostagensPorAutor(autor.getId(), pageable);
+				}
+
+				return postagensPaginadas;
+			}
+
+		}
+		
+		return new PageImpl<>(new ArrayList<Postagem>());
 	}
 
 }

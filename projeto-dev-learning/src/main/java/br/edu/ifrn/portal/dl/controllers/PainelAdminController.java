@@ -1,6 +1,8 @@
 package br.edu.ifrn.portal.dl.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,7 @@ import br.edu.ifrn.portal.dl.services.PostagemService;
 @Controller
 @RequestMapping(value = "/admin")
 public class PainelAdminController {
-	
+
 	@Autowired
 	private PostagemService postagemService;
 
@@ -29,6 +31,7 @@ public class PainelAdminController {
 		ModelAndView mv = new ModelAndView("pg-painel-admin");
 		mv.addObject("infoPostagens", postagemService.countPostsByType());
 		mv.addObject("infoDisciplinas", postagemService.countPostByDisciplinas());
+
 		
 		return mv;
 	}

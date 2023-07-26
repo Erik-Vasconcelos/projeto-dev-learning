@@ -21,23 +21,23 @@
 					<a th:href="@{/admin/postagens}" class="btn-link">
 						<button class="btn btn-menu">
 							<img src="/icones/branding.png" alt="postagens">
-							<label for="">Postagens</label>
+							<label>Postagens</label>
 						</button>
 					</a>
 
 					<!-- Irá mostrar o botão de disciplinas se o usuário for do tipo admin -->
 					<!-- sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_ESCRITOR')" -->
-					<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/disciplinas}" class="btn-link">
+					<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN_MASTER')" th:href="@{/admin/disciplinas}" class="btn-link">
 						<button class="btn btn-menu">
 							<img src="/icones/educacao.png" alt="disciplinas">
-							<label for="">Dsciplinas</label>
+							<label>Disciplinas</label>
 						</button>
 					</a>
 
 					<a th:href="@{/admin/tecnologias}" class="btn-link">
 						<button class="btn btn-menu">
 							<img src="/icones/tecnologia.png" alt="tecnologias">
-							<label for="">Tecnologias</label>
+							<label>Tecnologias</label>
 						</button>
 					</a>
 				</nav>

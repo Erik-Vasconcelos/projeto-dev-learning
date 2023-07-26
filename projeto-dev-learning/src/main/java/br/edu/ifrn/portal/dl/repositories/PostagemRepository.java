@@ -27,13 +27,16 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 
 	public List<Postagem> findByTituloContainingIgnoreCase(String titulo);
 
-	@Query("SELECT d FROM Postagem d WHERE lower(d.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY d.id ASC")
+	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.id ASC")
 	public Page<Postagem> findByTituloPagined(@Param("titulo") String titulo, Pageable pageable);
 
-	@Query("SELECT d FROM Postagem d ORDER BY d.id ASC")
+	@Query("SELECT p FROM Postagem p ORDER BY p.id ASC")
 	public Page<Postagem> findAllAsc(Pageable pageable);
+	
+	@Query("SELECT p FROM Postagem p WHERE p.autor.id = :id ORDER BY p.id ASC")
+	public Page<Postagem> findByIdAutor(@Param("id") Long idAutor, Pageable pageable);
 
-	@Query("SELECT d.imagem FROM Postagem d WHERE d.id = :id")
+	@Query("SELECT p.imagem FROM Postagem p WHERE p.id = :id")
 	public String findImagem(@Param("id") Long id);
 
 	@Query("SELECT count(p.id) FROM Postagem p WHERE p.titulo = :titulo")

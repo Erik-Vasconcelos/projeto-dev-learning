@@ -1,7 +1,7 @@
 package br.edu.ifrn.portal.dl.dtos;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.ifrn.portal.dl.models.Disciplina;
+import br.edu.ifrn.portal.dl.models.Gerenciador;
 import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.models.enuns.TipoPostagem;
@@ -58,7 +59,7 @@ public class PostagemFormDTO {
 	private String tecnologiaTemp;
 
 	@NotNull(message = "A(s) tecnologia(s) relacionada(s) a postagem é/são obrigatória(s)!")
-	private List<Tecnologia> tecnologias = new LinkedList<>();
+	private Set<Tecnologia> tecnologias = new LinkedHashSet<>();
 
 	@NonNull
 	@NotBlank(message = "O corpo da postagem é obrigatório!")
@@ -67,6 +68,8 @@ public class PostagemFormDTO {
 
 	@NonNull
 	private String html;
+	
+	private Gerenciador autor; 
 
 	public Postagem toPostagem() {
 		Postagem postagem = new Postagem();
@@ -74,13 +77,14 @@ public class PostagemFormDTO {
 		postagem.setTipoPostagem(this.tipoPostagem);
 
 		if (imagemFile.getSize() > 0) {
-			postagem.setImagem(ConversorImagem.getImagemEncoded(imagemFile));
+			postagem.setImagem(ConversorImagem.getImagemEncoded(this.imagemFile));
 		}
 
-		postagem.setDisciplina(disciplina);
-		postagem.setTecnologias(tecnologias);
-		postagem.setCorpo(corpo);
-		postagem.setHtml(html);
+		postagem.setDisciplina(this.disciplina);
+		postagem.setTecnologias(this.tecnologias);
+		postagem.setCorpo(this.corpo);
+		postagem.setHtml(this.html);
+		postagem.setAutor(this.autor);
 
 		return postagem;
 	}
@@ -91,17 +95,17 @@ public class PostagemFormDTO {
 
 		// TODO
 		if (!imagemFile.isEmpty()) {
-			postagem.setImagem(ConversorImagem.getImagemEncoded(imagemFile));
-		} else if (!imagemBanner.isBlank()) {
-			postagem.setImagem(imagemBanner);
+			postagem.setImagem(ConversorImagem.getImagemEncoded(this.imagemFile));
+		} else if (!this.imagemBanner.isBlank()) {
+			postagem.setImagem(this.imagemBanner);
 		} else {
 			postagem.setImagem("");
 		}
 
-		postagem.setDisciplina(disciplina);
-		postagem.setTecnologias(tecnologias);
-		postagem.setCorpo(corpo);
-		postagem.setHtml(html);
+		postagem.setDisciplina(this.disciplina);
+		postagem.setTecnologias(this.tecnologias);
+		postagem.setCorpo(this.corpo);
+		postagem.setHtml(this.html);
 
 		return postagem;
 	}
@@ -116,6 +120,7 @@ public class PostagemFormDTO {
 
 		this.corpo = postagem.getCorpo();
 		this.html = postagem.getHtml();
+		this.autor = postagem.getAutor();
 	}
 
 	public boolean isEmpty() {

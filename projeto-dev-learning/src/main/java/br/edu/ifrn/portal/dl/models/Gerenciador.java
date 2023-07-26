@@ -1,25 +1,25 @@
 package br.edu.ifrn.portal.dl.models;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import br.edu.ifrn.portal.dl.models.enuns.TipoGerencidor;
 import br.edu.ifrn.portal.dl.security.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Classe modelo da <strong>entidade Gerenciador<strong>.
@@ -30,72 +30,52 @@ import lombok.RequiredArgsConstructor;
  */
 
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Data
 @Entity
 @Table(name = "gerenciadores")
-public class Gerenciador implements UserDetails {
+public class Gerenciador implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	/*@NonNull
-	@Column(nullable = false, unique = true)
-	private String nome; */
-	
-	@NonNull
-	@Column(nullable = false, unique = true)
-	private String login;
 
-	@NonNull
+	@Column(nullable = false)
+	private Integer tipoGerenciador;
+
+	@Column(nullable = false, unique = true)
+	private String nome;
+
+	@Column(nullable = false, unique = true)
+	private String email;
+
 	@Column(nullable = false)
 	private String senha;
-	
-	@ManyToMany
-	private List<Role> roles = new ArrayList<>();
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.roles;
+	@Column(nullable = false, columnDefinition = "TEXT", length = 4194304)
+	private String imagem;
+
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(fetch = FetchType.EAGER)
+	private Set<Role> roles = new LinkedHashSet<>();
+
+	public Gerenciador(TipoGerencidor tipoGerencidor, String nome, String email, String senha, String imagem) {
+		if(tipoGerencidor != null) {
+			this.tipoGerenciador = tipoGerencidor.getCodigo();
+		}
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.imagem = imagem;
 	}
 
-	@Override
-	public String getPassword() {
-		return this.senha;
+	public TipoGerencidor getTipoGerenciador() {
+		return TipoGerencidor.toEnum(tipoGerenciador);
 	}
 
-	@Override
-	public String getUsername() {
-		return this.login;
+	public void setTipoGerenciador(TipoGerencidor tipo) {
+		this.tipoGerenciador = tipo.getCodigo();
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	
-	
 }

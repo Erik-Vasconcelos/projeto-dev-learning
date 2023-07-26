@@ -42,6 +42,10 @@ public class PostagemService {
 		return postagemRepository.findById(id);
 	}
 	
+	public Optional<Postagem> obterAutorPorIdPostagem(Long idPostagem) throws IllegalArgumentException{
+		return postagemRepository.findById(idPostagem);
+	}
+	
 	public Page<Postagem> getPostagensPaginadas(Pageable pageable) {
 		return postagemRepository.findAllAsc(pageable);
 	}
@@ -50,6 +54,10 @@ public class PostagemService {
 		return postagemRepository.findByTituloPagined(titulo, pageable);
 	}
 
+	public Page<Postagem> getPostagensPorAutor(Long idAutor, Pageable pageable){
+		return postagemRepository.findByIdAutor(idAutor, pageable);
+	}
+	
 	/*---------------DELETE---------------*/
 
 	public void remover(Long id) {

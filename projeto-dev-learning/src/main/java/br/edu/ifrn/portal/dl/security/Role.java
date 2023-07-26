@@ -16,23 +16,26 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "roles")
-public class Role implements GrantedAuthority{
+public class Role implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(nullable = false, unique = true)	
+
+	@Column(nullable = false, unique = true)
 	private String nomeRole;
-	
+
 	@Override
 	public String getAuthority() {
 		return this.nomeRole;
 	}
 
-	/*Para inseir no banco de dados você precisa seguir o seguinte formato: ROLE_<NOME-ROLE>.
-	 *  Para usar dentr do spring você só precisa colocar o nome da role*/
-	
+	/*
+	 * Para inseir no banco de dados você precisa seguir o seguinte formato:
+	 * ROLE_<NOME-ROLE>. Para usar dentr do spring você só precisa colocar o nome da
+	 * role
+	 */
+
 }

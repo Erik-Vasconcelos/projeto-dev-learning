@@ -57,7 +57,7 @@
 				<li class="nav-item">
 					<div class="d-md-flex nav-link">
 						<img alt="imagem_usuario" src="/icones/usuario.png"> <a href=""
-							class="text-white info-n3" th:text="${#authentication.name}">teste</a>
+							class="text-white info-n3" th:text="${#authentication.getPrincipal().getNome()}"></a>
 							<!-- "${#authentication.getPrincipal().getNome()}" -->
 							<!--th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"  -->
 					</div>

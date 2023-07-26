@@ -1,8 +1,8 @@
 package br.edu.ifrn.portal.dl.models;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -94,7 +94,10 @@ public class Postagem implements Serializable {
 	private Disciplina disciplina;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Tecnologia> tecnologias = new LinkedList<>();
+	private Set<Tecnologia> tecnologias = new LinkedHashSet<>();
+	
+	@ManyToOne(optional = false)
+	private Gerenciador autor; 
 
 	public Postagem(TipoPostagem tipo, String titulo, String imagem, String corpo, String html, String trechoHtml,
 			Disciplina disciplina) {

@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -27,9 +29,9 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 			.disable()
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET, "/").permitAll()
-			.antMatchers(HttpMethod.GET, "/error").permitAll()
-			.antMatchers("/admin").hasAnyRole("ESCRITOR", "ADMIN")
-			.antMatchers("/admin/disciplinas/**").hasRole("ADMIN")
+			.antMatchers(HttpMethod.GET, "/error").permitAll() 
+			.antMatchers("/admin").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
+			.antMatchers("/admin/disciplinas/**").hasAnyRole("ADMIN", "ADMIN_MASTER")
 			.anyRequest().authenticated()
 			.and().formLogin().permitAll().defaultSuccessUrl("/admin")
 			.and().logout()
@@ -40,7 +42,6 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(gerenciadorService)
 		.passwordEncoder(new BCryptPasswordEncoder());
-		
 	}
 	
 	@Override //Ignora algum recurso

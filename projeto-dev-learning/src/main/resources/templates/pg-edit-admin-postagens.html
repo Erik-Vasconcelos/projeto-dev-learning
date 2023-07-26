@@ -224,6 +224,7 @@
 						<th scope="col">Corpo</th>
 						<th scope="col">Tipo</th>
 						<th scope="col">Disciplina</th>
+						<th scope="col">Autor</th>
 						<th scope="col">Ações</th>
 					</tr>
 				</thead>
@@ -235,6 +236,7 @@
 						<td th:text="${#strings.abbreviate(postagem.corpo, 40)}">
 						<td th:text="${postagem.tipoPostagem.descricao}">
 						<td th:text="${postagem.disciplina.nome}">
+						<td th:text="${postagem.autor.nome}">
 
 						<td>
 							<div class="content-acoes">
