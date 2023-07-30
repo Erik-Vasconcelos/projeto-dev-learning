@@ -126,7 +126,7 @@
 
 				<div class="input-group mb-3">
 					<label class="form-label" for="imagemBanner">Imagem de banner da postagem</label>
-					<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da disciplina" width="100%"
+					<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da postagem" width="100%"
 						height="400vh" class="preview-img-banner">
 
 				</div>
@@ -236,7 +236,7 @@
 						<td th:text="${#strings.abbreviate(postagem.corpo, 40)}">
 						<td th:text="${postagem.tipoPostagem.descricao}">
 						<td th:text="${postagem.disciplina.nome}">
-						<td th:text="${postagem.autor.nome}">
+						<td th:text="${'@' + postagem.autor.nome}" style="font-weight: bold;">
 
 						<td>
 							<div class="content-acoes">

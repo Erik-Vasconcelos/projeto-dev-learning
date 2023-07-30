@@ -50,7 +50,8 @@
 						<div class="col-md-5 align-items-start">
 							<h5 class="cbc-n5 cbc-style-info">Resumo quantitativo</h5>
 							<div class="div-info">
-								<th:block th:each="infoPostagem : ${infoPostagens}">
+								<label th:if="${infoPostagens.size == 0}" class="info info-quant">Nenhuma postagem até o momento!</label>
+								<th:block th:unless="${infoPostagens.size == 0}" th:each="infoPostagem : ${infoPostagens}">
 									<div class="group-info">
 										<label th:text="*{infoPostagem.tipo.descricao + ': '}" class="info"></label>
 										<label th:text="*{infoPostagem.quantidade}" class="info info-quant"></label>
@@ -60,8 +61,9 @@
 						</div>
 						<div class="col-md-6 offset-md">
 							<h5 class="cbc-n5 cbc-style-info">Postagens por disciplinas</h5>
-							<div  class="div-info">
-								<th:block th:each="infoDisciplina : ${infoDisciplinas}">
+							<div class="div-info">
+								<label th:if="${infoDisciplinas.size == 0}" class="info info-quant">Nenhuma postagem até o momento!</label>
+								<th:block th:unless="${infoDisciplinas.size == 0}" th:each="infoDisciplina : ${infoDisciplinas}">
 									<div class="group-info">
 										<label th:text="*{infoDisciplina.nome + ': '}" class="info"></label>
 										<label th:text="*{infoDisciplina.quantidade + (infoDisciplina.quantidade > 1 ? ' postagens' : ' postagem') }" class="info info-quant"></label>
@@ -70,7 +72,6 @@
 							</div>
 						</div>
 					</div>
-
 
 				</div>
 			</div>

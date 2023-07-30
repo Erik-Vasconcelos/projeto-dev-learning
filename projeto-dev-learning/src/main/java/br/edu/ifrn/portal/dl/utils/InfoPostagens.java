@@ -1,6 +1,7 @@
 package br.edu.ifrn.portal.dl.utils;
 
 import br.edu.ifrn.portal.dl.models.enuns.TipoPostagem;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class InfoPostagens {
 	
 	private TipoPostagem tipo;

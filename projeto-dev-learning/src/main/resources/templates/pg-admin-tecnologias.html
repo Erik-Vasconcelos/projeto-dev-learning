@@ -98,7 +98,7 @@
 								<img src="/icones/editar.png" alt="editar">
 							</a>
 
-							<a th:href="@{/admin/tecnologias/{id}/remover(id=${tecnologia.id})}"
+							<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN_MASTER')" th:href="@{/admin/tecnologias/{id}/remover(id=${tecnologia.id})}"
 								onclick="if (confirm('Deseja realmente excluir o item?')){return true;}else{event.stopPropagation(); event.preventDefault();};">
 								<img src="/icones/excluir.png" alt="remover">
 							</a>

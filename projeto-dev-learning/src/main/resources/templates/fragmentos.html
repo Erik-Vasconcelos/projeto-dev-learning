@@ -44,33 +44,47 @@
 <header th:fragment="header-admin">
 	<nav class="navbar navbar-expand-md navbar-style navbar-light fixed-top">
 
-		<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="182"></a>
+		<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="150"></a>
 
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
 			<img alt="imagem_usuario" src="/icones/cardapio.png">
 		</button>
 
-		<div class="collapse navbar-collapse" id="nav-principal">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a th:href="@{/admin}" class="nav-link info-n3 text-white">Painel de controle</a></li>
+		<div id="nav-principal" class="collapse navbar-collapse" >
+			<ul id="elementos" class="navbar-nav ml-auto align-items-center">
 
 				<li class="nav-item">
-					<div class="d-md-flex nav-link">
-						<img alt="imagem_usuario" src="/icones/usuario.png"> <a href=""
-							class="text-white info-n3" th:text="${#authentication.getPrincipal().getNome()}"></a>
-							<!-- "${#authentication.getPrincipal().getNome()}" -->
-							<!--th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}"  -->
-					</div>
+					<a th:href="@{/}" class="nav-link">Inicio</a>
 				</li>
-				
+
 				<li class="nav-item">
-					<a href="/logout" class="nav-link info-n3 text-white">Sair</a>
+					<a th:href="@{/disciplinas}" class="nav-link">Disciplinas</a>
+				</li>
+
+				<li sec:authorize="hasAnyRole('ROLE_ESCRITOR', 'ROLE_ADMIN', 'ROLE_ADMIN_MASTER')" class="nav-item">
+					<a th:href="@{/admin}" class="nav-link">Painel de Controle</a>
+				</li>
+
+				<!-- BOTÃO DO PERFIL DO USUÁRIO -->
+				<li sec:authorize="hasAnyRole('ROLE_ESCRITOR', 'ROLE_ADMIN', 'ROLE_ADMIN_MASTER')" class="nav-item dropdown ">
+					<button class=" dropdown-toggle btn-perfil" id="navbarDropdown" type="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img alt="imagem_usuario" th:src="${#authentication.getPrincipal().getImagem()}"
+							onError="this.onerror=null;this.src='/icones/usuario.png';" class="img-user">
+						<a href="" class="nav-link" th:text="${#authentication.getPrincipal().getNome()}"></a>
+					</button>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Perfil</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item d-flex align-items-center" href="/logout">
+							<img src="/icones/sair.png" alt="Sair">
+							<Label class="info-sair">Sair</Label></a>
+					</div>
 				</li>
 			</ul>
 		</div>
 	</nav>
 </header>
-
 
 <!--*****************************************************************
 				COMPONENTE DE PAGINAÇÃO PADRÃO
