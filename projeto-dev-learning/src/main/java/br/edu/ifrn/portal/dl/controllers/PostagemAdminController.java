@@ -67,19 +67,19 @@ public class PostagemAdminController {
 
 	@Autowired
 	private TecnologiaService tecnologiaService;
-	
-	private static final int REGISTROS_POR_PAGINA = 10;
-	
+
+	private static final int REGISTROS_POR_PAGINA = 1;
+
 	private static final int PAGINA_PADRAO = 0;
 
 	/*---------------READ---------------*/
 
 	@GetMapping /* OK */
-	public ModelAndView postagensPaginadas(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
+	public ModelAndView postagensPaginadas(
+			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
 		Page<Postagem> postagensPaginadas = carregarListaPostagens(pageable);
 		ModelAndView mv = getIndexTemplate();
 		mv.addObject("listaPostagens", postagensPaginadas);
-
 		mv.addObject("tipoPostagem", TipoPostagem.values());
 		mv.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
 		mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
@@ -88,7 +88,8 @@ public class PostagemAdminController {
 	}
 
 	@GetMapping("/pesquisa") /* OK */
-	public ModelAndView pesquisarPostagens(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable,
+	public ModelAndView pesquisarPostagens(
+			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable,
 			@Valid Pesquisa pesquisa, BindingResult result) {
 		if (result.hasErrors()) {
 			return getIndexComDados();
@@ -96,8 +97,11 @@ public class PostagemAdminController {
 		} else {
 			Page<Postagem> postagensPaginadas = postagemService.getPostagensPorTituloPaginadas(pesquisa.getValor(),
 					pageable);
-			ModelAndView mv = getIndexTemplate();
+			ModelAndView mv = postagensPaginadas(pageable);
 			mv.addObject("listaPostagens", postagensPaginadas);
+			mv.addObject("tipoPostagem", TipoPostagem.values());
+			mv.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
+			mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
 
 			return mv;
 		}
@@ -117,15 +121,9 @@ public class PostagemAdminController {
 				postagemDTO.setTecnologiaTemp(tecnologiasJson);
 			}
 
-			Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
 			ModelAndView mv = new ModelAndView("pg-edit-admin-postagens");
-			
-			mv.addObject("listaPostagens", postagensPaginadas);
-
-			mv.addObject("tipoPostagem", TipoPostagem.values());
-			mv.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
-			mv.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
 			mv.addObject("id", postagem.getId());
+			configDadosDaTela(mv);
 
 			return mv;
 
@@ -175,7 +173,6 @@ public class PostagemAdminController {
 
 				SecurityContext context = SecurityContextHolder.getContext();
 				if (context != null) {
-
 					Object principal = context.getAuthentication().getPrincipal();
 
 					Long id = 0L;
@@ -188,7 +185,6 @@ public class PostagemAdminController {
 					if (autor.isPresent()) {
 						postagemDTO.setAutor(autor.get());
 					}
-					System.out.println(context.getAuthentication().toString());
 
 				}
 
@@ -306,7 +302,8 @@ public class PostagemAdminController {
 	}
 
 	private void configDadosDaTela(ModelAndView modelAndView) {
-		Page<Postagem> postagensPaginadas = carregarListaPostagens(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
+		Page<Postagem> postagensPaginadas = carregarListaPostagens(
+				PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
 		modelAndView.addObject("listaPostagens", postagensPaginadas);
 		modelAndView.addObject("tipoPostagem", TipoPostagem.values());
 		modelAndView.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
@@ -356,7 +353,7 @@ public class PostagemAdminController {
 			}
 
 		}
-		
+
 		return new PageImpl<>(new ArrayList<Postagem>());
 	}
 

@@ -50,7 +50,7 @@
 			<img alt="imagem_usuario" src="/icones/cardapio.png">
 		</button>
 
-		<div id="nav-principal" class="collapse navbar-collapse" >
+		<div id="nav-principal" class="collapse navbar-collapse">
 			<ul id="elementos" class="navbar-nav ml-auto align-items-center">
 
 				<li class="nav-item">
@@ -66,9 +66,10 @@
 				</li>
 
 				<!-- BOTÃO DO PERFIL DO USUÁRIO -->
-				<li sec:authorize="hasAnyRole('ROLE_ESCRITOR', 'ROLE_ADMIN', 'ROLE_ADMIN_MASTER')" class="nav-item dropdown ">
-					<button class=" dropdown-toggle btn-perfil" id="navbarDropdown" type="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<li sec:authorize="hasAnyRole('ROLE_ESCRITOR', 'ROLE_ADMIN', 'ROLE_ADMIN_MASTER')"
+					class="nav-item dropdown ">
+					<button class=" dropdown-toggle btn-perfil" id="navbarDropdown" type="button" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
 						<img alt="imagem_usuario" th:src="${#authentication.getPrincipal().getImagem()}"
 							onError="this.onerror=null;this.src='/icones/usuario.png';" class="img-user">
 						<a href="" class="nav-link" th:text="${#authentication.getPrincipal().getNome()}"></a>
@@ -89,31 +90,43 @@
 <!--*****************************************************************
 				COMPONENTE DE PAGINAÇÃO PADRÃO
 *****************************************************************-->
-<nav th:fragment="pagination(paginationObjectName, resourceName)"
-	th:if="${[__${paginationObjectName}__].totalPages > 0}">
+<nav th:fragment="pagination(paginationObjectName, resourceName)" class="d-flex justify-content-center mt-3">
 	<ul class="pagination justify-content-center">
-		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'disabled'}">
-			<a class="page-link btn-pg"
+		<li th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'pagination-action-disable'}"
+			class="pagination-action pagination-previus">
+			<a th:if="${[__${paginationObjectName}__].hasPrevious()}"
 				th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
-				tabindex="-1">Anterior
+				class="pagination-link">&#60;
+				Anterior
 			</a>
+
+			<label th:unless="${[__${paginationObjectName}__].hasPrevious()}"
+				class="pagination-link pagination-link-disable">&#60; Anterior</label>
 		</li>
 
-		<th:block th:each="i : ${#numbers.sequence(0, [__${paginationObjectName}__].totalPages - 1)}">
-			<li class="page-item">
-				<a class="page-link"
-					th:href="@{__${resourceName}__(page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i} +
-					1]]</a>
+		<th:block
+			th:each="i : ${#numbers.sequence(0, ([__${paginationObjectName}__].totalPages - 1) == -1 ? 0 : [__${paginationObjectName}__].totalPages - 1 ) }">
+			<li class="pagination-item"
+				th:classappend="${[__${paginationObjectName}__].getPageable().getPageNumber() == __${i}__ ? 'pagination-select' : ''}">
+				<a th:if="${__${paginationObjectName}__.getPageable().getPageNumber() != __${i}__}"
+					th:href="@{__${resourceName}__(page=${i}, size=${[__${paginationObjectName}__].size})}"
+					class="pagination-link">[[${i}
+					+ 1]]</a>
+
+				<label th:unless="${__${paginationObjectName}__.getPageable().getPageNumber() != __${i}__}"
+					class="pagination-link-select">[[${i}+1]]</label>
 			</li>
 		</th:block>
 
-		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'disabled'}">
-			<a class="page-link btn-pg"
+		<li th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'pagination-action-disable'}"
+			class="pagination-action pagination-next">
+			<a th:if="${[__${paginationObjectName}__].hasNext()}"
 				th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
-				tabindex="+1">Próximo
+				class="pagination-link">Próximo &#62;
 			</a>
+			<label th:unless="${[__${paginationObjectName}__].hasNext()}"
+				class="pagination-link pagination-link-disable">Próximo &#62;</label>
 		</li>
-
 	</ul>
 </nav>
 
@@ -121,56 +134,45 @@
 				COMPONENTE DE PAGINAÇÃO COM PARÂMETRO
 *****************************************************************-->
 <nav th:fragment="paginationWithParameter(paginationObjectName, resourceName, parameter)"
-	th:if="${[__${paginationObjectName}__].totalPages > 0}">
+	class="d-flex justify-content-center mt-3">
 	<ul class="pagination justify-content-center">
-		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'disabled'}">
-			<a class="page-link btn-pg"
+		<li th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'pagination-action-disable'}"
+			class="pagination-action pagination-previus">
+			<a th:if="${[__${paginationObjectName}__].hasPrevious()}"
 				th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
-				tabindex="-1">Anterior
+				class="pagination-link">&#60;
+				Anterior
 			</a>
+
+			<label th:unless="${[__${paginationObjectName}__].hasPrevious()}"
+				class="pagination-link pagination-link-disable">&#60; Anterior</label>
 		</li>
 
-		<th:block th:each="i : ${#numbers.sequence(0, [__${paginationObjectName}__].totalPages - 1)}">
-			<li class="page-item">
-				<a class="page-link"
-					th:href="@{__${resourceName}__(valor=${parameter}, page=${i}, size=${[__${paginationObjectName}__].size})}">[[${i}
+		<th:block
+			th:each="i : ${#numbers.sequence(0, ([__${paginationObjectName}__].totalPages - 1) == -1 ? 0 : [__${paginationObjectName}__].totalPages - 1 ) }">
+			<li class="pagination-item"
+				th:classappend="${[__${paginationObjectName}__].getPageable().getPageNumber() == __${i}__ ? 'pagination-select' : ''}">
+				<a th:if="${__${paginationObjectName}__.getPageable().getPageNumber() != __${i}__}"
+					th:href="@{__${resourceName}__(valor=${parameter}, page=${i}, size=${[__${paginationObjectName}__].size})}"
+					class="pagination-link">[[${i}
 					+ 1]]</a>
+
+				<label th:unless="${__${paginationObjectName}__.getPageable().getPageNumber() != __${i}__}"
+					class="pagination-link-select">[[${i}+1]]</label>
 			</li>
 		</th:block>
 
-		<li class="page-item" th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'disabled'}">
-			<a class="page-link btn-pg"
+		<li th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'pagination-action-disable'}"
+			class="pagination-action pagination-next">
+			<a th:if="${[__${paginationObjectName}__].hasNext()}"
 				th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
-				tabindex="+1">Próximo
+				class="pagination-link">Próximo &#62;
 			</a>
+			<label th:unless="${[__${paginationObjectName}__].hasNext()}"
+				class="pagination-link pagination-link-disable">Próximo &#62;</label>
 		</li>
-
 	</ul>
 </nav>
-
-<!-- *********************** Modelo base *********************** -->
-<!-- <nav>
-			<ul class="pagination justify-content-center">
-				<li class="page-item" th:classappend="${disciplinas.hasPrevious() ? '' : 'disabled'}">
-					<a class="page-link btn-pg" th:href="@{/admin/disciplinas(page=${disciplinas.number-1}, size=${disciplinas.size})}"
-						tabindex="-1">Anterior
-					</a>
-				</li>
-				
-				<th:block th:each="i : ${#numbers.sequence(0, disciplinas.totalPages - 1)}">
-					<li class="page-item">
-						<a class="page-link" th:href="@{/admin/disciplinas(page=${i}, size=${disciplinas.size})}">[[${i} + 1]]</a>
-					</li>
-				</th:block>
-
-				<li class="page-item" th:classappend="${disciplinas.hasNext() ? '' : 'disabled'}">
-					<a class="page-link btn-pg" th:href="@{/admin/disciplinas(page=${disciplinas.number+1}, size=${disciplinas.size})}"
-						tabindex="+1">Próximo
-					</a>
-				</li>
-
-			</ul>
-		</nav> -->
 
 <!--*****************************************************************
 							RODAPÉ DO BLOG
@@ -188,7 +190,3 @@
 		</div>
 	</div>
 </footer>
-
-<!--th:classappend="nome" -> adiciona uma classe a um componente   -->
-
-<!--th:if=""${#fields.hasErrors(*)}" -> verifica se teve erros em alguns dos campos do objeto observado pelo form -->

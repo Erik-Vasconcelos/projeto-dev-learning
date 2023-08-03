@@ -216,6 +216,4 @@ function removerTecnologia(tecnologiaRemover) {
         }
     });
 
-
-
 }
