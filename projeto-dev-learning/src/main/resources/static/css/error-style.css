@@ -1,0 +1,64 @@
+/*container de erro/agrupador da imagem e dos elementos de informação*/
+@media(max-width: 900px) {
+    #error-img {
+        display: none;
+    }
+
+    .container-conteudo {
+        padding: 20px 40px 20px 40px;
+    }
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid #7C23F0;
+}
+
+.container-img {
+    width: auto;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.container-conteudo {
+    min-width: 70%;
+    padding: 15px 40px 15px 20px;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-error {
+    width: auto;
+    height: 100%;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.infomartion {
+    font-family: "Open Sans", "Lato", sans-serif;
+    font-size: 14px;
+    color: #FFF;
+}
+
+.btn {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+button a {
+    text-decoration: none;
+    color: #FFF;
+}
+
+button a:hover {
+    text-decoration: none;
+    color: #FFF;
+}
