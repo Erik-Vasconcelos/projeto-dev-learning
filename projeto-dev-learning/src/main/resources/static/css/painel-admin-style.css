@@ -1,14 +1,22 @@
+/*#########################################################
+					ESTILIZAÇÃO DA PÁGINA
+#########################################################*/
+
+/**************************** IMPORTAÇÕES ****************************/
 @font-face {
     font-family: Agency FB;
     src: url(../fontes/agency-fb/agency_fb.ttf);
 }
 
+/**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
 * {
-    margin: 0;
-    padding: 0;
-    border: 0;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
 }
 
+
+/**************************** MENU ****************************/
 .menu-opcoes {
     display: flex;
     flex-direction: column;
@@ -37,6 +45,7 @@
     margin: 0 0 0 5%;
 }
 
+/**************************** CONTAINER DAS INFOMAÇÕES ****************************/
 .cbc-style-info {
     color: #FFF;
     border: 2px solid #7C23F0;
@@ -54,7 +63,6 @@
     height: 15vh;
 }
 
-/*-----------  -------------*/
 .group-info {
     display: flex;
 }

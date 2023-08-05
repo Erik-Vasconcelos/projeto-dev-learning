@@ -18,41 +18,16 @@
 	src: url(../fontes/agency-fb/agency_fb.ttf);
 }
 
+
+/**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
 * {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
 }
 
-/**************************** COMPONENTES PRICIPAIS ****************************/
-body {
-	display: flex;
-	flex-direction: column;
-	background-color: #17171A;
-	margin-top: 6em;
-}
 
-section {
-	padding: 2em 4em 4em 4em;
-	box-sizing: border-box;
-}
-
-footer {
-	background-color: #121212;
-	padding: 2em;
-	position: relative;
-	color: #ffffff;
-}
-
-.class-container {
-	background-color: #212125;
-	border-radius: 15px;
-	box-sizing: border-box;
-	padding: 1em 2.5em 1em 2.5em;
-	margin: 3rem 0 4rem 0;
-}
-
-/**************************** CABEÇALHO ****************************/
+/*###################### MEDIA QUERIES ######################*/
 @media only screen and (max-width: 767px) {
 	.navbar-nav .nav-item {
 		border-bottom: 1px solid #303030;
@@ -71,6 +46,38 @@ footer {
 	}
 }
 
+/**************************** COMPONENTES PRICIPAIS ****************************/
+body {
+	display: flex;
+	flex-direction: column;
+	background-color: #17171A;
+	margin-top: 6em;
+}
+
+section {
+	padding: 2em 4em 4em 4em;
+	box-sizing: border-box;
+}
+
+footer {
+	z-index: -1;
+	position: fixed;
+	bottom: 0;
+	background-color: #121212;
+	padding: 2em;
+	position: relative;
+	color: #ffffff;
+}
+
+.class-container {
+	background-color: #212125;
+	border-radius: 15px;
+	box-sizing: border-box;
+	padding: 1em 2.5em 1em 2.5em;
+	margin: 3rem 0 4rem 0;
+}
+
+/**************************** CABEÇALHO ****************************/
 header nav a {
 	color: #ffffff;
 	font-family: Agency FB;
@@ -169,84 +176,7 @@ textarea {
 	resize: none;
 }
 
-/*#########################################################
-						BOOTSTRAP
-#########################################################*/
-
-/*----------- MUDANÇA EM CLASSES DO CABEÇALHO-------------*/
-
-.navbar-expand-md .navbar-nav .nav-link {
-	color: #FFF;
-	padding: 0px 0px;
-}
-
-.navbar-expand-md .navbar-nav .nav-link:hover {
-	color: #7C23F0;
-}
-
-.navbar-expand-md .navbar-nav .nav-link:focus {
-	color: #FFF;
-}
-
-.navbar-nav .nav-item {
-	list-style-type: none;
-	padding: 8px 18px;
-}
-
-header .nav-link {
-	font-family: "Open Sans", "Lato", sans-serif;
-	color: #ffffff;
-	font-size: 14px;
-	text-decoration: none;
-}
-
-/*----------- DROPDOWN DO PERFIL-------------*/
-.dropdown-menu {
-	background-color: #212125;
-}
-
-.dropdown-toogle::after {
-	color: #FFF;
-}
-
-.dropdown-item {
-	color: #FFF;
-	background-color: #212125;
-}
-
-/*----------- MUDANÇA EM CLASSES -------------*/
-nav.navbar-style {
-	justify-content: space-between;
-	background-color: #121212;
-	padding: 0.5em 1em;
-	border-bottom: #303030 solid 1px;
-	min-height: 70px;
-}
-
-.col-md-5 {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-/**************************** BOTÕES ****************************/
-.btn {
-	font-family: Goldman Regular;
-	min-width: 10vw;
-	width: auto;
-}
-
-.btn-primary {
-	background-color: #7C23F0;
-	border: 0;
-	width: 8em;
-}
-
-.btn-primary:hover {
-	background-color: #4F26B5;
-}
-
-/*----------- PAGINAÇÃO -------------*/
+/**************************** PAGINAÇÃO ****************************/
 
 /*AGRUPADOR DOS BOTÕES*/
 .pagination {
@@ -337,4 +267,81 @@ nav.navbar-style {
 
 .pagination-select {
 	border-top: 2px solid #7C23F0;
+}
+
+/*#########################################################
+						BOOTSTRAP
+#########################################################*/
+
+/*----------- MUDANÇA EM CLASSES DO CABEÇALHO-------------*/
+
+.navbar-expand-md .navbar-nav .nav-link {
+	color: #FFF;
+	padding: 0px 0px;
+}
+
+.navbar-expand-md .navbar-nav .nav-link:hover {
+	color: #7C23F0;
+}
+
+.navbar-expand-md .navbar-nav .nav-link:focus {
+	color: #FFF;
+}
+
+.navbar-nav .nav-item {
+	list-style-type: none;
+	padding: 8px 18px;
+}
+
+header .nav-link {
+	font-family: "Open Sans", "Lato", sans-serif;
+	color: #ffffff;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+/*----------- DROPDOWN DO PERFIL-------------*/
+.dropdown-menu {
+	background-color: #212125;
+}
+
+.dropdown-toogle::after {
+	color: #FFF;
+}
+
+.dropdown-item {
+	color: #FFF;
+	background-color: #212125;
+}
+
+/*----------- MUDANÇA EM CLASSES -------------*/
+nav.navbar-style {
+	justify-content: space-between;
+	background-color: #121212;
+	padding: 0.5em 1em;
+	border-bottom: #303030 solid 1px;
+	min-height: 70px;
+}
+
+.col-md-5 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/**************************** BOTÕES ****************************/
+.btn {
+	font-family: Goldman Regular;
+	min-width: 10vw;
+	width: auto;
+}
+
+.btn-primary {
+	background-color: #7C23F0;
+	border: 0;
+	width: 8em;
+}
+
+.btn-primary:hover {
+	background-color: #4F26B5;
 }

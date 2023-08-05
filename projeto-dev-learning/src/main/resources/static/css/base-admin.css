@@ -1,4 +1,8 @@
-/**************************** FORM ****************************/
+/*#########################################################
+					ESTILIZAÇÃO DA PÁGINA
+#########################################################*/
+
+/**************************** COMPONENTES DE FORMULÁRIO ****************************/
 .form-label {
 	color: #ffffff;
 	font-family: Agency FB;
@@ -65,7 +69,7 @@ thead tr {
 	justify-content: space-around;
 }
 
-/**************************** MENSAGENS ****************************/
+/*********************** ESTILO DAS MENSAGENS DE AVISO ***********************/
 .success-message {
 	color: #1d942c;
 	font-family: Agency FB;

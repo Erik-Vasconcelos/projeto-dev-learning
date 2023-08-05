@@ -1,4 +1,8 @@
-/*container de erro/agrupador da imagem e dos elementos de informação*/
+/*#########################################################
+					ESTILIZAÇÃO DA PÁGINA
+#########################################################*/
+
+/*###################### MEDIA QUERIES ######################*/
 @media(max-width: 900px) {
     #error-img {
         display: none;
@@ -9,12 +13,15 @@
     }
 }
 
+/**************************** CONTAINER DO ERRO ****************************/
 .container {
     display: flex;
     justify-content: space-between;
     padding: 0;
+	box-sizing: border-box;
     border-radius: 10px;
     border: 1px solid #7C23F0;
+    background-color: #212125;
 }
 
 .container-img {
