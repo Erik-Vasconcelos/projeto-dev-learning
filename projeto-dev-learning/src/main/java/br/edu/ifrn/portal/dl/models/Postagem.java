@@ -1,6 +1,7 @@
 package br.edu.ifrn.portal.dl.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -98,15 +99,18 @@ public class Postagem implements Serializable {
 	
 	@ManyToOne(optional = false)
 	private Gerenciador autor; 
+	
+	private LocalDate dataPostagem;
 
 	public Postagem(TipoPostagem tipo, String titulo, String imagem, String corpo, String html, String trechoHtml,
-			Disciplina disciplina) {
+			Disciplina disciplina, LocalDate dataPostagem) {
 		setTipoPostagem(tipo);
 		this.titulo = titulo;
 		this.imagem = imagem;
 		this.corpo = corpo;
 		this.html = html;
 		this.disciplina = disciplina;
+		this.dataPostagem = dataPostagem;
 	}
 
 	public TipoPostagem getTipoPostagem() {

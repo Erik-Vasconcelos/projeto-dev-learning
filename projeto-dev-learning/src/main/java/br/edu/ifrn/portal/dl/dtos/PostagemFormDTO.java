@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.dtos;
 
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -57,6 +58,8 @@ public class PostagemFormDTO {
 
 	@NotBlank(message = "Insira ao menos uma tecnologia para ser relacionada a postagem")
 	private String tecnologiaTemp;
+	
+	private LocalDate dataPostagem;
 
 	@NotNull(message = "A(s) tecnologia(s) relacionada(s) a postagem é/são obrigatória(s)!")
 	private Set<Tecnologia> tecnologias = new LinkedHashSet<>();
@@ -121,6 +124,7 @@ public class PostagemFormDTO {
 		this.corpo = postagem.getCorpo();
 		this.html = postagem.getHtml();
 		this.autor = postagem.getAutor();
+		this.dataPostagem = postagem.getDataPostagem();
 	}
 
 	public boolean isEmpty() {

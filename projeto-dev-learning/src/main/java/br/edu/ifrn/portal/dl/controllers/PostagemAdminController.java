@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -142,17 +143,26 @@ public class PostagemAdminController {
 		if (result.hasErrors()) {
 			ModelAndView mv = getIndexComDados();
 			if (result.hasErrors()) {
-				if (!postagemDTO.getImagemFile().isEmpty()) {
-					postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));
+				try {
+					if (!postagemDTO.getImagemFile().isEmpty()) {
+						postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));
+					}
+				} catch (NullPointerException e) {
+					e.printStackTrace();
 				}
 				mv.addObject("mensagem", new Mensagem("Verifique os campos de entrada!", true));
 			}
 			return mv;
 
 		} else {
-			if (!postagemDTO.getImagemFile().isEmpty()) {
-				postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));
+			try {
+				if (!postagemDTO.getImagemFile().isEmpty()) {
+					postagemDTO.setImagemBanner(ConversorImagem.getImagemEncoded(postagemDTO.getImagemFile()));
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
 			}
+			
 
 			if (postagemService.titleExists(postagemDTO.getTitulo())) {
 				ModelAndView mv = getIndexComDados();
@@ -194,6 +204,7 @@ public class PostagemAdminController {
 					postagem.setImagem("");
 				}
 
+				postagem.setDataPostagem(LocalDate.now());
 				postagemService.salvar(postagem);
 				redirect.addFlashAttribute("mensagem", new Mensagem("Postagem inserida com sucesso!"));
 
@@ -225,7 +236,8 @@ public class PostagemAdminController {
 
 				Postagem postagem = postagemDTO.configAttibutes(optional.get());
 				postagem.setAutor(optional.get().getAutor());
-
+				postagem.setDataPostagem(optional.get().getDataPostagem());
+				
 				if (postagemService.nameIsDuplicate(id, postagem.getTitulo())) {
 					ModelAndView mv = getEditComDados();
 					mv.addObject("mensagem", new Mensagem("O título informado já existe no banco de dados!", true));

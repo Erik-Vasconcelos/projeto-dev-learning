@@ -28,6 +28,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers(HttpMethod.GET, "/").permitAll()
 			.antMatchers(HttpMethod.GET, "/error").permitAll() 
+			.antMatchers(HttpMethod.GET, "/disciplinas").permitAll()
 			.antMatchers("/admin").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
 			.antMatchers("/admin/disciplinas/**").hasAnyRole("ADMIN", "ADMIN_MASTER")
 			.anyRequest().authenticated()
@@ -44,7 +45,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	
 	@Override //Ignora algum recurso
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/static/**");
+		web.ignoring().antMatchers("/static/**", "/css/**", "/fontes/**", "/icones/**", "/imagens/**", "/js/**");
 	}
 	
 }
