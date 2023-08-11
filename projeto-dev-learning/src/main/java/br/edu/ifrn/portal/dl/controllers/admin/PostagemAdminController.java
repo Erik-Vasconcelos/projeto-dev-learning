@@ -1,4 +1,4 @@
-package br.edu.ifrn.portal.dl.controllers;
+package br.edu.ifrn.portal.dl.controllers.admin;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class PostagemAdminController {
 	@Autowired
 	private TecnologiaService tecnologiaService;
 
-	private static final int REGISTROS_POR_PAGINA = 1;
+	private static final int REGISTROS_POR_PAGINA = 10;
 
 	private static final int PAGINA_PADRAO = 0;
 

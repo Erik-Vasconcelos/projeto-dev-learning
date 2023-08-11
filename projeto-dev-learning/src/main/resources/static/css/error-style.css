@@ -44,6 +44,7 @@
 .img-error {
     width: auto;
     height: 100%;
+    object-fit: cover;
     border-radius: 10px 0px 0px 10px;
 }
 

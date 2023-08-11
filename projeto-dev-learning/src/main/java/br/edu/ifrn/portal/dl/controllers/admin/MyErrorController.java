@@ -1,4 +1,4 @@
-package br.edu.ifrn.portal.dl.controllers;
+package br.edu.ifrn.portal.dl.controllers.admin;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;

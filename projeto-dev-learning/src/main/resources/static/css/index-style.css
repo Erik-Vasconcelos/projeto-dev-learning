@@ -8,7 +8,25 @@
     src: url(../fontes/orbitron/static/Orbitron-Regular.ttf);
 }
 
-@media(max-width: 1100px) {
+@font-face {
+    font-family: Montserrat-regular;
+    src: url(../fontes/montserrat/Montserrat-Regular.ttf);
+}
+
+@font-face {
+    font-family: Montserrat-medium;
+    src: url(../fontes/montserrat/Montserrat-Medium.ttf);
+}
+
+@font-face {
+    font-family: Montserrat-bold;
+    src: url(../fontes/montserrat/Montserrat-Bold.ttf);
+}
+
+
+
+/*###################### MEDIA QUERIES ######################*/
+@media(max-width: 1024px) {
     section {
         padding: 1.5em 3em 3em 3em;
     }
@@ -22,15 +40,27 @@
         height: auto !important;
     }
 
+    .cbc-style-primary2 {
+        font-size: 16px !important;
+    }
+
+    .tecnologias-blog {
+        padding: 20px 15px 15px 15px !important;
+    }
+
+    .btn-post-tecnologia {
+        font-size: 12px !important;
+        height: 25px !important;
+    }
+
 }
 
 @media(max-width: 768px) {
-
     section {
         padding: 1.2em 2.4em 2.4em 2.4em;
     }
 
-    #coluna-tecnologias{
+    #coluna-tecnologias {
         display: none;
     }
 
@@ -46,14 +76,16 @@
     .row-inner {
         display: flex;
         flex-direction: row;
+        margin-bottom: 12px;
     }
 
     .img-autor,
     .img-calendar {
-        width: 24px;
+        width: 24px !important;
     }
 }
 
+/*Para mobile*/
 @media(max-width: 470px) {
     section {
         padding: 0.8em 1.6em 1.6em 1.6em;
@@ -93,9 +125,68 @@
 
 }
 
+/**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/*----------------------- CONTAINER DA POSTAGEM -----------------------*/
 .class-container {
     padding: 20px 30px 15px 30px;
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 30px 0px;
+    z-index: 2;
+}
+
+.container-postagem {
+    position: inherit;
+    margin: 0;
+}
+
+.externa {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    margin: 0px 0px 40px 0px;
+}
+
+.externa:hover{
+    transform: scale(1.02);
+    transition: 0.2s;
+}
+
+.externa:hover::before {
+    content: '';
+    position: absolute;
+    width: 12vw;
+    height: 400%;
+    z-index: -2;
+    background: linear-gradient( 45deg, #4F26B5, #7C23F0, #8963E1);
+    animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+    100% {
+        transform: rotate(500deg);
+        filter: blur(calc((9vw + 9vh - 30px)/2));
+
+    }
+}
+
+.externa::after {
+
+    /* position: absolute;
+    background-color: #212125;
+    inset: 5px;
+    z-index: -1;
+    border-radius: inherit;*/
 }
 
 .container-info {
@@ -108,6 +199,7 @@
 
 }
 
+/*------ Row 1: Container do título------*/
 .container-titulo {
     border: 1px solid #7C23F0;
     border-radius: 5px;
@@ -115,34 +207,25 @@
 
 .titulo {
     color: #7C23F0;
-    font-family: Orbitron;
-    font-size: 16px;
+    font-family: Montserrat-bold;
+    font-size: 18px;
     margin: 0px;
+    text-align: center;
 }
 
 .ref-disciplina {
     color: #7C23F0;
-    font-family: Orbitron;
+    font-family: Montserrat-medium;
+    text-align: center;
     font-size: 14px;
 }
 
-.img-postagem {
-    width: 100%;
-    height: 35vh;
-    object-fit: cover;
-    border-radius: 10px;
+.ref-disciplina:hover {
+    text-decoration: none;
+    color: #4F26B5;
 }
 
-.previa-post {
-    text-align: justify;
-    height: 100%;
-    max-height: 35vh;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-family: "Open Sans", "Lato", sans-serif;
-    font-size: 14px;
-}
-
+/*------ Row 2: Referência das tecnologias da postagem ------*/
 .containerTecnologias {
     display: flex;
     width: 100%;
@@ -163,6 +246,34 @@
     font-family: Goldman Regular;
 }
 
+.referencia-tecnologia label {
+    margin: 0;
+    font-size: 12px;
+}
+
+/*------ Row 3: Imagem e previa da postagem ------*/
+.img-postagem {
+    width: 100%;
+    height: 35vh;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.previa-post {
+    text-align: justify;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    max-height: 35vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Open Sans", "Lato", sans-serif;
+    font-size: 14px;
+    color: #FFF;
+}
+
+/*------ Row 4: Dados da postagem e botão de ler mais ------*/
 .data {
     color: #FFF;
     font-family: "Open Sans", "Lato", sans-serif;
@@ -170,17 +281,17 @@
     margin: 0;
 }
 
-.ref-type {
+.ref-type-post {
     color: #8963E1;
     font-weight: bold;
 }
 
-.referencia-tecnologia label {
-    margin: 0;
-    font-size: 12px;
+.img-autor {
+    width: 32px;
+    border-radius: 50%;
 }
 
-.item-post {
+.item-data-post {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -192,12 +303,27 @@
     width: auto;
 }
 
+/*----------------------- CONTAINER DAS TECNOLOGIAS -----------------------*/
+.tecnologias-blog {
+    /* overflow: hidden; */
+}
 
-/* container de tecnologias do blog */
+.tecnologias-blog-fixed {
+    position: fixed;
+}
+
+.nav-tecnologias {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0px 5px;
+}
+
 .btn-post-tecnologia {
     border-radius: 5px;
     width: 100%;
     height: 30px;
+    box-sizing: border-box;
     border: 1px solid #7C23F0;
     background-color: transparent;
     color: #7C23F0;
@@ -205,17 +331,12 @@
     font-size: 14px;
 }
 
-.class-container{
-	border-radius: 10px;
-}
-
-.tecnologias-blog{
-	position: static;
-	width: auto;
-}
-
-section {
-    display: flex;
-    gap: 20px;
+.btn-post-tecnologia:hover {
+    background-color: #7C23F0;
     color: #FFF;
+    transition: 0.5s;
+}
+
+.class-container {
+    border-radius: 10px;
 }

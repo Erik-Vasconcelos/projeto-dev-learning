@@ -42,30 +42,24 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "postagens")
 
 @NamedNativeQueries(value = {
-	@NamedNativeQuery(name = "Postagem.countPostsByType", query = "SELECT p.tipo_postagem, COUNT(p.id) AS quantidade FROM postagens p"
-			+ " INNER JOIN disciplinas d ON d.id = p.disciplina_id"
-			+ " GROUP BY p.tipo_postagem", resultSetMapping = "countPostsByTypeMapping"),
-	
-	@NamedNativeQuery(name = "Postagem.countPostByDisciplinas", query = "SELECT d.nome AS disciplina, COUNT(p.id) AS quantidade FROM postagens p"
-			+ " INNER JOIN disciplinas d On d.id = p.disciplina_id"
-			+ " GROUP BY disciplina ORDER BY disciplina ASC" , resultSetMapping = "countPostByDisciplinasMapping")
-})
+		@NamedNativeQuery(name = "Postagem.countPostsByType", query = "SELECT p.tipo_postagem, COUNT(p.id) AS quantidade FROM postagens p"
+				+ " INNER JOIN disciplinas d ON d.id = p.disciplina_id"
+				+ " GROUP BY p.tipo_postagem", resultSetMapping = "countPostsByTypeMapping"),
+
+		@NamedNativeQuery(name = "Postagem.countPostByDisciplinas", query = "SELECT d.nome AS disciplina, COUNT(p.id) AS quantidade FROM postagens p"
+				+ " INNER JOIN disciplinas d On d.id = p.disciplina_id"
+				+ " GROUP BY disciplina ORDER BY disciplina ASC", resultSetMapping = "countPostByDisciplinasMapping") })
 
 @SqlResultSetMappings(value = {
-	@SqlResultSetMapping(name = "countPostsByTypeMapping", classes = {
-			@ConstructorResult(targetClass = br.edu.ifrn.portal.dl.utils.InfoPostagens.class, columns = {
-					@ColumnResult(name = "tipo_postagem", type = Integer.class),
-					@ColumnResult(name = "quantidade", type = Long.class) 
-			}) 
-	}),
-	
-	@SqlResultSetMapping(name = "countPostByDisciplinasMapping", classes = {
-			@ConstructorResult(targetClass = br.edu.ifrn.portal.dl.utils.InfoDisciplina.class, columns = {
-					@ColumnResult(name = "disciplina", type = String.class),
-					@ColumnResult(name = "quantidade", type = Long.class) 
-			}) 
-	})
-})
+		@SqlResultSetMapping(name = "countPostsByTypeMapping", classes = {
+				@ConstructorResult(targetClass = br.edu.ifrn.portal.dl.utils.InfoPostagens.class, columns = {
+						@ColumnResult(name = "tipo_postagem", type = Integer.class),
+						@ColumnResult(name = "quantidade", type = Long.class) }) }),
+
+		@SqlResultSetMapping(name = "countPostByDisciplinasMapping", classes = {
+				@ConstructorResult(targetClass = br.edu.ifrn.portal.dl.utils.InfoDisciplina.class, columns = {
+						@ColumnResult(name = "disciplina", type = String.class),
+						@ColumnResult(name = "quantidade", type = Long.class) }) }) })
 public class Postagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -96,10 +90,10 @@ public class Postagem implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<Tecnologia> tecnologias = new LinkedHashSet<>();
-	
+
 	@ManyToOne(optional = false)
-	private Gerenciador autor; 
-	
+	private Gerenciador autor;
+
 	private LocalDate dataPostagem;
 
 	public Postagem(TipoPostagem tipo, String titulo, String imagem, String corpo, String html, String trechoHtml,
@@ -119,6 +113,11 @@ public class Postagem implements Serializable {
 
 	public void setTipoPostagem(TipoPostagem tipo) {
 		this.tipoPostagem = tipo.getCodigo();
+	}
+
+	public String getDataFormatada() {
+		return String.format("%d de %s de %d", this.dataPostagem.getDayOfMonth(),
+				this.dataPostagem.getMonth().name().substring(0, 3).toLowerCase(), this.dataPostagem.getYear());
 	}
 
 }

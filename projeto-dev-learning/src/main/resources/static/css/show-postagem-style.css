@@ -1,0 +1,266 @@
+/*#########################################################
+					ESTILIZAÇÃO DA PÁGINA
+#########################################################*/
+
+/**************************** IMPORTAÇÕES ****************************/
+@font-face {
+    font-family: Montserrat-regular;
+    src: url(../fontes/montserrat/Montserrat-Regular.ttf);
+}
+
+@font-face {
+    font-family: Montsettat-medium;
+    src: url(../fontes/montserrat/Montserrat-Medium.ttf);
+}
+
+@font-face {
+    font-family: Montserrat-bold;
+    src: url(../fontes/montserrat/Montserrat-Bold.ttf);
+}
+
+@font-face {
+    font-family: Source-sans-pro;
+    src: url(../fontes/source-sans-pro/static/SourceSans3-Regular.ttf);
+}
+
+
+/**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
+
+/*###################### MEDIA QUERIES ######################*/
+@media(max-width: 768px) {
+    .img-postagem {
+        height: 45vh !important;
+    }
+
+    .section-conteudo {
+        padding: 2em 3.2em 3.2em 3.2em;
+    }
+
+    .titulo-postagem {
+        font-size: 1.8em;
+    }
+
+    .ref-disciplina {
+        font: 1em;
+    }
+
+    .data {
+        font-size: 0.85em;
+    }
+
+    .container-autor {
+        height: 12em !important;
+    }
+
+    .img-autor {
+        width: 5em !important;
+    }
+
+    .nome-autor {
+        font-size: 1.1em !important;
+    }
+}
+
+@media(max-width: 425px) {
+    .img-postagem {
+        height: 35vh !important;
+    }
+
+    .section-conteudo {
+        padding: 1em 2em 4em 2em;
+    }
+
+    .dados-postagem {
+        margin-bottom: 2em !important;
+    }
+
+    .container-autor {
+        height: 10em !important;
+        width: 80% !important;
+    }
+
+    .group-img_autor-name_autor {
+        margin-bottom: 0.5em !important;
+    }
+
+    .img-autor {
+        width: 4em !important;
+    }
+
+    .nome-autor {
+        font-size: 1em !important;
+    }
+
+    .linha {
+        margin: 0.5em 0em !important;
+    }
+}
+
+/*------------------------- FORMATAÇÃO PADRÃO -------------------------*/
+body {
+    margin-top: 0px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/*------------------------- CABECALHO: BARRA DE PROGRESSO -------------------------*/
+#caminhoRolagem {
+    position: fixed;
+    width: 100%;
+    height: 2px;
+    background-color: #303030;
+}
+
+#barraProgresso {
+    position: fixed;
+    z-index: 1;
+    height: 2px;
+    background-color: #7C23F0;
+}
+
+/*------------------------- IMAGEM DA POSTAGEM -------------------------*/
+.section-img {
+    padding: 0;
+    margin: 4.3em 0 1.5em 0;
+}
+
+.img-postagem {
+    width: 100%;
+    height: 55vh;
+    object-fit: cover;
+}
+
+/*------------------------- CONTEÚDO DA POSTAGEM -------------------------*/
+.dados-postagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px 0px;
+    width: 90%;
+    padding: 0vh 3vw;
+    margin-bottom: 3em;
+    align-items: center;
+}
+
+.titulo-postagem {
+    font-family: Montserrat-bold;
+    text-align: center;
+    color: #FFF;
+}
+
+/*REFERENCIA DA DISCIPLINA*/
+.ref-disciplina {
+    display: inline-block;
+    position: relative;
+    padding: 2px 4px;
+    font-family: Orbitron;
+    font-size: 18px;
+    color: #7C23F0;
+}
+
+.ref-disciplina:hover {
+    text-decoration: none;
+    color: #7C23F0;
+}
+
+/*Efeito underline ref. disciplina*/
+.ref-disciplina::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #7C23F0;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.ref-disciplina:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/*Efeito underline ref. disciplina*/
+
+.containerTecnologias {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 5px 8px;
+    width: 100%;
+    padding: 5px 0px 5px 0px;
+}
+
+.referencia-tecnologia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 1.6em;
+    padding: 10px;
+    border-radius: 15px;
+    font-family: Goldman Regular;
+    background-color: #303030;
+    color: #8963E1;
+}
+
+.referencia-tecnologia label {
+    margin: 0;
+    font-size: 14px;
+}
+
+.referencia-tecnologia:hover {
+    transform: scale(1.1);
+    transition: 0.1s;
+    border: 1px solid #8963E1;
+    box-shadow: 2px 2px 4px #8963E1,
+        2px 0px 4px #8963E1;
+}
+
+.data {
+    margin: 0;
+    font-family: "Source-sans-pro";
+    font-size: 16px;
+    text-align: center;
+    color: #FFF;
+}
+
+.ref-type-post {
+    font-weight: bold;
+    color: #8963E1;
+}
+
+/*------------------------- CONTAINER DO AUTOR -------------------------*/
+.container-autor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 14em;
+    min-height: 10em;
+    max-height: 20em;
+    border-radius: 0.75em;
+    margin: 1.3em 0 3em 0;
+}
+
+.group-img_autor-name_autor {
+    margin-bottom: 1em;
+}
+
+.img-autor {
+    width: 100px;
+    border-radius: 50%;
+}
+
+.nome-autor {
+    font-family: Montsettat-medium;
+    font-size: 1.25em;
+}
+
+.linha {
+    background-color: #7C23F0;
+    width: 100%;
+}
