@@ -10,10 +10,17 @@
 	<section class="section-img">
 		<img th:src="${postagem.imagem}" onError="this.onerror=null;this.src='/imagens/img-post-padrao.jpg';"
 			alt="imagem postagem" class="img-postagem">
+
 	</section>
+	<div class="d-flex justify-content-left align-items-center">
+
+		<a id="link-voltar" href="" class="link-voltar">
+			<img src="/icones/voltar.png" alt="voltar">
+			voltar
+		</a>
+	</div>
 
 	<section class="d-flex flex-column align-items-center section-conteudo">
-
 		<div class="dados-postagem mb-5">
 			<h1 th:text="${postagem.titulo}" class="titulo-postagem mb-2">As principais tecnologias da atualidade</h1>
 
@@ -30,7 +37,7 @@
 
 			<div class="containerTecnologias d-flex justify-content-center">
 				<div class="referencia-tecnologia" th:each="tecnologia :${postagem.tecnologias}">
-					<label th:text="${tecnologia.nome}"></label>
+					<label th:text="${ '#' + tecnologia.nome}"></label>
 				</div>
 			</div>
 		</div>
@@ -64,5 +71,6 @@
 	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 	crossorigin="anonymous"></script>
 <script src="/js/script-progress-bar.js" type="text/javascript"></script>
+<script src="/js/script-show-postagem.js" type="text/javascript"></script>
 
 </html>

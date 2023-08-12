@@ -1,7 +1,7 @@
 const topoColumn = document.getElementsByClassName("tecnologias-blog").offsetTop;
 const tecnologiasBlog = document.getElementById("tecnologias-blog");
 
-const alturaCta = $("#tecnologias-blog").height(); //capturar a altura do div fixo
+const alturaCta = document.getElementById("tecnologias-blog").clientHeight; //capturar a altura do div fixo
 const alturadiv = $("#coluna-tecnologias").height(); //capturar a altura do div fixo
 window.onscroll = function () {
     fixar();
@@ -23,7 +23,7 @@ function fixar() {
         //tecnologiasBlog.classList.remove("tecnologias-blog-fixed");
          $('#tecnologias-blog').css({
             'position': 'static', //fixo a partir deste ponto
-            'margin-top': alturadiv - (alturaCta  + 65)+ 'px', //agora novoTop
+            'margin-top': alturadiv - (alturaCta)+ 'px', //agora novoTop
         });
     }
 

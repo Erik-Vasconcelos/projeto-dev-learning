@@ -1,6 +1,7 @@
 package br.edu.ifrn.portal.dl.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,8 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 
 	public List<Postagem> findByTituloContainingIgnoreCase(String titulo);
 
+	public Optional<Postagem> findByTituloIgnoreCase(String titulo);
+	
 	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.id ASC")
 	public Page<Postagem> findByTituloPagined(@Param("titulo") String titulo, Pageable pageable);
 

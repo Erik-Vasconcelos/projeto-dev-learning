@@ -1,6 +1,5 @@
 package br.edu.ifrn.portal.dl.services;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifrn.portal.dl.models.Postagem;
-import br.edu.ifrn.portal.dl.models.enuns.TipoPostagem;
 import br.edu.ifrn.portal.dl.repositories.PostagemRepository;
 import br.edu.ifrn.portal.dl.utils.InfoDisciplina;
 import br.edu.ifrn.portal.dl.utils.InfoPostagens;
@@ -43,6 +41,10 @@ public class PostagemService {
 
 	public Optional<Postagem> obterPorId(Long id) throws IllegalArgumentException {
 		return postagemRepository.findById(id);
+	}
+	
+	public Optional<Postagem> obterPorTitulo(String titulo) {
+		return postagemRepository.findByTituloIgnoreCase(titulo);
 	}
 
 	public Optional<Postagem> obterAutorPorIdPostagem(Long idPostagem) throws IllegalArgumentException {

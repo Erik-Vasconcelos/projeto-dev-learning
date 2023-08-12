@@ -23,12 +23,31 @@
     src: url(../fontes/montserrat/Montserrat-Bold.ttf);
 }
 
-
+@font-face {
+    font-family: Source-sans-pro;
+    src: url(../fontes/source-sans-pro/static/SourceSans3-Regular.ttf);
+}
 
 /*###################### MEDIA QUERIES ######################*/
 @media(max-width: 1024px) {
     section {
-        padding: 1.5em 3em 3em 3em;
+        padding: 1.5em 3em 3em 3em !important;
+    }
+
+    .tecnologias-blog {
+        right: 3em !important;
+    }
+
+    .titulo {
+        font-size: 1.5em !important;
+    }
+
+    .ref-disciplina {
+        font-size: 0.8em !important;
+    }
+
+    .data {
+        font-size: 0.75em !important;
     }
 
     .img-postagem {
@@ -55,6 +74,24 @@
 
 }
 
+@media(max-width: 992px) {
+    .containerDisciplina {
+        text-align: center !important;
+        margin-bottom: 3px;
+    }
+
+    .containerTecnologias {
+        justify-content: center !important;
+    }
+
+    .row-inner {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 12px;
+    }
+
+}
+
 @media(max-width: 768px) {
     section {
         padding: 1.2em 2.4em 2.4em 2.4em;
@@ -69,16 +106,6 @@
         margin-bottom: 10px;
     }
 
-    .titulo {
-        margin-bottom: 15px !important;
-    }
-
-    .row-inner {
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 12px;
-    }
-
     .img-autor,
     .img-calendar {
         width: 24px !important;
@@ -86,17 +113,21 @@
 }
 
 /*Para mobile*/
-@media(max-width: 470px) {
+@media(max-width: 426px) {
     section {
-        padding: 0.8em 1.6em 1.6em 1.6em;
+        padding: 0.5em 1em 3em 1em !important;
+    }
+
+    .externa {
+        margin: 0px 0px 20px 0px !important;
     }
 
     .class-container {
-        padding: 10px 15px 10px 15px !important;
+        padding: 10px 15px !important;
     }
 
     .titulo {
-        font-size: 14px !important;
+        font-size: 1.12em !important;
     }
 
     .ref-disciplina {
@@ -112,7 +143,7 @@
     .previa-post {
         max-height: 22vh !important;
         height: auto !important;
-        font-size: 12px !important;
+        font-size: 14px !important;
     }
 
     .data {
@@ -126,6 +157,10 @@
 }
 
 /**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
+html{
+    scroll-behavior: smooth;
+}
+
 section {
     display: flex;
     flex-direction: column;
@@ -157,7 +192,7 @@ section {
     margin: 0px 0px 40px 0px;
 }
 
-.externa:hover{
+.externa:hover {
     transform: scale(1.02);
     transition: 0.2s;
 }
@@ -168,7 +203,7 @@ section {
     width: 12vw;
     height: 400%;
     z-index: -2;
-    background: linear-gradient( 45deg, #4F26B5, #7C23F0, #8963E1);
+    background: linear-gradient(45deg, #4F26B5, #7C23F0, #8963E1);
     animation: animate 4s linear infinite;
 }
 
@@ -176,7 +211,6 @@ section {
     100% {
         transform: rotate(500deg);
         filter: blur(calc((9vw + 9vh - 30px)/2));
-
     }
 }
 
@@ -189,49 +223,93 @@ section {
     border-radius: inherit;*/
 }
 
+
+/*------ Row 1: Container do título------*/
 .container-info {
     display: flex;
     width: 100%;
     margin: 0px;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
     box-sizing: border-box;
 
 }
 
-/*------ Row 1: Container do título------*/
 .container-titulo {
-    border: 1px solid #7C23F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
     border-radius: 5px;
+    border: 1px solid #7C23F0;
 }
 
 .titulo {
-    color: #7C23F0;
-    font-family: Montserrat-bold;
-    font-size: 18px;
     margin: 0px;
+    padding: 4px;
+    font-family: Montserrat-bold;
+    font-size: 28px;
     text-align: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    color: #FFF;
 }
 
+.group-disciplina-tecnogias {
+    padding: 5px;
+}
+
+/* .containerDisciplina{
+    position: absolute;
+} */
+
 .ref-disciplina {
+    position: relative;
+    display: inline-block;
     color: #7C23F0;
-    font-family: Montserrat-medium;
+    font-family: Orbitron;
     text-align: center;
-    font-size: 14px;
+    font-size: 1em;
 }
 
 .ref-disciplina:hover {
     text-decoration: none;
-    color: #4F26B5;
+    color: #7C23F0;
+}
+
+/*Efeito underline ref. disciplina*/
+.ref-disciplina::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #7C23F0;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.ref-disciplina:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    width: 100%;
 }
 
 /*------ Row 2: Referência das tecnologias da postagem ------*/
+
+
+
 .containerTecnologias {
     display: flex;
+    overflow: auto;
+    justify-content: left;
     width: 100%;
     flex-wrap: wrap;
     grid-gap: 5px 8px;
-    padding: 5px 0px 5px 0px;
+    padding: 5px;
 }
 
 .referencia-tecnologia {
@@ -251,6 +329,14 @@ section {
     font-size: 12px;
 }
 
+.referencia-tecnologia:hover {
+    transform: scale(1.1);
+    transition: 0.1s;
+    border: 1px solid #8963E1;
+    box-shadow: 2px 2px 4px #8963E1,
+        2px 0px 4px #8963E1;
+}
+
 /*------ Row 3: Imagem e previa da postagem ------*/
 .img-postagem {
     width: 100%;
@@ -268,8 +354,8 @@ section {
     max-height: 35vh;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-family: "Open Sans", "Lato", sans-serif;
-    font-size: 14px;
+    font-family: Source-sans-pro;
+    font-size: 1em;
     color: #FFF;
 }
 
@@ -304,37 +390,88 @@ section {
 }
 
 /*----------------------- CONTAINER DAS TECNOLOGIAS -----------------------*/
+#coluna-tecnologias {
+    padding: 5px 15px;
+}
+
 .tecnologias-blog {
-    /* overflow: hidden; */
+    flex: 1;
+    position: fixed;
+    right: 4em;
+    width: 20vw;
+    padding: 20px 20px 15px 20px;
+    height: calc(60vh + 4em);
 }
 
 .tecnologias-blog-fixed {
     position: fixed;
+    right: 4em;
+    width: 22vw;
 }
 
 .nav-tecnologias {
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 80%;
     gap: 8px;
     margin: 0px 5px;
+    padding: 1vh 1.1vw;
 }
 
 .btn-post-tecnologia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 8px;
     border-radius: 5px;
     width: 100%;
     height: 30px;
+    min-height: 30px;
     box-sizing: border-box;
     border: 1px solid #7C23F0;
     background-color: transparent;
     color: #7C23F0;
     font-family: Orbitron;
     font-size: 14px;
+    overflow: hidden;
+}
+
+.nav-tecnologias a:hover {
+	text-decoration: none;
+}
+
+.btn-post-tecnologia label {
+    margin: 0;
+}
+
+.tec-name{
+    width: auto;
+    margin-left: 0.6vw !important;
+    font-weight: bold;
+    scroll-behavior: auto;
+}
+
+.qtd-post {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    color: #FFF;
+    font-size: 12px;
+    height: 100%;
+    border-radius: 5px;
+    padding: 0px 5px;
+    background-color: #4F26B5;
 }
 
 .btn-post-tecnologia:hover {
     background-color: #7C23F0;
     color: #FFF;
     transition: 0.5s;
+    transform: scale(1.1);
+    box-shadow: 0 0 2px #7C23F0, 0 0 4px #7C23F0, 0 0 8px #7C23F0;
 }
 
 .class-container {

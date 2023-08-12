@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.edu.ifrn.portal.dl.exceptions.ResourceNotFountException;
 import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.services.PostagemService;
 
@@ -33,10 +34,28 @@ public class ShowPostagemController {
 		
 		if(optional.isPresent()) {
 			mv.addObject("postagem", optional.get());
+		}else {
+			throw new ResourceNotFountException();
+		}
+
+		return mv;
+	}
+	
+	@GetMapping("/post/{titulo}")
+	public ModelAndView getPostByTitle(@PathVariable(name = "titulo") String titulo) {
+		ModelAndView mv = new ModelAndView("pg-show-postagem");
+		
+		titulo =  titulo.replace('-', ' ').trim();
+		Optional<Postagem> optional = postagemService.obterPorTitulo(titulo);
+		
+		if(optional.isPresent()) {
+			mv.addObject("postagem", optional.get());
+		}else {
+			
+			throw new ResourceNotFountException();
 		}
 		
 		return mv;
 	}
-	
 
 }

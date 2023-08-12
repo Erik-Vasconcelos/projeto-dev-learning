@@ -6,87 +6,81 @@
 
 <body>
 	<header th:replace="~{fragmentos :: header-padrao}"></header>
-
 	<section>
 		<div class="row">
 			<div class="col-12 col-sm-12 col-md-9">
 				<div class="externa" th:each="postagem : ${listaPostagens.content}">
-					<div class="class-container container-fluid container-postagem"
-						>
-						<div class="row mb-1">
+					<div class="class-container container-fluid container-postagem">
+
+						<div class="row  justify-content-center mb-1">
 							<div class="col-md-12">
-
 								<div class="container-titulo">
-									<div class="row container-info">
-										<div class="col-md-9">
-											<label th:text="${postagem.titulo}" class="titulo"></label>
-										</div>
-
-										<div class="col-md-3 d-flex justify-content-center">
-											<a href="/disciplinas" th:text="${ '<' + postagem.disciplina.nome + '/>'}"
-												class="ref-disciplina"></a>
-										</div>
-									</div>
+									<label th:text="${postagem.titulo}" class="titulo"></label>
 								</div>
 							</div>
 						</div>
 
-						<div class="row mb-1">
-							<div class="col-md-12">
+						<div class="row d-flex align-items-center mb-1 group-disciplina-tecnogias">
+							<div class="col-sm-12 col-md-12 col-lg-7">
+								<div class="containerDisciplina">
+									<a href="/disciplinas" th:text="${ '<' + postagem.disciplina.nome + '/>'}"
+										class="ref-disciplina"></a>
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-12 col-lg-5">
 								<div class="containerTecnologias">
 									<div class="referencia-tecnologia" th:each="tecnologia :${postagem.tecnologias}">
-										<label th:text="${tecnologia.nome}"></label>
+										<label th:text="${ '#' + tecnologia.nome}"></label>
 									</div>
 								</div>
 							</div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-7">
+							<div class="col-sm-12 col-md-12 col-lg-7">
 								<img th:src="${postagem.imagem}"
 									onError="this.onerror=null;this.src='/imagens/img-post-padrao.jpg';" alt="postagem"
 									class="img-postagem mb-2">
 							</div>
 
-							<div class="col-md-5">
+							<div class="col-sm-12 col-md-12 col-lg-5">
 								<p th:text="${#strings.abbreviate(postagem.corpo, 800)}" class="previa-post"></p>
-								<!-- <p th:text="${#strings.abbreviate(postagem.corpo, 500)}" class="previa-post"></p> -->
 							</div>
 
 						</div>
 
 						<div class="row">
-							<div class="col-md-7">
+							<div class="col-sm-12 col-md-12 col-lg-7">
 								<div class="row row-inner">
-									<div class="col-6 col-sm-4 col-md-6 col-lg-4 item-data-post">
+									<div class="col-12 col-sm-4 col-md-4 col-lg-5 item-data-post">
 										<div class="ref-data">
-										 <!-- TODO -->	<img th:src="${postagem.autor.imagem}"
+											<!-- TODO --> <img th:src="${postagem.autor.imagem}"
 												onError="this.onerror=null;this.src='/icones/usuario.png';"
 												alt="imagem autor" class="img-autor">
 											<label th:text="${postagem.autor.nome}" class="data"></label>
 										</div>
 									</div>
 
-									<div class="col-6 col-sm-4 col-md-6 col-lg-4 item-data-post">
+									<div class="col-8 col-sm-4 col-md-4 col-lg-5 item-data-post">
 										<div class="ref-data">
 											<img src="/icones/calendario.png" alt="calendario" class="img-calendar">
 											<label th:text="${postagem.getDataFormatada()}" class="data"></label>
 										</div>
 									</div>
 
-									<div class="col-12 col-sm-4 col-md-12 col-lg-4 item-data-post">
+									<div class="col-4 col-sm-4 col-md-4 col-lg-2 item-data-post">
 										<label th:text="${ '{'+ postagem.tipoPostagem.descricao + '}'}"
 											class="data ref-type-post"></label>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-md-5 item-data-post">
-								<button class="btn btn-primary btn-continue">Continue lendo</button>
+							<div class="col-sm-12 col-md-12 col-lg-5 item-data-post">
+								<a th:href="${ '/post/' + #strings.toLowerCase(#strings.replace('__${postagem.titulo}__', ' ', '-'))}">
+								<button class="btn btn-primary btn-continue">Continue lendo</button></a>
 							</div>
 
-							<!-- </div>
-						</div> -->
 						</div>
 
 					</div>
@@ -97,6 +91,23 @@
 				<div id="tecnologias-blog" class="class-container tecnologias-blog">
 					<h3 class="cbc-n5 cbc-style-primary2 mb-3">Tecnologias</h3>
 					<nav class="nav-tecnologias">
+						<a href="#">
+							<button class="btn-post-tecnologia">
+								<label class="tec-name">HTML</label>
+								<label class="qtd-post">4504</label>
+							</button>
+						</a>
+						<button class="btn-post-tecnologia">
+							<label class="tec-name">CSS</label>
+							<label class="qtd-post">124</label>
+						</button>
+
+						<button class="btn-post-tecnologia">
+							<label class="tec-name">Javascript</label>
+							<label class="qtd-post">04</label>
+						</button>
+						<button class="btn-post-tecnologia">HTML</button>
+						<button class="btn-post-tecnologia">HTML</button>
 						<button class="btn-post-tecnologia">HTML</button>
 						<button class="btn-post-tecnologia">HTML</button>
 						<button class="btn-post-tecnologia">HTML</button>
