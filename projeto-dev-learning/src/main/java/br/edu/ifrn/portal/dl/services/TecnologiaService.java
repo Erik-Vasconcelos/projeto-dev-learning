@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.repositories.TecnologiaRepository;
+import br.edu.ifrn.portal.dl.utils.PostsTecnologia;
 
 /**
  * Classe responsável por encapsular o objeto de acesso a dados da <strong>entidade 
@@ -50,6 +51,10 @@ public class TecnologiaService {
 	
 	public Page<Tecnologia> getTecnologiasPorNomePaginadas(String nome, Pageable pageable){
 		return tecnologiaRepository.findByNomePagined(nome, pageable);
+	}
+	
+	public List<PostsTecnologia> getPostsPorTecnologia(){
+		return tecnologiaRepository.getNumbersPostsByTecnology();
 	}
 
 	/*---------------DELETE---------------*/

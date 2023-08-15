@@ -1,6 +1,6 @@
 package br.edu.ifrn.portal.dl.repositories;
 
-import javax.persistence.NamedNativeQuery;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.edu.ifrn.portal.dl.models.Tecnologia;
+import br.edu.ifrn.portal.dl.utils.PostsTecnologia;
 
 /**
  * Interface responsável pela comunicação com o banco de dados referente aos processos 
@@ -35,7 +36,9 @@ public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long>{
 	@Query("SELECT count(t.id) FROM Tecnologia t WHERE t.nome = :nome AND t.id <> :id") 
 	public Long countOccurrenceName(@Param("id") Long id, @Param("nome") String nome);
 	
-	//@Query("SELECT count(pt.postagem_id) FROM postagens_tecnologias pt WHERE pt.tecnologias_id = :id)") 
 	public Long countRelatedPosts(Long id);
+	
+	@Query(nativeQuery = true)
+	public List<PostsTecnologia> getNumbersPostsByTecnology();
 	
 }

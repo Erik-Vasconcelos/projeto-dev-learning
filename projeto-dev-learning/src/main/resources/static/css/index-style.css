@@ -29,135 +29,169 @@
 }
 
 /*###################### MEDIA QUERIES ######################*/
-@media(max-width: 1024px) {
+/*---- col-lg ----*/
+@media(max-width: 1200px) {
     section {
         padding: 1.5em 3em 3em 3em !important;
     }
 
     .tecnologias-blog {
+        padding: 1.25em 1em 1em 1em !important;
         right: 3em !important;
+    }
+
+    .cbc-style-primary2 {
+        font-size: 1em !important;
+    }
+
+    .btn-post-tecnologia {
+        height: 1.5em !important;
+        font-size: 0.75em !important;
     }
 
     .titulo {
         font-size: 1.5em !important;
     }
 
-    .ref-disciplina {
-        font-size: 0.8em !important;
-    }
-
-    .data {
-        font-size: 0.75em !important;
-    }
-
-    .img-postagem {
-        max-height: 25vh !important;
+    .referencia-disciplina {
+        font-size: 0.87em !important;
     }
 
     .previa-post {
-        max-height: 25vh !important;
         height: auto !important;
+        max-height: 25vh !important;
     }
 
-    .cbc-style-primary2 {
-        font-size: 16px !important;
+    .nome-autor {
+        font-size: 1.13em !important;
     }
-
-    .tecnologias-blog {
-        padding: 20px 15px 15px 15px !important;
-    }
-
-    .btn-post-tecnologia {
-        font-size: 12px !important;
-        height: 25px !important;
-    }
-
 }
 
+/*---- col-md ----*/
 @media(max-width: 992px) {
-    .containerDisciplina {
-        text-align: center !important;
-        margin-bottom: 3px;
+    #coluna-tecnologias {
+        display: none;
     }
 
-    .containerTecnologias {
-        justify-content: center !important;
+    .ref-type-post {
+        font-size: 0.75em !important;
     }
-
-    .row-inner {
-        display: flex;
-        flex-direction: row;
-        margin-bottom: 12px;
-    }
-
 }
 
+/*---- col-sm ----*/
 @media(max-width: 768px) {
     section {
         padding: 1.2em 2.4em 2.4em 2.4em;
     }
 
-    #coluna-tecnologias {
-        display: none;
+    .img-postagem {
+        min-height: 25vh !important;
+        max-height: 30vh !important;
     }
 
-    .item-post {
-        justify-content: left;
-        margin-bottom: 10px;
+    .previa-post {
+        max-height: 22vh !important;
     }
 
-    .img-autor,
-    .img-calendar {
-        width: 24px !important;
+    .img-autor {
+        width: 3em !important;
+    }
+
+    .nome-autor {
+        font-size: 1em !important;
+    }
+
+    .coluna-btn {
+        justify-content: center !important;
+        margin-top: 0.62em;
     }
 }
 
-/*Para mobile*/
-@media(max-width: 426px) {
+/*---- col ----*/
+@media(max-width: 576px) {
     section {
         padding: 0.5em 1em 3em 1em !important;
     }
 
     .externa {
-        margin: 0px 0px 20px 0px !important;
+        margin: 0 0 1.25em 0 !important;
     }
 
-    .class-container {
-        padding: 10px 15px !important;
+    .conteudo {
+        padding: 0.5em 1em 1em 1em !important;
     }
 
+    /*container das tecnologias relacionadas*/
+    .nav-ref-tecnologias {
+        width: calc(100% - 30px) !important;
+        max-width: calc(100% - 30px) !important;
+        border-radius: 0 !important;
+    }
+
+    .container-tecnologias {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0.35em 1em 0.3em 1em !important;
+        margin: 0 !important;
+    }
+
+    /*Scroll das tecnologias do post*/
+    .container-tecnologias::-webkit-scrollbar {
+        width: 100% !important;
+        height: 3px !important;
+    }
+
+    .referencia-tecnologia {
+        height: 1.3em !important;
+        padding: 4px 5px !important;
+    }
+
+    /*Dados da postagem*/
     .titulo {
-        font-size: 1.12em !important;
+        font-size: 1.25em !important;
     }
 
-    .ref-disciplina {
-        font-size: 14px !important;
+    .referencia-disciplina {
+        font-size: 1em !important;
     }
 
+    .previa-post {
+        max-height: 20vh !important;
+        font-size: 0.87em !important;
+    }
+
+    .item-data-post {
+        margin-bottom: 0.5em !important;
+    }
+
+    .nome-autor {
+        font-size: 0.87em !important;
+    }
+
+    .btn {
+        font-size: 0.87em;
+    }
+}
+
+/*---- mobile L ----*/
+@media(max-width: 424px) {
     .img-postagem {
-        min-height: 15vh !important;
-        max-height: 22vh !important;
+        min-height: 24vh !important;
+        max-height: 28vh !important;
         height: auto !important;
     }
 
     .previa-post {
-        max-height: 22vh !important;
-        height: auto !important;
-        font-size: 14px !important;
+        max-height: 18vh !important;
     }
 
-    .data {
-        font-size: 12px !important;
+    .referencia-disciplina {
+        font-size: 13px !important;
     }
-
-    .btn {
-        font-size: 14px;
-    }
-
 }
 
 /**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
-html{
+html {
     scroll-behavior: smooth;
 }
 
@@ -167,29 +201,49 @@ section {
     gap: 20px;
 }
 
+.container-tecnologias::-webkit-scrollbar {
+    width: 50%;
+    height: 6px;
+}
+
+.link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: none;
+}
+
 /*----------------------- CONTAINER DA POSTAGEM -----------------------*/
 .class-container {
-    padding: 20px 30px 15px 30px;
+    padding: 20px 30px 1em 30px;
     margin: 0px 0px 30px 0px;
     z-index: 2;
+    border-radius: 0.625em;
 }
 
 .container-postagem {
-    position: inherit;
     margin: 0;
+    padding: 0;
 }
 
+.conteudo {
+    padding: 0.5em 30px 1em 30px;
+}
+
+/*---- div para o efeito rotatório ----*/
 .externa {
-    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
-    border-radius: 10px;
     position: relative;
     overflow: hidden;
+    padding: 5px;
     margin: 0px 0px 40px 0px;
+    border-radius: 10px;
 }
 
 .externa:hover {
@@ -198,8 +252,8 @@ section {
 }
 
 .externa:hover::before {
-    content: '';
     position: absolute;
+    content: '';
     width: 12vw;
     height: 400%;
     z-index: -2;
@@ -214,119 +268,64 @@ section {
     }
 }
 
-.externa::after {
-
-    /* position: absolute;
-    background-color: #212125;
-    inset: 5px;
-    z-index: -1;
-    border-radius: inherit;*/
-}
-
-
-/*------ Row 1: Container do título------*/
-.container-info {
-    display: flex;
-    width: 100%;
-    margin: 0px;
-    align-items: center;
-    padding: 8px;
-    box-sizing: border-box;
-
-}
-
-.container-titulo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #7C23F0;
-}
-
-.titulo {
-    margin: 0px;
-    padding: 4px;
-    font-family: Montserrat-bold;
-    font-size: 28px;
-    text-align: center;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-    color: #FFF;
-}
-
-.group-disciplina-tecnogias {
-    padding: 5px;
-}
-
-/* .containerDisciplina{
-    position: absolute;
-} */
-
-.ref-disciplina {
+/*------ Row 1: Imagem e tecnologias------*/
+.div-img {
     position: relative;
-    display: inline-block;
-    color: #7C23F0;
-    font-family: Orbitron;
-    text-align: center;
-    font-size: 1em;
-}
-
-.ref-disciplina:hover {
-    text-decoration: none;
-    color: #7C23F0;
-}
-
-/*Efeito underline ref. disciplina*/
-.ref-disciplina::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #7C23F0;
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
-}
-
-.ref-disciplina:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-    width: 100%;
-}
-
-/*------ Row 2: Referência das tecnologias da postagem ------*/
-
-
-
-.containerTecnologias {
     display: flex;
-    overflow: auto;
     justify-content: left;
+    align-items: flex-end;
+}
+
+.img-postagem {
     width: 100%;
-    flex-wrap: wrap;
-    grid-gap: 5px 8px;
-    padding: 5px;
+    max-height: 35vh;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.nav-ref-tecnologias {
+    position: absolute;
+    display: flex;
+    justify-content: left;
+    width: auto;
+    max-width: 50%;
+    max-height: 50px;
+    margin: 0 0 1.25em 0;
+    border-radius: 0 0.75em 0.75em 0;
+    background-color: #212125;
+}
+
+.container-tecnologias {
+    display: flex;
+    justify-content: left;
+    grid-gap: 5px 0.5em;
+    flex-wrap: nowrap;
+    width: auto;
+    max-height: 50px;
+    padding: 0.5em 2em 0.4em 0.62em;
+    margin: 0 0.8em 0 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: transparent;
 }
 
 .referencia-tecnologia {
-    height: 1.6em;
-    padding: 10px;
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #303030;
+    height: 1.6em;
+    padding: 10px;
+    border-radius: 1em;
+    white-space: nowrap;
     color: #8963E1;
-    border-radius: 15px;
     font-family: Goldman Regular;
+    background-color: #303030;
 }
 
 .referencia-tecnologia label {
     margin: 0;
-    font-size: 12px;
+    font-size: 0.75em;
 }
 
 .referencia-tecnologia:hover {
@@ -337,22 +336,74 @@ section {
         2px 0px 4px #8963E1;
 }
 
-/*------ Row 3: Imagem e previa da postagem ------*/
-.img-postagem {
-    width: 100%;
-    height: 35vh;
-    object-fit: cover;
-    border-radius: 10px;
+/*------ Div conteúdo postagem ------*/
+
+/*------ Row 1: Container titulo ------*/
+.container-titulo {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-.previa-post {
-    text-align: justify;
-    width: 100%;
+.titulo {
+    margin: 0px;
+    padding: 4px 4px 0 4px;
+    font-family: Montserrat-bold;
+    font-size: 28px;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
-    max-height: 35vh;
+    color: #FFF;
+    cursor: pointer;
+}
+
+/*---- Row 1: Container disciplina----*/
+.container-disciplina {
+    padding: 5px 5px 5px 1em;
+}
+
+.referencia-disciplina {
+    position: relative;
+    display: inline-block;
+    color: #7C23F0;
+    font-family: Orbitron;
+    font-size: 1em;
+}
+
+.referencia-disciplina:hover {
+    color: #7C23F0;
+}
+
+/*Efeito underline referencia disciplina*/
+.referencia-disciplina::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transform: scaleX(0);
+    background-color: #7C23F0;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.referencia-disciplina:hover::after {
+    width: 100%;
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/*------ Row 3: Previa da postagem ------*/
+.previa-post {
+    width: 100%;
+    max-height: 28vh;
     overflow: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    text-align: justify;
     text-overflow: ellipsis;
     font-family: Source-sans-pro;
     font-size: 1em;
@@ -360,27 +411,58 @@ section {
 }
 
 /*------ Row 4: Dados da postagem e botão de ler mais ------*/
+.item-data-post {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.coluna-btn {
+    justify-content: flex-end;
+}
+
 .data {
     color: #FFF;
-    font-family: "Open Sans", "Lato", sans-serif;
-    font-size: 14px;
+    font-family: Montserrat-regular;
+    font-size: 0.87em;
     margin: 0;
 }
 
-.ref-type-post {
-    color: #8963E1;
-    font-weight: bold;
+.dados-autoria {
+    display: flex;
+    flex-direction: column;
+    gap: 5px 0;
+    padding: 0px 0.5em;
+    align-items: flex-start;
 }
 
 .img-autor {
-    width: 32px;
+    width: 64px;
     border-radius: 50%;
 }
 
-.item-data-post {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.nome-autor {
+    font-family: Montserrat-medium;
+    font-size: 18px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.data-postagem {
+    font-size: 0.75em;
+    color: #919191;
+}
+
+.ref-type-post {
+    padding: 5px 1em;
+    border-radius: 0.5em;
+    color: #8963E1;
+    font-family: Montserrat-medium;
+    font-size: 0.87em;
+    white-space: nowrap;
+    font-weight: bold;
+    background-color: #303030;
 }
 
 .btn-continue {
@@ -389,80 +471,79 @@ section {
     width: auto;
 }
 
-/*----------------------- CONTAINER DAS TECNOLOGIAS -----------------------*/
+/*----------------------- TECNOLOGIAS QUENTES -----------------------*/
 #coluna-tecnologias {
-    padding: 5px 15px;
+    padding: 5px 1em;
 }
 
 .tecnologias-blog {
-    flex: 1;
-    position: fixed;
+    position: sticky;
+    top: 100px;
     right: 4em;
     width: 20vw;
-    padding: 20px 20px 15px 20px;
-    height: calc(60vh + 4em);
+    height: calc(62vh + 4em);
+    padding: 20px 20px 1em 20px;
+    margin: 0 0 2.5em 0;
 }
 
-.tecnologias-blog-fixed {
-    position: fixed;
-    right: 4em;
-    width: 22vw;
+.tecnologias-blog h3 {
+    font-size: 1.125em;
 }
 
 .nav-tecnologias {
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
+    gap: 0.5em;
     overflow-y: auto;
     overflow-x: hidden;
     height: 80%;
-    gap: 8px;
     margin: 0px 5px;
     padding: 1vh 1.1vw;
 }
 
+/*---- Botão da tecnologia ----*/
 .btn-post-tecnologia {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 3px 8px;
-    border-radius: 5px;
     width: 100%;
     height: 30px;
     min-height: 30px;
     box-sizing: border-box;
+    padding: 3px 0.5em;
+    overflow: hidden;
     border: 1px solid #7C23F0;
-    background-color: transparent;
+    border-radius: 5px;
     color: #7C23F0;
     font-family: Orbitron;
-    font-size: 14px;
-    overflow: hidden;
-}
-
-.nav-tecnologias a:hover {
-	text-decoration: none;
+    font-size: 0.87em;
+    background-color: transparent;
 }
 
 .btn-post-tecnologia label {
-    margin: 0;
+    margin-bottom: 0;
 }
 
-.tec-name{
+.nome-tecnologia {
     width: auto;
-    margin-left: 0.6vw !important;
+    margin-left: 0.6vw;
+    overflow: hidden;
     font-weight: bold;
-    scroll-behavior: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.qtd-post {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-    color: #FFF;
-    font-size: 12px;
+.qtd-posts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
+    margin-left: 5px;
     border-radius: 5px;
     padding: 0px 5px;
+    color: #FFF;
+    font-size: 0.75em;
     background-color: #4F26B5;
 }
 
@@ -471,9 +552,5 @@ section {
     color: #FFF;
     transition: 0.5s;
     transform: scale(1.1);
-    box-shadow: 0 0 2px #7C23F0, 0 0 4px #7C23F0, 0 0 8px #7C23F0;
-}
-
-.class-container {
-    border-radius: 10px;
+    box-shadow: 0 0 2px #7C23F0, 0 0 4px #7C23F0, 0 0 0.5em #7C23F0;
 }

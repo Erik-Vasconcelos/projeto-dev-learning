@@ -135,6 +135,7 @@ body {
 .link-voltar{
     height: 15px;
     padding: 8px;
+    margin-left: 1em;
     text-decoration: none;
     color: #919191;
     text-align: center;

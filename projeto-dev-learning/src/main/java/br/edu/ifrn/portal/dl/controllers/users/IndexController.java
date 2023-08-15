@@ -1,5 +1,7 @@
 package br.edu.ifrn.portal.dl.controllers.users;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.services.PostagemService;
+import br.edu.ifrn.portal.dl.services.TecnologiaService;
+import br.edu.ifrn.portal.dl.utils.PostsTecnologia;
+
+/**
+ * Classe responsável por interceptar e gerenciar o fluxo de requisições
+ * relacionados à <strong>página incial<strong>.
+ * 
+ * @author Erik Vasconcelos
+ * @since 2023-08-03
+ * @version 0.1
+ */
 
 @Controller
 public class IndexController {
@@ -17,15 +30,21 @@ public class IndexController {
 	@Autowired
 	private PostagemService postagemService;
 	
-	private static final int REGISTROS_POR_PAGINA = 2;
+	@Autowired
+	private TecnologiaService tecnologiaService;
+	
+	private static final int REGISTROS_POR_PAGINA = 10;
 
 	private static final int PAGINA_PADRAO = 0;
 
 	@GetMapping
 	public ModelAndView getIndex(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
 		ModelAndView mv = new ModelAndView("index");
-		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
+		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadasOrderData(pageable);
+		List<PostsTecnologia> postPorTecnologias = tecnologiaService.getPostsPorTecnologia();
+		
 		mv.addObject("listaPostagens", postagensPaginadas);
+		mv.addObject("listaPostsPorTecnologia", postPorTecnologias);
 		
 		return mv;
 	}

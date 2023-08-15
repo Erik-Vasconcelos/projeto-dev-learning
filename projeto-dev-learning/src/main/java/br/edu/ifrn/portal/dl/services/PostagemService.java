@@ -54,6 +54,10 @@ public class PostagemService {
 	public Page<Postagem> getPostagensPaginadas(Pageable pageable) {
 		return postagemRepository.findAllAsc(pageable);
 	}
+	
+	public Page<Postagem> getPostagensPaginadasOrderData(Pageable pageable) {
+		return postagemRepository.findAllOrderDataDesc(pageable);
+	}
 
 	public Page<Postagem> getPostagensPorTituloPaginadas(String titulo, Pageable pageable) {
 		return postagemRepository.findByTituloPagined(titulo, pageable);

@@ -33,8 +33,14 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.id ASC")
 	public Page<Postagem> findByTituloPagined(@Param("titulo") String titulo, Pageable pageable);
 
+	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.dataPostagem DESC")
+	public Page<Postagem> findByTituloPaginedOrderData(@Param("titulo") String titulo, Pageable pageable);
+	
 	@Query("SELECT p FROM Postagem p ORDER BY p.id ASC")
 	public Page<Postagem> findAllAsc(Pageable pageable);
+	
+	@Query("SELECT p FROM Postagem p ORDER BY p.dataPostagem DESC")
+	public Page<Postagem> findAllOrderDataDesc(Pageable pageable);
 	
 	@Query("SELECT p FROM Postagem p WHERE p.autor.id = :id ORDER BY p.id ASC")
 	public Page<Postagem> findByIdAutor(@Param("id") Long idAutor, Pageable pageable);
