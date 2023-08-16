@@ -2,7 +2,6 @@ package br.edu.ifrn.portal.dl.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -23,18 +22,23 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf() 
-			.disable()
-			.authorizeRequests()
-			.antMatchers(HttpMethod.GET, "/").permitAll()
-			.antMatchers(HttpMethod.GET, "/error").permitAll() 
-			.antMatchers(HttpMethod.GET, "/disciplinas").permitAll()
+		http.csrf().disable().authorizeRequests()
 			.antMatchers("/admin").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
+			.antMatchers("/admin/postagens/**").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
+			.antMatchers("/admin/tecnologias/**").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
 			.antMatchers("/admin/disciplinas/**").hasAnyRole("ADMIN", "ADMIN_MASTER")
+			.antMatchers("/*", "/*/**", "/error", "/post/**", "/disciplinas/**").permitAll()
 			.anyRequest().authenticated()
-			.and().formLogin().permitAll().defaultSuccessUrl("/admin")
-			.and().logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+			.and()
+				.formLogin()
+				.defaultSuccessUrl("/admin")
+			.and()
+				.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
+			.and()
+				.sessionManagement()
+				.maximumSessions(1)
+				.expiredUrl("/login");
 	}
 	
 	@Override

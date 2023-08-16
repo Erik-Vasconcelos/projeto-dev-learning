@@ -46,8 +46,6 @@
     font-size: 0.8em !important;
   }
 
-
-
 }
 
 .ql-container {
@@ -56,6 +54,7 @@
   font-size: 1.2rem;
   height: 100%;
   margin: 0px;
+  max-width: 100%;
   position: relative;
 }
 

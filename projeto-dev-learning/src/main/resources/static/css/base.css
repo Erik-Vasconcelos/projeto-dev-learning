@@ -45,6 +45,20 @@
 	color: #121212;
 }
 
+::-webkit-scrollbar {
+	width: 6px;               /* width of the entire scrollbar */
+  }
+  
+::-webkit-scrollbar-track {
+	background: #303030;        /* color of the tracking area */
+  }
+  
+::-webkit-scrollbar-thumb {
+	background-color: #7C23F0;    /* color of the scroll thumb */
+	/* border-radius: 20px;    */
+	/* border: 3px solid orange;   */
+  }
+
 /*###################### MEDIA QUERIES ######################*/
 @media (max-width: 767px) {
 	.navbar-nav .nav-item {
@@ -358,14 +372,92 @@ nav.navbar-style {
 	font-family: Goldman Regular;
 	min-width: 10vw;
 	width: auto;
+	outline: none;
+}
+
+.btn:active{
+	transform: scale(0.95);
+}
+
+.btn:focus{
+	outline: none;
+	outline-offset: 0;
+	outline-style: none;
 }
 
 .btn-primary {
 	background-color: #7C23F0;
 	border: 0;
 	width: 8em;
+	outline: none;
 }
 
 .btn-primary:hover {
 	background-color: #4F26B5;
 }
+
+/*Pre-loader*/
+/* ini: Preloader */
+ 
+#preloader {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color: #121212; /* cor do background que vai ocupar o body */
+    z-index:9999; /* z-index para jogar para frente e sobrepor tudo */
+}
+#preloader .inner {
+    position: absolute;
+   top: 50%;
+    left: 50%;
+	display: flex;
+	flex-direction: column;
+    transform: translate(-50%, -50%);  
+}
+.bolas > div {
+  display: inline-block;
+  background-color: #fff;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  margin: 3px;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  animation-name: animarBola;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+   
+}
+.bolas > div:nth-child(1) {
+    animation-duration:0.75s ;
+    animation-delay: 0;
+}
+.bolas > div:nth-child(2) {
+    animation-duration: 0.75s ;
+    animation-delay: 0.12s;
+}
+.bolas > div:nth-child(3) {
+    animation-duration: 0.75s  ;
+    animation-delay: 0.24s;
+}
+ 
+@keyframes animarBola {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+  16% {
+    -webkit-transform: scale(0.1);
+    transform: scale(0.1);
+    opacity: 0.7;
+  }
+  33% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1; 
+  } 
+}
+/* end: Preloader */
