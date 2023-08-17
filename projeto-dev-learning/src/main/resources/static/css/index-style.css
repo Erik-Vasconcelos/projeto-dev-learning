@@ -479,8 +479,8 @@ section {
 .tecnologias-blog {
     position: sticky;
     top: 100px;
-    right: 4em;
-    width: 20vw;
+    right: 2em;
+    width: 100%;
     height: calc(62vh + 4em);
     padding: 20px 20px 1em 20px;
     margin: 0 0 2.5em 0;

@@ -29,7 +29,10 @@ public interface DisciplinaRepository extends JpaRepository<Disciplina, Long>{
 	public Page<Disciplina> findByNomePagined(@Param("nome") String nome, Pageable pageable);
 			
 	@Query("SELECT d FROM Disciplina d ORDER BY d.id ASC") 
-	 public Page<Disciplina> findAllAsc(Pageable pageable);
+	public Page<Disciplina> findAllAsc(Pageable pageable);
+	
+	@Query("SELECT d FROM Disciplina d ORDER BY d.nome ASC") 
+	public Page<Disciplina> findAllOrderByName(Pageable pageable);
 	
 	@Query("SELECT d.imagem FROM Disciplina d WHERE d.id = :id") 
 	public String findImagem(@Param("id") Long id);

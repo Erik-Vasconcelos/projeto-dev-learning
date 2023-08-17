@@ -1,0 +1,146 @@
+/*#########################################################
+					ESTILIZAÇÃO DA PÁGINA
+#########################################################*/
+
+/**************************** IMPORTAÇÕES ****************************/
+@font-face {
+    font-family: Montserrat-medium;
+    src: url(../fontes/montserrat/Montserrat-Medium.ttf);
+}
+
+@font-face {
+    font-family: Montserrat-bold;
+    src: url(../fontes/montserrat/Montserrat-Bold.ttf);
+}
+
+@font-face {
+    font-family: Source-sans-pro;
+    src: url(../fontes/source-sans-pro/static/SourceSans3-Regular.ttf);
+}
+
+/*###################### MEDIA QUERIES ######################*/
+@media (max-width: 768px) {
+    .section-figury {
+        min-height: 20em !important;
+        max-height: 25em !important;
+    }
+
+    .figury-disciplinas {
+        min-height: 20em !important;
+        max-height: 25em !important;
+    }
+
+    .info {
+        padding: 0 6vw !important;
+    }
+
+    .cbc-n3 {
+        font-size: 1.75em !important;
+    }
+}
+
+/**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
+body {
+    margin-top: 0;
+}
+
+.cbc-style-primary {
+    text-align: center;
+}
+
+.coluna-disciplina {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.class-container {
+    margin: 0;
+}
+
+.btn-primary {
+    width: auto;
+}
+
+/*------------------------- IMAGEM DA PÁGINA -------------------------*/
+.section-figury {
+    min-height: 25em;
+    max-height: 35em;
+    padding: 0;
+    margin: 4.3em 0 1.5em 0;
+    border-bottom: 1px solid #303030;
+}
+
+.figury-disciplinas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 25em;
+    max-height: 35em;
+    background-image: linear-gradient(to top, rgb(124, 35, 240, 0.3), #212125);
+}
+
+.info {
+    width: 100%;
+    padding: 0 4vw;
+}
+
+/*------------------------- CONTEUDO -------------------------*/
+.container-disciplina {
+    flex: 1;
+    max-height: 22em;
+    min-height: 100%;
+    max-width: 36em;
+    overflow: hidden;
+    border: 2px solid #303030;
+    border-radius: 12px;
+    background-color: #212125;
+}
+
+.container-disciplina:hover {
+    transform: scale(1.04);
+    transition: .4s all;
+    box-shadow: 3px 3px 8px #7C23F0,
+        4px 4px 10px #7C23F0;
+}
+
+/*------ Row 1: Imagem disciplina ------*/
+.img-disciplina {
+    width: 100%;
+    height: 10em;
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+}
+
+/*------ Container do conteúdo ------*/
+.container-conteudo {
+    padding: 0.8em 1em;
+}
+
+/*------ Row 1: Quantidade de posts ------*/
+.quantidade-posts {
+    font-size: 12px;
+    font-family: Montserrat-bold;
+    color: #7C23F0;
+}
+
+/*------ Row 3: Nome da disciplina ------*/
+.nome-disciplina {
+    font-family: Montserrat-medium;
+    font-size: 18px;
+    color: #FFF;
+}
+
+/*------ Row 4: Objetivos da disciplina ------*/
+.descricao-objetivos {
+    max-height: 6em;
+    padding-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    color: #a8a8a8;
+    font-size: 14px;
+    font-family: Source-sans-pro;
+    margin: 0;
+}

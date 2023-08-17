@@ -87,7 +87,7 @@ body {
 }
 
 section {
-	padding: 2em 4em 4em 4em;
+	padding: 2em 2em 4em 2em;
 	box-sizing: border-box;
 }
 
@@ -107,6 +107,15 @@ footer {
 	box-sizing: border-box;
 	padding: 1em 2.5em 1em 2.5em;
 	margin: 3rem 0 4rem 0;
+}
+
+.link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: none;
 }
 
 /**************************** CABEÇALHO ****************************/
