@@ -66,6 +66,10 @@ public class PostagemService {
 	public Page<Postagem> getPostagensPorAutor(Long idAutor, Pageable pageable) {
 		return postagemRepository.findByIdAutor(idAutor, pageable);
 	}
+	
+	public Page<Postagem> getPostagensPorDisciplina(Long idDisciplina, Pageable pageable) {
+		return postagemRepository.findByDisciplinaOderByDataDesc(idDisciplina, pageable);
+	}
 
 	/*---------------DELETE---------------*/
 

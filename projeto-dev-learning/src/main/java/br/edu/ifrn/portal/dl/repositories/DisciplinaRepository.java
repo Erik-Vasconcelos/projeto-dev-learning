@@ -1,6 +1,7 @@
 package br.edu.ifrn.portal.dl.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +35,8 @@ public interface DisciplinaRepository extends JpaRepository<Disciplina, Long>{
 	@Query("SELECT d FROM Disciplina d ORDER BY d.nome ASC") 
 	public Page<Disciplina> findAllOrderByName(Pageable pageable);
 	
+	public Optional<Disciplina> findByNomeIgnoreCase(String nome);
+	
 	@Query("SELECT d.imagem FROM Disciplina d WHERE d.id = :id") 
 	public String findImagem(@Param("id") Long id);
 	
@@ -45,5 +48,5 @@ public interface DisciplinaRepository extends JpaRepository<Disciplina, Long>{
 	
 	@Query("SELECT count(p.id) FROM Disciplina d INNER JOIN Postagem p on d.id = p.disciplina.id WHERE d.id = :id") 
 	public Long countRelatedPosts(@Param("id") Long id);
-	 
+	
 }

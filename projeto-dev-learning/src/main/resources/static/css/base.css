@@ -46,18 +46,16 @@
 }
 
 ::-webkit-scrollbar {
-	width: 6px;               /* width of the entire scrollbar */
-  }
-  
+	width: 6px;
+}
+
 ::-webkit-scrollbar-track {
-	background: #303030;        /* color of the tracking area */
-  }
-  
+	background: #303030;
+}
+
 ::-webkit-scrollbar-thumb {
-	background-color: #7C23F0;    /* color of the scroll thumb */
-	/* border-radius: 20px;    */
-	/* border: 3px solid orange;   */
-  }
+	background-color: #7C23F0;
+}
 
 /*###################### MEDIA QUERIES ######################*/
 @media (max-width: 767px) {
@@ -110,12 +108,12 @@ footer {
 }
 
 .link {
-    text-decoration: none;
-    cursor: pointer;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .link:hover {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 /**************************** CABEÇALHO ****************************/
@@ -164,6 +162,10 @@ header nav a {
 .cbc-style-secundary {
 	color: #7C23F0;
 	border-bottom: #303030 solid 2px;
+}
+
+.cbc-center {
+	text-align: center;
 }
 
 .btn-perfil {
@@ -384,11 +386,11 @@ nav.navbar-style {
 	outline: none;
 }
 
-.btn:active{
+.btn:active {
 	transform: scale(0.95);
 }
 
-.btn:focus{
+.btn:focus {
 	outline: none;
 	outline-offset: 0;
 	outline-style: none;
@@ -406,67 +408,21 @@ nav.navbar-style {
 }
 
 /*Pre-loader*/
-/* ini: Preloader */
- 
 #preloader {
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background-color: #121212; /* cor do background que vai ocupar o body */
-    z-index:9999; /* z-index para jogar para frente e sobrepor tudo */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #121212;
+	z-index: 9999;
 }
+
 #preloader .inner {
-    position: absolute;
-   top: 50%;
-    left: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
 	display: flex;
 	flex-direction: column;
-    transform: translate(-50%, -50%);  
+	transform: translate(-50%, -50%);
 }
-.bolas > div {
-  display: inline-block;
-  background-color: #fff;
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-  margin: 3px;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  animation-name: animarBola;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-   
-}
-.bolas > div:nth-child(1) {
-    animation-duration:0.75s ;
-    animation-delay: 0;
-}
-.bolas > div:nth-child(2) {
-    animation-duration: 0.75s ;
-    animation-delay: 0.12s;
-}
-.bolas > div:nth-child(3) {
-    animation-duration: 0.75s  ;
-    animation-delay: 0.24s;
-}
- 
-@keyframes animarBola {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    opacity: 1;
-  }
-  16% {
-    -webkit-transform: scale(0.1);
-    transform: scale(0.1);
-    opacity: 0.7;
-  }
-  33% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    opacity: 1; 
-  } 
-}
-/* end: Preloader */

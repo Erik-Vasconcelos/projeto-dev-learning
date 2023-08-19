@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="~{fragmentos :: headPadrao2('DevLearning', 'index-style')}"></head>
+<head th:replace="~{fragmentos :: headPadrao('DevLearning', 'base-pg-users', 'index-style')}"></head>
 
 <body>
 	<div th:replace="~{fragmentos :: preloader}"></div>
 
 	<header th:replace="~{fragmentos :: header-padrao}"></header>
-	<section>
+	<section class="section-conteudo">
 		<div class="row">
 			<div class="col-12 col-sm-12 col-md-12 col-lg-9">
 				<div class="externa" th:each="postagem : ${listaPostagens.content}">

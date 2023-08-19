@@ -48,6 +48,10 @@ public class DisciplinaService {
 		return disciplinaRepository.findAllAsc(pageable);
 	}
 	
+	public Optional<Disciplina> obterDisciplinaPorNome(String nome){
+		return disciplinaRepository.findByNomeIgnoreCase(nome);
+	}
+	
 	public Page<Disciplina> getDisciplinasPaginadasOrdenadasPorNome(Pageable pageable) {
 		return disciplinaRepository.findAllOrderByName(pageable);
 	}

@@ -44,6 +44,9 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 	
 	@Query("SELECT p FROM Postagem p WHERE p.autor.id = :id ORDER BY p.id ASC")
 	public Page<Postagem> findByIdAutor(@Param("id") Long idAutor, Pageable pageable);
+	
+	@Query("SELECT p FROM Postagem p INNER JOIN Disciplina d ON p.disciplina.id = d.id WHERE d.id = :id ORDER BY p.dataPostagem DESC")
+	public Page<Postagem> findByDisciplinaOderByDataDesc(@Param("id") Long idDisciplina, Pageable pageable);
 
 	@Query("SELECT p.imagem FROM Postagem p WHERE p.id = :id")
 	public String findImagem(@Param("id") Long id);

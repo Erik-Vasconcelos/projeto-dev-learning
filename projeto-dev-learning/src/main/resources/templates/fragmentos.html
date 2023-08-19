@@ -55,7 +55,7 @@
 *****************************************************************-->
 <div th:fragment="preloader" id="preloader">
 	<div class="inner">
-	   <img src="/imagens/loader.gif" alt="loader">
+		<img src="/imagens/loader.gif" alt="loader">
 	</div>
 </div>
 
@@ -65,7 +65,7 @@
 <header th:fragment="header-padrao">
 	<nav class="navbar navbar-expand-md navbar-style navbar-light fixed-top">
 
-		<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="150"></a>
+		<a th:href="@{/}" class="navbar-brand"> <img src="/imagens/logo.png" width="150"></a>
 
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
 			<img alt="imagem_usuario" src="/icones/cardapio.png">
@@ -110,7 +110,7 @@
 <header th:fragment="header-progress" class="d-flex flex-column">
 	<div class="d-flex flex-column fixed-top">
 		<nav class="navbar navbar-expand-md navbar-style navbar-light ">
-			<a href="index.html" class="navbar-brand"> <img src="/imagens/logo.png" width="150"></a>
+			<a th:href="@{/}" class="navbar-brand"> <img src="/imagens/logo.png" width="150"></a>
 
 			<button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
 				<img alt="imagem_usuario" src="/icones/cardapio.png">
@@ -193,6 +193,49 @@
 			class="pagination-action pagination-next">
 			<a th:if="${[__${paginationObjectName}__].hasNext()}"
 				th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
+				class="pagination-link">Próximo &#62;
+			</a>
+			<label id="next" th:unless="${[__${paginationObjectName}__].hasNext()}"
+				class="pagination-link pagination-link-disable">Próximo &#62;</label>
+		</li>
+	</ul>
+</nav>
+
+<!--*****************************************************************
+	COMPONENTE DE PAGINAÇÃO QUE MONTA A URL COMO O NOME DA ENTIDADE
+*****************************************************************-->
+<nav th:fragment="paginationEntityLink(paginationObjectName, resourceName)" class="d-flex justify-content-center mt-3">
+	<ul class="pagination justify-content-center">
+		<li th:classappend="${[__${paginationObjectName}__].hasPrevious() ? '' : 'pagination-action-disable'}"
+			class="pagination-action pagination-previus">
+			<a id="previous" th:if="${[__${paginationObjectName}__].hasPrevious()}"
+				th:href="@{${#strings.toLowerCase(#strings.replace('__${resourceName}__', ' ', '-'))}(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
+				class="pagination-link">&#60;
+				Anterior
+			</a>
+
+			<label th:unless="${[__${paginationObjectName}__].hasPrevious()}"
+				class="pagination-link pagination-link-disable">&#60; Anterior</label>
+		</li>
+
+		<th:block
+			th:each="i : ${#numbers.sequence(0, ([__${paginationObjectName}__].totalPages - 1) == -1 ? 0 : [__${paginationObjectName}__].totalPages - 1 ) }">
+			<li class="pagination-item"
+				th:classappend="${[__${paginationObjectName}__].getPageable().getPageNumber() == __${i}__ ? 'pagination-select' : ''}">
+				<a th:if="${__${paginationObjectName}__.getPageable().getPageNumber() != __${i}__}"
+					th:href="@{${#strings.toLowerCase(#strings.replace('__${resourceName}__', ' ', '-'))}(page=${i}, size=${[__${paginationObjectName}__].size})}"
+					class="pagination-link">[[${i}
+					+ 1]]</a>
+
+				<label th:unless="${__${paginationObjectName}__.getPageable().getPageNumber() != __${i}__}"
+					class="pagination-link-select">[[${i}+1]]</label>
+			</li>
+		</th:block>
+
+		<li th:classappend="${[__${paginationObjectName}__].hasNext() ? '' : 'pagination-action-disable'}"
+			class="pagination-action pagination-next">
+			<a th:if="${[__${paginationObjectName}__].hasNext()}"
+				th:href="@{${#strings.toLowerCase(#strings.replace('__${resourceName}__', ' ', '-'))}(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
 				class="pagination-link">Próximo &#62;
 			</a>
 			<label id="next" th:unless="${[__${paginationObjectName}__].hasNext()}"

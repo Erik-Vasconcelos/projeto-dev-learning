@@ -19,7 +19,7 @@
 			<h1 th:text="${postagem.titulo}" class="titulo-postagem mb-2">As principais tecnologias da atualidade</h1>
 
 			<h3 class="text-center">
-				<a href="/disciplinas" th:text="${ '<' + postagem.disciplina.nome + '/>'}" class="ref-disciplina"></a>
+				<a th:href="@{/disciplinas/{nome}(nome = ${#strings.toLowerCase(#strings.replace('__${postagem.disciplina.nome}__', ' ', '-' ))} )}" th:text="${ '<' + postagem.disciplina.nome + '/>'}" class="ref-disciplina"></a>
 			</h3>
 
 			<h5 th:text="${ '{'+ postagem.tipoPostagem.descricao + '}'}" class="data ref-type-post"></h5>

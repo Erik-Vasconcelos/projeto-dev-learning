@@ -23,39 +23,23 @@ import br.edu.ifrn.portal.dl.services.PostagemService;
 
 @Controller
 public class ShowPostagemController {
-	
+
 	@Autowired
 	private PostagemService postagemService;
 
-	@GetMapping("/postagem/{id}")
-	public ModelAndView getPost(@PathVariable(name = "id") Long id) {
-		ModelAndView mv = new ModelAndView("pg-show-postagem");
-		Optional<Postagem> optional = postagemService.obterPorId(id);
-		
-		if(optional.isPresent()) {
-			mv.addObject("postagem", optional.get());
-		}else {
-			throw new ResourceNotFountException();
-		}
-
-		return mv;
-	}
-	
 	@GetMapping("/post/{titulo}")
 	public ModelAndView getPostByTitle(@PathVariable(name = "titulo") String titulo) {
 		ModelAndView mv = new ModelAndView("pg-show-postagem");
-		
-		titulo =  titulo.replace('-', ' ').trim();
+
+		titulo = titulo.replace('-', ' ').trim();
 		Optional<Postagem> optional = postagemService.obterPorTitulo(titulo);
-		
-		if(optional.isPresent()) {
+
+		if (optional.isPresent()) {
 			mv.addObject("postagem", optional.get());
-		}else {
-			
+			return mv;
+		} else {
 			throw new ResourceNotFountException();
 		}
-		
-		return mv;
 	}
 
 }
