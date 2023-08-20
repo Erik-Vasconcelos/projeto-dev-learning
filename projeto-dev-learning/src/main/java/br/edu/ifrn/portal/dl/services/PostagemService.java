@@ -63,8 +63,12 @@ public class PostagemService {
 		return postagemRepository.findByTituloPagined(titulo, pageable);
 	}
 
-	public Page<Postagem> getPostagensPorAutor(Long idAutor, Pageable pageable) {
-		return postagemRepository.findByIdAutor(idAutor, pageable);
+	public Page<Postagem> getPostagensPorAutorOrderByData(Long idAutor, Pageable pageable) {
+		return postagemRepository.findByIdAutorOrderByData(idAutor, pageable);
+	}
+	
+	public Page<Postagem> getPostagensPorTecnologia(Long idTenologia, Pageable pageable){
+		return postagemRepository.findByTecnologiaId(idTenologia, pageable);
 	}
 	
 	public Page<Postagem> getPostagensPorDisciplina(Long idDisciplina, Pageable pageable) {

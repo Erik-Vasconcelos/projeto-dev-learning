@@ -1,6 +1,7 @@
 package br.edu.ifrn.portal.dl.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,8 @@ public interface TecnologiaRepository extends JpaRepository<Tecnologia, Long>{
 	
 	@Query("SELECT t FROM Tecnologia t WHERE lower(t.nome) LIKE  lower(concat('%', :nome, '%')) ORDER BY t.id ASC")
 	public Page<Tecnologia> findByNomePagined(@Param("nome") String nome, Pageable pageable);
+	
+	public Optional<Tecnologia> findByNomeIgnoreCase(String nome);
 	
 	@Query("SELECT count(d.id) FROM Tecnologia d WHERE d.nome = :nome") 
 	public Long countByName(@Param("nome") String nome);

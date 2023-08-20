@@ -1,0 +1,58 @@
+/*###################### MEDIA QUERIES ######################*/
+@media (max-width: 768px) {
+    .section-figury {
+        min-height: 20em !important;
+        max-height: 25em !important;
+    }
+
+    .figury-disciplinas {
+        min-height: 20em !important;
+        max-height: 25em !important;
+    }
+
+    .info {
+        padding: 0 6vw !important;
+    }
+
+    .cbc-n3 {
+        font-size: 1.75em !important;
+    }
+}
+
+@media (max-width: 576px){
+    .container-postagem {
+        margin-bottom: 0 !important;
+    }
+}
+
+/**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
+body {
+    margin-top: 0;
+}
+
+.container-postagem {
+    margin-bottom: 1.5em;
+}
+
+/*------------------------- IMAGEM DA PÁGINA -------------------------*/
+.section-figury {
+    min-height: 25em;
+    max-height: 35em;
+    padding: 0;
+    margin: 4.3em 0 1.5em 0;
+    border-bottom: 1px solid #303030;
+}
+
+.figury-disciplinas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 25em;
+    max-height: 35em;
+    background-image: linear-gradient(to top, rgb(124, 35, 240, 0.3), #212125);
+}
+
+.info {
+    width: 100%;
+    padding: 0 4vw;
+}

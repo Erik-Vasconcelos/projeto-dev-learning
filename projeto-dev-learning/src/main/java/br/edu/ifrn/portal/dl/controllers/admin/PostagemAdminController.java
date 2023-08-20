@@ -42,6 +42,7 @@ import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.ConversorImagem;
 import br.edu.ifrn.portal.dl.utils.Mensagem;
 import br.edu.ifrn.portal.dl.utils.Pesquisa;
+import br.edu.ifrn.portal.dl.utils.UtilPageable;
 
 /**
  * Classe responsável por interceptar e gerenciar o fluxo de requisições
@@ -78,6 +79,9 @@ public class PostagemAdminController {
 	@GetMapping /* OK */
 	public ModelAndView postagensPaginadas(
 			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
+
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+
 		Page<Postagem> postagensPaginadas = carregarListaPostagens(pageable);
 		ModelAndView mv = getIndexTemplate();
 		mv.addObject("listaPostagens", postagensPaginadas);
@@ -92,6 +96,8 @@ public class PostagemAdminController {
 	public ModelAndView pesquisarPostagens(
 			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable,
 			@Valid Pesquisa pesquisa, BindingResult result) {
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+
 		if (result.hasErrors()) {
 			return getIndexComDados();
 
@@ -111,6 +117,8 @@ public class PostagemAdminController {
 	@GetMapping("/{id}/editar") /* OK */
 	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, PostagemFormDTO postagemDTO,
 			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
+
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
 
 		Optional<Postagem> optional = postagemService.obterPorId(id);
 		if (optional.isPresent()) {
@@ -162,7 +170,6 @@ public class PostagemAdminController {
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
-			
 
 			if (postagemService.titleExists(postagemDTO.getTitulo())) {
 				ModelAndView mv = getIndexComDados();
@@ -237,7 +244,7 @@ public class PostagemAdminController {
 				Postagem postagem = postagemDTO.configAttibutes(optional.get());
 				postagem.setAutor(optional.get().getAutor());
 				postagem.setDataPostagem(optional.get().getDataPostagem());
-				
+
 				if (postagemService.nameIsDuplicate(id, postagem.getTitulo())) {
 					ModelAndView mv = getEditComDados();
 					mv.addObject("mensagem", new Mensagem("O título informado já existe no banco de dados!", true));
@@ -356,9 +363,9 @@ public class PostagemAdminController {
 
 				TipoGerencidor tipo = autor.getTipoGerenciador();
 				if (tipo.equals(TipoGerencidor.ADMIN_MASTER) || tipo.equals(TipoGerencidor.ADMIN)) {
-					postagensPaginadas = postagemService.getPostagensPaginadas(pageable);
+					postagensPaginadas = postagemService.getPostagensPaginadasOrderData(pageable);
 				} else {
-					postagensPaginadas = postagemService.getPostagensPorAutor(autor.getId(), pageable);
+					postagensPaginadas = postagemService.getPostagensPorAutorOrderByData(autor.getId(), pageable);
 				}
 
 				return postagensPaginadas;

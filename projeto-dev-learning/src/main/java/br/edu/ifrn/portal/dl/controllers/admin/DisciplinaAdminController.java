@@ -26,6 +26,7 @@ import br.edu.ifrn.portal.dl.models.Disciplina;
 import br.edu.ifrn.portal.dl.services.DisciplinaService;
 import br.edu.ifrn.portal.dl.utils.Mensagem;
 import br.edu.ifrn.portal.dl.utils.Pesquisa;
+import br.edu.ifrn.portal.dl.utils.UtilPageable;
 
 /**
  * Classe responsável por interceptar e gerenciar o fluxo de requisições
@@ -39,6 +40,10 @@ import br.edu.ifrn.portal.dl.utils.Pesquisa;
 @Controller
 @RequestMapping(value = "admin/disciplinas")
 public class DisciplinaAdminController {
+	
+	private static final int REGISTROS_POR_PAGINA = 10;
+
+	private static final int PAGINA_PADRAO = 0;
 
 	@Autowired
 	private DisciplinaService disciplinaService;
@@ -46,7 +51,9 @@ public class DisciplinaAdminController {
 	/*---------------READ---------------*/
 
 	@GetMapping /* OK */
-	public ModelAndView disciplinasPaginadas(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+	public ModelAndView disciplinasPaginadas(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+		
 		Page<Disciplina> disciplinasPaginadas = disciplinaService.getDisciplinasPaginadas(pageable);
 		ModelAndView mv = getIndexTemplate();
 		mv.addObject("disciplinas", disciplinasPaginadas);
@@ -55,12 +62,14 @@ public class DisciplinaAdminController {
 	}
 
 	@GetMapping("/pesquisa") /* OK */
-	public ModelAndView pesquisarDisciplinas(@PageableDefault(page = 0, size = 10) Pageable pageable,
+	public ModelAndView pesquisarDisciplinas(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable,
 			@Valid Pesquisa pesquisa, BindingResult result) {
 		if (result.hasErrors()) {
 			return getIndexComDados();
 
 		} else {
+			pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+			
 			Page<Disciplina> disciplinasPaginadas = disciplinaService
 					.getDisciplinasPorNomePaginadas(pesquisa.getValor(), pageable);
 			ModelAndView mv = getIndexTemplate();
@@ -72,8 +81,10 @@ public class DisciplinaAdminController {
 
 	@GetMapping("/{id}/editar") /* OK */
 	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, DisciplinaFormDTO disciplinaDTO,
-			@PageableDefault(page = 0, size = 10) Pageable pageable) {
+			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
 
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+		
 		Optional<Disciplina> optional = disciplinaService.obterPorId(id);
 		if (optional.isPresent()) {
 
@@ -87,6 +98,7 @@ public class DisciplinaAdminController {
 			return mv;
 
 		} else {
+			
 			ModelAndView mv = disciplinasPaginadas(pageable);
 			mv.addObject("mensagem", new Mensagem("A disciplina #" + id + " não foi encontrada no banco!", true));
 

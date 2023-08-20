@@ -29,22 +29,25 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 	public List<Postagem> findByTituloContainingIgnoreCase(String titulo);
 
 	public Optional<Postagem> findByTituloIgnoreCase(String titulo);
-	
+
 	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.id ASC")
 	public Page<Postagem> findByTituloPagined(@Param("titulo") String titulo, Pageable pageable);
 
 	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.dataPostagem DESC")
 	public Page<Postagem> findByTituloPaginedOrderData(@Param("titulo") String titulo, Pageable pageable);
-	
+
 	@Query("SELECT p FROM Postagem p ORDER BY p.id ASC")
 	public Page<Postagem> findAllAsc(Pageable pageable);
-	
+
 	@Query("SELECT p FROM Postagem p ORDER BY p.dataPostagem DESC")
 	public Page<Postagem> findAllOrderDataDesc(Pageable pageable);
-	
-	@Query("SELECT p FROM Postagem p WHERE p.autor.id = :id ORDER BY p.id ASC")
-	public Page<Postagem> findByIdAutor(@Param("id") Long idAutor, Pageable pageable);
-	
+
+	@Query("SELECT p FROM Postagem p WHERE p.autor.id = :id ORDER BY p.dataPostagem DESC")
+	public Page<Postagem> findByIdAutorOrderByData(@Param("id") Long idAutor, Pageable pageable);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM postagens p INNER JOIN postagens_tecnologias pt ON p.id = pt.postagem_id WHERE pt.tecnologias_id = :id ORDER BY p.data_postagem DESC")
+	public Page<Postagem> findByTecnologiaId(@Param("id") Long idTecnologia, Pageable pageable);
+
 	@Query("SELECT p FROM Postagem p INNER JOIN Disciplina d ON p.disciplina.id = d.id WHERE d.id = :id ORDER BY p.dataPostagem DESC")
 	public Page<Postagem> findByDisciplinaOderByDataDesc(@Param("id") Long idDisciplina, Pageable pageable);
 

@@ -44,6 +44,9 @@ public class TecnologiaService {
 	public Optional<Tecnologia> obterPorId(Long id) throws IllegalArgumentException{
 		return tecnologiaRepository.findById(id);
 	}
+	public Optional<Tecnologia> obterPorNome(String nome) {
+		return tecnologiaRepository.findByNomeIgnoreCase(nome);
+	}
 	
 	public Page<Tecnologia> getTecnologiasPaginadas(Pageable pageable) {
 		return tecnologiaRepository.findAllAsc(pageable);

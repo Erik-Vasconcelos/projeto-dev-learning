@@ -92,7 +92,7 @@
     }
 
     .externa {
-        margin: 0 0 1.25em 0 !important;
+        margin: 0 0 1em 0 !important;
     }
 
     .conteudo {
@@ -213,7 +213,7 @@ html {
     position: relative;
     overflow: hidden;
     padding: 5px;
-    margin: 0px 0px 40px 0px;
+    margin: 0 0 1.5em 0;
     border-radius: 10px;
 }
 

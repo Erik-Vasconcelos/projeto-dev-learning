@@ -26,6 +26,7 @@ import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.Mensagem;
 import br.edu.ifrn.portal.dl.utils.Pesquisa;
+import br.edu.ifrn.portal.dl.utils.UtilPageable;
 
 /**
  * Classe responsável por interceptar e gerenciar o fluxo de requisições
@@ -42,11 +43,17 @@ public class TecnologiaAdminController {
 
 	@Autowired
 	private TecnologiaService tecnologiaService;
+	
+	private static final int REGISTROS_POR_PAGINA = 10;
+
+	private static final int PAGINA_PADRAO = 0;
 
 	/*---------------READ---------------*/
 
 	@GetMapping /* OK */
-	public ModelAndView tecnologiasPaginadas(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+	public ModelAndView tecnologiasPaginadas(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+		
 		Page<Tecnologia> tecnologiasPaginadas = tecnologiaService.getTecnologiasPaginadas(pageable);
 		ModelAndView mv = getIndexTemplate();
 		mv.addObject("tecnologias", tecnologiasPaginadas);
@@ -55,8 +62,10 @@ public class TecnologiaAdminController {
 	}
 
 	@GetMapping("/pesquisa") /* OK */
-	public ModelAndView pesquisarTecnologias(@PageableDefault(page = 0, size = 10) Pageable pageable,
+	public ModelAndView pesquisarTecnologias(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable,
 			@Valid Pesquisa pesquisa, BindingResult result) {
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+		
 		if (result.hasErrors()) {
 			return getIndexComDados();
 
@@ -72,8 +81,9 @@ public class TecnologiaAdminController {
 
 	@GetMapping("/{id}/editar") /* OK */
 	public ModelAndView getPaginaEdicao(@PathVariable("id") Long id, TecnologiaFormDTO tecnologiaDTO,
-			@PageableDefault(page = 0, size = 10) Pageable pageable) {
-
+			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+		
 		Optional<Tecnologia> optional = tecnologiaService.obterPorId(id);
 		if (optional.isPresent()) {
 
@@ -207,7 +217,7 @@ public class TecnologiaAdminController {
 	private ModelAndView getIndexComDados() {
 		ModelAndView mv = getIndexTemplate();
 		Page<Tecnologia> pageTecnologias = tecnologiaService
-				.getTecnologiasPaginadas(PageRequest.of(0, 10, Sort.by("id")));
+				.getTecnologiasPaginadas(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
 		mv.addObject("tecnologias", pageTecnologias);
 
 		return mv;
@@ -221,7 +231,7 @@ public class TecnologiaAdminController {
 	private ModelAndView getEditComDados() {
 		ModelAndView mv = new ModelAndView("pg-edit-admin-tecnologias");
 		Page<Tecnologia> pageTecnologias = tecnologiaService
-				.getTecnologiasPaginadas(PageRequest.of(0, 10, Sort.by("id")));
+				.getTecnologiasPaginadas(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
 		mv.addObject("tecnologias", pageTecnologias);
 
 		return mv;

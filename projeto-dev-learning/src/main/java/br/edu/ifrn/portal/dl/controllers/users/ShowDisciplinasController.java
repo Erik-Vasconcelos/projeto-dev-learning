@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.services.DisciplinaService;
 import br.edu.ifrn.portal.dl.services.PostagemService;
 import br.edu.ifrn.portal.dl.utils.DisciplinaPosts;
+import br.edu.ifrn.portal.dl.utils.UtilPageable;
 
 /**
  * Classe responsável por interceptar e gerenciar o fluxo de requisições
@@ -48,7 +48,7 @@ public class ShowDisciplinasController {
 	public ModelAndView getPaginaDisciplinas(
 			@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
 		ModelAndView mv = new ModelAndView("pg-show-disciplinas");
-		pageable = verifySizePageable(pageable);
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
 
 		Page<DisciplinaPosts> disciplinaPostsPaginadas = getDisciplinasAndQtdPostsRelated(pageable);
 
@@ -65,7 +65,7 @@ public class ShowDisciplinasController {
 		Optional<Disciplina> optional = disciplinaService.obterDisciplinaPorNome(nome);
 		
 		if(optional.isPresent()) {
-			pageable = verifySizePageable(pageable);
+			pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
 			Disciplina disciplina = optional.get();
 			Page<Postagem> postagensPaginadas = postagemService.getPostagensPorDisciplina(disciplina.getId(), pageable);
 			
@@ -87,14 +87,6 @@ public class ShowDisciplinasController {
 		});
 
 		return disciplinaPostsPaginadas;
-	}
-
-	private Pageable verifySizePageable(Pageable pageable) {
-		if (pageable.getPageSize() > REGISTROS_POR_PAGINA) {
-			return PageRequest.of(pageable.getPageNumber(), REGISTROS_POR_PAGINA);
-		} else {
-			return pageable;
-		}
 	}
 
 }

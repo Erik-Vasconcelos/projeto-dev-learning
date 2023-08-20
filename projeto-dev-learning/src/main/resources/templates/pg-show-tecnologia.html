@@ -2,27 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="~{fragmentos :: headPadrao('DevLearning',  'base-pg-users', 'show-disciplina-style')}"></head>
+<head th:replace="~{fragmentos :: headPadrao('DevLearning',  'base-pg-users', 'show-tecnologia-style')}"></head>
 
 <body>
 	<div th:replace="~{fragmentos :: preloader}"></div>
 
 	<header th:replace="~{fragmentos :: header-padrao}"></header>
-	<section class="section-img">
-		<img th:src="${disciplina.imagem}" onError="this.onerror=null;this.src='/imagens/img-padrao-disciplina.jpg';"
-			alt="imagem disciplina" class="img-disciplina">
 
-		<div class="container-info-disciplina">
-			<div class="row">
-				<div class="col-md-12">
-					<h3 th:text="${disciplina.nome}" class="cbc-n3 cbc-style-primary cbc-center"></h3>
-				</div>
-			</div>
- 
-			<div class="row">
-				<div class="col-md-12">
-					<p th:text="${disciplina.descricaoObjetivos}" class="descricao-objetivos"></p>
-				</div>
+	<section class="section-figury">
+		<div class="figury-disciplinas">
+			<div class="info">
+				<h1 th:text="${tecnologia.nome}" class="cbc-n3 cbc-style-primary cbc-center"></h1>
 			</div>
 		</div>
 	</section>
@@ -117,9 +107,11 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<nav th:replace="~{fragmentos :: paginationEntityLink('listaPostagens', '/disciplinas/__${disciplina.nome}__')}"></nav>
+				<nav
+					th:replace="~{fragmentos :: paginationEntityLink('listaPostagens', '/posts/tecnologia/__${tecnologia.nome}__')}">
+				</nav>
 			</div>
-		</div> 
+		</div>
 	</section>
 
 	<footer th:replace="~{fragmentos :: footer}"></footer>

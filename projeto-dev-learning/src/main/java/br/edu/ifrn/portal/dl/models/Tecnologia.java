@@ -38,8 +38,8 @@ import lombok.RequiredArgsConstructor;
 		@NamedNativeQuery(name = "Tecnologia.countRelatedPosts", 
 				query = "SELECT count(pt.postagem_id) FROM postagens_tecnologias pt WHERE pt.tecnologias_id = ?1"),
 		@NamedNativeQuery(name = "Tecnologia.getNumbersPostsByTecnology", 
-				query = "SELECT t.*, count(pt.postagem_id) AS quantidade FROM tecnologias t INNER JOIN postagens_tecnologias pt "
-						+ "ON t.id = pt.tecnologias_id GROUP BY t.id ORDER BY quantidade DESC", resultSetMapping = "getNumbersPostsByTecnologyMapping")
+				query = "SELECT t.*, count(pt.postagem_id) AS quantidade FROM tecnologias t LEFT JOIN postagens_tecnologias pt "
+						+ "ON t.id = pt.tecnologias_id GROUP BY t.id ORDER BY quantidade DESC, t.nome LIMIT 10", resultSetMapping = "getNumbersPostsByTecnologyMapping")
 })
 
 @SqlResultSetMappings(value = {

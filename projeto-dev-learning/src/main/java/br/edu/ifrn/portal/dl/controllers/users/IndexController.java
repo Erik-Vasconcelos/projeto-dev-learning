@@ -14,6 +14,7 @@ import br.edu.ifrn.portal.dl.models.Postagem;
 import br.edu.ifrn.portal.dl.services.PostagemService;
 import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.PostsTecnologia;
+import br.edu.ifrn.portal.dl.utils.UtilPageable;
 
 /**
  * Classe responsável por interceptar e gerenciar o fluxo de requisições
@@ -40,6 +41,8 @@ public class IndexController {
 	@GetMapping
 	public ModelAndView getIndex(@PageableDefault(page = PAGINA_PADRAO, size = REGISTROS_POR_PAGINA) Pageable pageable) {
 		ModelAndView mv = new ModelAndView("index");
+		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
+		
 		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadasOrderData(pageable);
 		List<PostsTecnologia> postPorTecnologias = tecnologiaService.getPostsPorTecnologia();
 		
