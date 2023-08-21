@@ -229,7 +229,7 @@ public class DisciplinaAdminController {
 	private ModelAndView getIndexComDados() {
 		ModelAndView mv = getIndexTemplate();
 		Page<Disciplina> pageDisciplinas = disciplinaService
-				.getDisciplinasPaginadas(PageRequest.of(0, 10, Sort.by("id")));
+				.getDisciplinasPaginadas(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
 		mv.addObject("disciplinas", pageDisciplinas);
 
 		return mv;
@@ -243,7 +243,7 @@ public class DisciplinaAdminController {
 	private ModelAndView getEditComDados() {
 		ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
 		Page<Disciplina> pageDisciplinas = disciplinaService
-				.getDisciplinasPaginadas(PageRequest.of(0, 10, Sort.by("id")));
+				.getDisciplinasPaginadas(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
 		mv.addObject("disciplinas", pageDisciplinas);
 
 		return mv;

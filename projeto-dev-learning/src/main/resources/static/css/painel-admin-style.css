@@ -43,6 +43,7 @@
 
 .menu-opcoes label {
     margin: 0 0 0 5%;
+    cursor: pointer;
 }
 
 /**************************** CONTAINER DAS INFOMAÇÕES ****************************/

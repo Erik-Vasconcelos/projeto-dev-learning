@@ -18,26 +18,31 @@
 
 			<div class="col-md-3">
 				<nav class="menu-opcoes">
-					<a th:href="@{/admin/postagens}" class="btn-link">
+					<a th:href="@{/admin/postagens}" class="btn-link link">
 						<button class="btn btn-menu">
 							<img src="/icones/branding.png" alt="postagens">
 							<label>Postagens</label>
 						</button>
 					</a>
 
-					<!-- Irá mostrar o botão de disciplinas se o usuário for do tipo admin -->
-					<!-- sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_ESCRITOR')" -->
-					<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN_MASTER')" th:href="@{/admin/disciplinas}" class="btn-link">
+					<a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN_MASTER')" th:href="@{/admin/disciplinas}" class="btn-link link">
 						<button class="btn btn-menu">
 							<img src="/icones/educacao.png" alt="disciplinas">
 							<label>Disciplinas</label>
 						</button>
 					</a>
 
-					<a th:href="@{/admin/tecnologias}" class="btn-link">
+					<a th:href="@{/admin/tecnologias}" class="btn-link link">
 						<button class="btn btn-menu">
 							<img src="/icones/tecnologia.png" alt="tecnologias">
 							<label>Tecnologias</label>
+						</button>
+					</a>
+					
+					<a sec:authorize="hasRole('ROLE_ADMIN_MASTER')" th:href="@{/admin/gerenciadores}" class="btn-link link">
+						<button class="btn btn-menu">
+							<img src="/icones/gerenciadores.png" alt="gerenciadores">
+							<label>Gerenciadores</label>
 						</button>
 					</a>
 				</nav>

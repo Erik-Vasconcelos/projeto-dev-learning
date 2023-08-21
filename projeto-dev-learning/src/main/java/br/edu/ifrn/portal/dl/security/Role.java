@@ -26,6 +26,9 @@ public class Role implements GrantedAuthority {
 
 	@Column(nullable = false, unique = true)
 	private String nomeRole;
+	
+	@Column(unique = true)
+	private int nivelPermissao;
 
 	@Override
 	public String getAuthority() {

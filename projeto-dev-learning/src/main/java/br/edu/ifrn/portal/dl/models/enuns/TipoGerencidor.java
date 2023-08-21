@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Enum do tipo da postagem
+ * Enum do tipo do gerenciador
  * 
  * @author Erik Vasconcelos
  * @since 2023-06-28
@@ -44,5 +44,5 @@ public enum TipoGerencidor {
 
 		throw new IllegalArgumentException("Código inválido: " + codigo);
 	}
-
+	
 }

@@ -24,9 +24,11 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
 			.antMatchers("/admin").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
+			.antMatchers("/admin/").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
 			.antMatchers("/admin/postagens/**").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
 			.antMatchers("/admin/tecnologias/**").hasAnyRole("ESCRITOR", "ADMIN", "ADMIN_MASTER")
 			.antMatchers("/admin/disciplinas/**").hasAnyRole("ADMIN", "ADMIN_MASTER")
+			.antMatchers("/admin/gerenciadores/**").hasAnyRole("ADMIN_MASTER")
 			.antMatchers("/*", "/*/**", "/error", "/post/**", "/disciplinas/**").permitAll()
 			.anyRequest().authenticated()
 			.and()
