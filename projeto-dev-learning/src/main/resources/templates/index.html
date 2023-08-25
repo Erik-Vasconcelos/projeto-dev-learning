@@ -8,7 +8,7 @@
 	<div th:replace="~{fragmentos :: preloader}"></div>
 
 	<header th:replace="~{fragmentos :: header-padrao}"></header>
-	<section class="section-conteudo">
+	<section class="secao section-conteudo">
 		<div class="row">
 			<div class="col-12 col-sm-12 col-md-12 col-lg-9">
 				<div class="externa" th:each="postagem : ${listaPostagens.content}">
@@ -109,7 +109,7 @@
 		</div>
 	</section>
 
-	<footer th:replace="~{fragmentos :: footer}"></footer>
+	<footer th:replace="~{fragmentos :: footer(${principaisTecnologias})}"></footer>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.edu.ifrn.portal.dl.models.Postagem;
+import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.services.PostagemService;
 import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.PostsTecnologia;
@@ -45,9 +46,11 @@ public class IndexController {
 		
 		Page<Postagem> postagensPaginadas = postagemService.getPostagensPaginadasOrderData(pageable);
 		List<PostsTecnologia> postPorTecnologias = tecnologiaService.getPostsPorTecnologia();
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
 		
 		mv.addObject("listaPostagens", postagensPaginadas);
 		mv.addObject("listaPostsPorTecnologia", postPorTecnologias);
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
 		
 		return mv;
 	}

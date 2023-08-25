@@ -2,6 +2,7 @@ package br.edu.ifrn.portal.dl.controllers.admin;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -310,6 +311,9 @@ public class PostagemAdminController {
 
 	private ModelAndView getIndexTemplate() {
 		ModelAndView mv = new ModelAndView("pg-admin-postagens");
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
+		
 		return mv;
 	}
 
@@ -323,10 +327,12 @@ public class PostagemAdminController {
 	private void configDadosDaTela(ModelAndView modelAndView) {
 		Page<Postagem> postagensPaginadas = carregarListaPostagens(
 				PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
+		
 		modelAndView.addObject("listaPostagens", postagensPaginadas);
 		modelAndView.addObject("tipoPostagem", TipoPostagem.values());
 		modelAndView.addObject("listaDisciplinas", disciplinaService.getListDisciplinas());
 		modelAndView.addObject("listaTecnologias", tecnologiaService.getListTecnologias());
+		modelAndView.addObject("principaisTecnologias", tecnologiaService.getPricipaisTecnologias());
 	}
 
 	private void carregarTecnologiasDoBanco(PostagemFormDTO postagemFormDTO) {

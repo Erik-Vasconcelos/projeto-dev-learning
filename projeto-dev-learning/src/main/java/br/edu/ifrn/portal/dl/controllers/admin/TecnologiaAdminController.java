@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.controllers.admin;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -90,9 +91,12 @@ public class TecnologiaAdminController {
 			Tecnologia tecnologia = optional.get();
 			tecnologiaDTO.fromTecnologiaDTO(tecnologia);
 			Page<Tecnologia> pageTecnologias = tecnologiaService.getTecnologiasPaginadas(pageable);
+			List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+			
 			ModelAndView mv = new ModelAndView("pg-edit-admin-tecnologias");
 			mv.addObject("tecnologias", pageTecnologias);
 			mv.addObject("id", tecnologia.getId());
+			mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 			return mv;
 
@@ -225,6 +229,9 @@ public class TecnologiaAdminController {
 
 	private ModelAndView getIndexTemplate() {
 		ModelAndView mv = new ModelAndView("pg-admin-tecnologias");
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
+		
 		return mv;
 	}
 
@@ -232,7 +239,10 @@ public class TecnologiaAdminController {
 		ModelAndView mv = new ModelAndView("pg-edit-admin-tecnologias");
 		Page<Tecnologia> pageTecnologias = tecnologiaService
 				.getTecnologiasPaginadas(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		
 		mv.addObject("tecnologias", pageTecnologias);
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 		return mv;
 	}

@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.controllers.admin;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -23,7 +24,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.ifrn.portal.dl.dtos.DisciplinaFormDTO;
 import br.edu.ifrn.portal.dl.models.Disciplina;
+import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.services.DisciplinaService;
+import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.Mensagem;
 import br.edu.ifrn.portal.dl.utils.Pesquisa;
 import br.edu.ifrn.portal.dl.utils.UtilPageable;
@@ -47,6 +50,9 @@ public class DisciplinaAdminController {
 
 	@Autowired
 	private DisciplinaService disciplinaService;
+	
+	@Autowired
+	private TecnologiaService tecnologiaService;
 
 	/*---------------READ---------------*/
 
@@ -91,9 +97,12 @@ public class DisciplinaAdminController {
 			Disciplina disciplina = optional.get();
 			disciplinaDTO.fromDisciplinaDTO(disciplina);
 			Page<Disciplina> pageDisciplinas = disciplinaService.getDisciplinasPaginadas(pageable);
+			List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+			
 			ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
 			mv.addObject("disciplinas", pageDisciplinas);
 			mv.addObject("id", disciplina.getId());
+			mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 			return mv;
 
@@ -230,13 +239,19 @@ public class DisciplinaAdminController {
 		ModelAndView mv = getIndexTemplate();
 		Page<Disciplina> pageDisciplinas = disciplinaService
 				.getDisciplinasPaginadas(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		
 		mv.addObject("disciplinas", pageDisciplinas);
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 		return mv;
 	}
 
 	private ModelAndView getIndexTemplate() {
 		ModelAndView mv = new ModelAndView("pg-admin-disciplinas");
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
+		
 		return mv;
 	}
 
@@ -244,7 +259,10 @@ public class DisciplinaAdminController {
 		ModelAndView mv = new ModelAndView("pg-edit-admin-disciplinas");
 		Page<Disciplina> pageDisciplinas = disciplinaService
 				.getDisciplinasPaginadas(PageRequest.of(PAGINA_PADRAO, REGISTROS_POR_PAGINA, Sort.by("id")));
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		
 		mv.addObject("disciplinas", pageDisciplinas);
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 		return mv;
 	}

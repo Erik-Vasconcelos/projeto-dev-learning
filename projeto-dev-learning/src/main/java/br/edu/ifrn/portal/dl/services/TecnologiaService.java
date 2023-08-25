@@ -59,6 +59,12 @@ public class TecnologiaService {
 	public List<PostsTecnologia> getPostsPorTecnologia(){
 		return tecnologiaRepository.getNumbersPostsByTecnology();
 	}
+	
+	public List<Tecnologia> getPricipaisTecnologias(){
+		return tecnologiaRepository.getPricipaisTecnologias();
+	}
+	
+	
 
 	/*---------------DELETE---------------*/
 

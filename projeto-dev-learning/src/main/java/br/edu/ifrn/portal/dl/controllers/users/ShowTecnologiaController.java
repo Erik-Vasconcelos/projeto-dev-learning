@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.controllers.users;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,11 @@ public class ShowTecnologiaController {
 			
 			Tecnologia tecnologia = optional.get();
 			Page<Postagem> postagensPaginadas = postagemService.getPostagensPorTecnologia(tecnologia.getId(), pageable);
+			List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
 			
 			mv.addObject("tecnologia", tecnologia);
 			mv.addObject("listaPostagens", postagensPaginadas);
+			mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 			return mv;
 		} else {

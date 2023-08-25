@@ -1,5 +1,6 @@
 package br.edu.ifrn.portal.dl.controllers.users;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import br.edu.ifrn.portal.dl.exceptions.ResourceNotFountException;
 import br.edu.ifrn.portal.dl.models.Disciplina;
 import br.edu.ifrn.portal.dl.models.Postagem;
+import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.services.DisciplinaService;
 import br.edu.ifrn.portal.dl.services.PostagemService;
+import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.DisciplinaPosts;
 import br.edu.ifrn.portal.dl.utils.UtilPageable;
 
@@ -39,6 +42,9 @@ public class ShowDisciplinasController {
 	
 	@Autowired
 	private PostagemService postagemService;
+	
+	@Autowired
+	private TecnologiaService tecnologiaService;
 
 	private static final int REGISTROS_POR_PAGINA = 8;
 
@@ -51,8 +57,10 @@ public class ShowDisciplinasController {
 		pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
 
 		Page<DisciplinaPosts> disciplinaPostsPaginadas = getDisciplinasAndQtdPostsRelated(pageable);
-
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		
 		mv.addObject("listaDisciplinasPosts", disciplinaPostsPaginadas);
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
 		return mv;
 	}
 
@@ -68,9 +76,11 @@ public class ShowDisciplinasController {
 			pageable = UtilPageable.verifySizePageable(REGISTROS_POR_PAGINA, pageable);
 			Disciplina disciplina = optional.get();
 			Page<Postagem> postagensPaginadas = postagemService.getPostagensPorDisciplina(disciplina.getId(), pageable);
+			List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
 			
 			mv.addObject("disciplina", disciplina);
 			mv.addObject("listaPostagens", postagensPaginadas);
+			mv.addObject("principaisTecnologias", pricipaisTecnologias);
 			
 			return mv;
 		}else {

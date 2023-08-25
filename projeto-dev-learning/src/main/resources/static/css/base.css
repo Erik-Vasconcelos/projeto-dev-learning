@@ -58,8 +58,16 @@
 }
 
 /*###################### MEDIA QUERIES ######################*/
+@media (max-width: 992px) {
+	.footer-column {
+		margin-bottom: 1.5em;
+	}
+}
+
 @media (max-width: 767px) {
-	.navbar-nav .nav-item {
+
+	/*TODO*/
+	header .navbar-nav .nav-item {
 		border-bottom: 1px solid #303030;
 		width: 100%;
 	}
@@ -74,6 +82,28 @@
 	.navbar-nav .nav-item:hover {
 		background-color: #303030;
 	}
+
+	.container-rodape {
+		padding: 2em 3em !important;
+	}
+
+}
+
+@media (max-width: 576px) {
+	.pagination-item {
+		max-width: 1.8em !important;
+		min-height: 2.2em !important;
+		height: auto !important;
+		font-size: 12px !important;
+	}
+
+	.pagination-action {
+		font-size: 12px !important;
+	}
+
+	.container-rodape {
+		padding: 2em !important;
+	}
 }
 
 /**************************** COMPONENTES PRICIPAIS ****************************/
@@ -84,19 +114,17 @@ body {
 	margin-top: 6em;
 }
 
-section {
+.secao {
 	padding: 2em 2em 4em 2em;
 	box-sizing: border-box;
 }
 
 footer {
-	z-index: -1;
-	position: fixed;
+	position: static;
 	bottom: 0;
 	background-color: #121212;
-	padding: 2em;
-	position: relative;
 	color: #ffffff;
+	font-family: Source-sans-pro;
 }
 
 .class-container {
@@ -114,6 +142,8 @@ footer {
 
 .link:hover {
 	text-decoration: none;
+	color: rgba(124, 35, 240, 0.8);
+	transition: .5s;
 }
 
 /**************************** CABEÇALHO ****************************/
@@ -203,14 +233,74 @@ header nav a {
 }
 
 /**************************** RODAPÉ ****************************/
-footer h3 {
-	font-family: Orbitron;
-	font-size: 1.3em;
+footer .navbar-nav .nav-item {
+	padding: 1px 0.25em;
 }
 
-footer p {
-	font-family: Source-sans-pro;
-	font-size: 0.87em;
+footer .navbar-nav .nav-item .link,
+footer .navbar-nav .nav-item .link:hover {
+	text-decoration: revert;
+}
+
+.link-img,
+.link-img:hover {
+	text-decoration: none !important;
+}
+
+.item-info {
+	white-space: nowrap;
+}
+
+.item-bold {
+	font-weight: bold;
+}
+
+.dropdown-toggle {
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.dropdown-toggle:focus {
+	border: 0;
+	outline: 0;
+}
+
+.item-nav-footer,
+.dropdown-toggle {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #C7C7C7;
+}
+
+.titulo-footer {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.icone-link {
+	width: 0.75em;
+	margin-left: 0.25em;
+}
+
+.container-rodape {
+	display: flex;
+	flex-direction: column;
+	gap: 2em 0;
+	max-width: 100%;
+	min-height: 15em;
+	padding: 2em 4em;
+}
+
+.container-logo-rodape {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px 0.7em;
+	height: 4em;
+	max-height: 4em;
+	border-top: 1px solid #313131;
+	background-color: transparent;
 }
 
 /**************************** COMPONENTES ****************************/
@@ -366,10 +456,9 @@ header .nav-link {
 /*----------- MUDANÇA EM CLASSES -------------*/
 nav.navbar-style {
 	justify-content: space-between;
-	background-color: #121212;
 	padding: 0.5em 1em;
-	border-bottom: #303030 solid 1px;
 	min-height: 70px;
+	background-color: #121212;
 }
 
 .col-md-5 {
@@ -414,15 +503,13 @@ nav.navbar-style {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: #121212;
 	z-index: 9999;
+	background-color: #121212;
 }
 
 #preloader .inner {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	display: flex;
-	flex-direction: column;
 	transform: translate(-50%, -50%);
 }

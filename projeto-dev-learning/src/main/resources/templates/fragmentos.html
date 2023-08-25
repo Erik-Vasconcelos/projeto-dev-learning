@@ -167,12 +167,11 @@
 			class="pagination-action pagination-previus">
 			<a id="previous" th:if="${[__${paginationObjectName}__].hasPrevious()}"
 				th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
-				class="pagination-link">&#60;
-				Anterior
+				class="pagination-link">&#60;&#60;
 			</a>
 
 			<label th:unless="${[__${paginationObjectName}__].hasPrevious()}"
-				class="pagination-link pagination-link-disable">&#60; Anterior</label>
+				class="pagination-link pagination-link-disable">&#60;&#60;</label>
 		</li>
 
 		<th:block
@@ -193,10 +192,10 @@
 			class="pagination-action pagination-next">
 			<a th:if="${[__${paginationObjectName}__].hasNext()}"
 				th:href="@{__${resourceName}__(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
-				class="pagination-link">Próximo &#62;
+				class="pagination-link">&#62;&#62;
 			</a>
 			<label id="next" th:unless="${[__${paginationObjectName}__].hasNext()}"
-				class="pagination-link pagination-link-disable">Próximo &#62;</label>
+				class="pagination-link pagination-link-disable">&#62;&#62;</label>
 		</li>
 	</ul>
 </nav>
@@ -210,12 +209,12 @@
 			class="pagination-action pagination-previus">
 			<a id="previous" th:if="${[__${paginationObjectName}__].hasPrevious()}"
 				th:href="@{${#strings.toLowerCase(#strings.replace('__${resourceName}__', ' ', '-'))}(page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
-				class="pagination-link">&#60;
-				Anterior
+				class="pagination-link">&#60;&#60;
+
 			</a>
 
 			<label th:unless="${[__${paginationObjectName}__].hasPrevious()}"
-				class="pagination-link pagination-link-disable">&#60; Anterior</label>
+				class="pagination-link pagination-link-disable">&#60;&#60;</label>
 		</li>
 
 		<th:block
@@ -236,10 +235,10 @@
 			class="pagination-action pagination-next">
 			<a th:if="${[__${paginationObjectName}__].hasNext()}"
 				th:href="@{${#strings.toLowerCase(#strings.replace('__${resourceName}__', ' ', '-'))}(page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
-				class="pagination-link">Próximo &#62;
+				class="pagination-link">&#62;&#62;
 			</a>
 			<label id="next" th:unless="${[__${paginationObjectName}__].hasNext()}"
-				class="pagination-link pagination-link-disable">Próximo &#62;</label>
+				class="pagination-link pagination-link-disable">&#62;&#62;</label>
 		</li>
 	</ul>
 </nav>
@@ -254,12 +253,11 @@
 			class="pagination-action pagination-previus">
 			<a id="previous" th:if="${[__${paginationObjectName}__].hasPrevious()}"
 				th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number-1}, size=${[__${paginationObjectName}__].size})}"
-				class="pagination-link">&#60;
-				Anterior
+				class="pagination-link">&#60;&#60;
 			</a>
 
 			<label th:unless="${[__${paginationObjectName}__].hasPrevious()}"
-				class="pagination-link pagination-link-disable">&#60; Anterior</label>
+				class="pagination-link pagination-link-disable">&#60;&#60;</label>
 		</li>
 
 		<th:block
@@ -280,10 +278,10 @@
 			class="pagination-action pagination-next">
 			<a th:if="${[__${paginationObjectName}__].hasNext()}"
 				th:href="@{__${resourceName}__(valor=${parameter}, page=${[__${paginationObjectName}__].number+1}, size=${[__${paginationObjectName}__].size})}"
-				class="pagination-link">Próximo &#62;
+				class="pagination-link">&#62;&#62;
 			</a>
 			<label id="next" th:unless="${[__${paginationObjectName}__].hasNext()}"
-				class="pagination-link pagination-link-disable">Próximo &#62;</label>
+				class="pagination-link pagination-link-disable">&#62;&#62;</label>
 		</li>
 	</ul>
 </nav>
@@ -291,16 +289,129 @@
 <!--*****************************************************************
 							RODAPÉ DO BLOG
 *****************************************************************-->
-<footer th:fragment="footer">
-	<div class="container">
-		<div class="row  justify-content-center">
-			<div class="col-md-5">
-				<h3>Sobre nós</h3>
-				<p>Somos um grupo de professores e alunos que tem com objetivo
-					auxiliar estudantes que têm dificuldades na aprendizagem de
-					disciplinas de programação do curso técnico em informática do
-					IFRN.</p>
+<footer th:fragment="footer(listaPrincipaisTecnologias)" class="mt-4">
+	<div class="container-rodape">
+		<div class="row">
+			<div class="footer-column col-sm-12 col-md-8 col-lg-4 col-xl-4">
+				<h3 class="titulo-footer">SOBRE-NÓS</h3>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<p class="item-nav-footer">Dev Learning é um blog de artigos e tutoriais sobre desenvolvimento
+							de
+							software, que tem o objetivo de
+							auxiliar os estundantes do
+							curso técnico em infomática do IFRN que possuem dificuldades no aprendizado das disciplinas
+							do eixo
+							tenológico.</p>
+					</li>
+				</ul>
+			</div>
+
+			<div class="footer-column col-sm-12 col-md-4 col-lg-2 col-xl-2">
+				<h3 class="titulo-footer">LINKS</h3>
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a th:href="@{/}" class="link link-footer item-nav-footer">
+							Home
+							<img src="/icones/link.png" alt="link" class="icone-link">
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a th:href="@{/disciplinas}" class="link item-nav-footer">
+							Disciplinas
+							<img src="/icones/link.png" alt="link" class="icone-link">
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<div class="dropdown">
+							<button class="dropdown-toggle link" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Tecnologias
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<h6 class="dropdown-header">Postagens por tecnologia</h6>
+								<a th:href="@{/posts/tecnologia/{nome}(nome = ${#strings.toLowerCase(#strings.replace('__${tecnologia.nome}__', ' ', '-'))})}"
+									th:each="tecnologia : ${listaPrincipaisTecnologias}" th:text="${tecnologia.nome}"
+									class="dropdown-item"></a>
+							</div>
+						</div>
+					</li>
+				</ul>
+
+			</div>
+
+			<div class="footer-column col-sm-12 col-md-6 col-lg-3 col-xl-3">
+				<h3 class="titulo-footer">CONTATO</h3>
+
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<span>
+							<img src="/icones/home.png" alt="endereco">
+							<label class="item-nav-footer">Endereço:&nbsp;</label>
+						</span>
+						<label class="item-nav-footer">Nova Cruz, RN - Brasil</label>
+					</li>
+
+					<li class="nav-item">
+						<span>
+							<img src="/icones/cep.png" alt="endereco">
+							<label class="item-nav-footer">Cep:&nbsp;</label>
+						</span>
+						<label class="item-nav-footer">59215000</label>
+					</li>
+
+					<li class="nav-item">
+						<span>
+							<img src="/icones/email.png" alt="email">
+							<label class="item-nav-footer">Email:&nbsp;</label>
+						</span>
+						<label class="item-nav-footer">erikvasconcelos2018@gmail.com</label>
+					</li>
+				</ul>
+			</div>
+
+			<div class="footer-column col-sm-12 col-md-6 col-lg-3 col-xl-3">
+				<h3 class="titulo-footer">INFORMAÇÕES TÉCNICAS</h3>
+
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<label class="item-nav-footer item-bold">Servidor:&nbsp;</label>
+						<label class="item-nav-footer item-info">Amazon AWS ohio 8jgh732</label>
+					</li>
+
+					<li class="nav-item">
+						<label class="item-nav-footer item-bold">Última atualização:&nbsp;</label>
+						<label class="item-nav-footer item-info">25/08/2023 10:52</label>
+					</li>
+
+					<li class="nav-item">
+						<label class="item-nav-footer item-bold">Desenvolvedor:&nbsp;</label>
+						<a href="https://www.linkedin.com/in/erik-vasconcelos-193907224/" class="link item-nav-footer item-info">
+							Erik Vasconcelos
+							<img src="/icones/link.png" alt="link" class="icone-link">
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<label class="item-nav-footer item-bold">Feito com:&nbsp;</label>
+						<span class="item-info">
+							<a href="https://spring.io/" class="link link-img">
+								<img src="/imagens/logoSpring.svg" alt="Spring" width="78px">
+							</a>
+							<a href="https://www.thymeleaf.org/" class="link link-img">
+								<img src="/imagens/logoThymeleaf.png" alt="Thymeleaf" width="90px">
+							</a>
+						</span>
+					</li>
+				</ul>
 			</div>
 		</div>
+	</div>
+
+	<div class="container-logo-rodape">
+		<img src="/icones/usuario.png" alt="logo">
+		<label class="item-nav-footer">Dev Learning 2023</label>
 	</div>
 </footer>

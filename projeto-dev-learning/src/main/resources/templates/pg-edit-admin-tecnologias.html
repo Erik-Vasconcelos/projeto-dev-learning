@@ -6,7 +6,7 @@
 <body>
 	<header th:replace="~{fragmentos :: header-padrao}"></header>
 
-	<section>
+	<section class="secao">
 		<h3 class="cbc-n3 cbc-style-primary">Administração das tecnologias</h3>
 		
 		<div class="col-md-auto" th:if="${mensagem}" >
@@ -123,7 +123,7 @@
 
 	</section>
 
-	<footer th:replace="~{fragmentos :: footer}"></footer>
+	<footer th:replace="~{fragmentos :: footer(${principaisTecnologias})}"></footer>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

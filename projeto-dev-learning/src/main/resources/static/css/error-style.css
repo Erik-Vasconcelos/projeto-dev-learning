@@ -2,36 +2,126 @@
 					ESTILIZAÇÃO DA PÁGINA
 #########################################################*/
 
+/**************************** IMPORTAÇÕES ****************************/
+@font-face {
+    font-family: Source-sans-pro;
+    src: url(../fontes/source-sans-pro/static/SourceSans3-Regular.ttf);
+}
+
 /*###################### MEDIA QUERIES ######################*/
-@media(max-width: 900px) {
-    #error-img {
-        display: none;
+
+/*---- col-md ----*/
+@media(max-width: 992px) {
+    .cbc-n4 {
+        font-size: 1.37em;
+    }
+}
+
+/*---- col-sm ----*/
+@media(max-width: 768px) {
+    .container {
+        flex-direction: column !important;
+        max-height: none !important;
+        max-width: 30em;
     }
 
     .container-conteudo {
-        padding: 20px 40px 20px 40px;
+        width: 100% !important;
+        padding: 1em !important;
     }
+
+    .img-error {
+        height: 15em !important;
+        max-height: 15em !important;
+        border-radius: 0.62em 0.62em 0 0 !important;
+    }
+
+    .div-titulo {
+        justify-content: space-around !important;
+    }
+}
+
+/*---- col ----*/
+@media (max-width: 576px) {
+    .container-conteudo {
+        padding: 0.5em !important;
+    }
+
+    .cbc-n4 {
+        font-size: 1.25em !important;
+    }
+
+    #info-home {
+        display: inherit !important;
+    }
+}
+
+/*---- mobile L ----*/
+@media (max-width: 424px) {
+    .img-error {
+        height: 13em !important;
+        max-height: 13em !important;
+    }
+
+    .cbc-n4 {
+        font-size: 1em !important;
+    }
+
+    .infomartion {
+        font-size: 12px !important;
+    }
+}
+
+/*---- mobile M ----*/
+@media (max-width: 300px) {
+    #info-home {
+        display: none !important;
+    }
+}
+
+/**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
+#info-home {
+    margin: 0;
+}
+
+.cbc-n4,
+.cbc-n5 {
+    width: 90%;
+}
+
+.btn-primary {
+    width: auto;
+}
+
+#group-components-btn-home {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 5px;
+    min-width: 5em;
 }
 
 /**************************** CONTAINER DO ERRO ****************************/
 .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0;
-	box-sizing: border-box;
-    border-radius: 10px;
+    box-sizing: border-box;
+    border-radius: 0.62em;
     border: 1px solid #7C23F0;
     background-color: #212125;
-}
-
-.container-img {
-    width: auto;
-    border-radius: 10px 0px 0px 10px;
+    max-height: 20em;
+    max-width: 68em;
 }
 
 .container-conteudo {
     min-width: 70%;
-    padding: 15px 40px 15px 20px;
+    padding: 15px 20px 15px 0;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .conteudo {
@@ -39,34 +129,40 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1em 0.5em;
+    padding: 0.5em 1em;
 }
 
 .img-error {
-    width: auto;
     height: 100%;
+    max-height: 19.9em;
+    width: 100%;
     object-fit: cover;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 0.62em 0 0 0.62em;
+}
+
+.div-titulo {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 0.5em;
+    width: 100%;
 }
 
 .infomartion {
-    font-family: "Open Sans", "Lato", sans-serif;
+    font-family: Source-sans-pro;
     font-size: 14px;
     color: #FFF;
 }
 
 .btn {
-    height: 30px;
     display: flex;
     align-items: center;
     gap: 5px;
+    height: 30px;
 }
 
-button a {
-    text-decoration: none;
-    color: #FFF;
-}
-
+button a,
 button a:hover {
-    text-decoration: none;
     color: #FFF;
 }

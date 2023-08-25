@@ -6,7 +6,7 @@
 <body>
 	<header th:replace="~{fragmentos :: header-padrao}"></header>
 
-	<section>
+	<section class="secao">
 		<h3 class="cbc-n3 cbc-style-primary">Administração dos gerenciadores</h3>
 		
 		<div class="col-md-auto" th:if="${mensagem}" >
@@ -17,7 +17,7 @@
 							 INICIO DO FORM DE CADASTRO
 		*****************************************************************-->
 		<div class="class-container container-fluid ">
-			<h5 class="cbc-n4 cbc-style-secundary">Editar gerenciador</h5>
+			<h5 class="cbc-n4 cbc-style-secundary" th:text="'Editar Gerenciador #' + ${id}"></h5>
 
 			<form class="mb-3" th:action="@{/admin/gerenciadores/{id}(id = ${id})}" method="POST" enctype="multipart/form-data" th:object="${gerenciadorFormEditDTO}">
 
@@ -151,7 +151,7 @@
 
 	</section>
 
-	<footer th:replace="~{fragmentos :: footer}"></footer>
+	<footer th:replace="~{fragmentos :: footer(${principaisTecnologias})}"></footer>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

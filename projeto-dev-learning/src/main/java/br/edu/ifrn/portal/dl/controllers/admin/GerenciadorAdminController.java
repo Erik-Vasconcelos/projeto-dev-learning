@@ -25,9 +25,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.ifrn.portal.dl.dtos.GerenciadorFormDTO;
 import br.edu.ifrn.portal.dl.dtos.GerenciadorFormEditDTO;
 import br.edu.ifrn.portal.dl.models.Gerenciador;
+import br.edu.ifrn.portal.dl.models.Tecnologia;
 import br.edu.ifrn.portal.dl.models.enuns.TipoGerencidor;
 import br.edu.ifrn.portal.dl.services.GerenciadorService;
 import br.edu.ifrn.portal.dl.services.RoleService;
+import br.edu.ifrn.portal.dl.services.TecnologiaService;
 import br.edu.ifrn.portal.dl.utils.Mensagem;
 import br.edu.ifrn.portal.dl.utils.Pesquisa;
 import br.edu.ifrn.portal.dl.utils.UtilPageable;
@@ -52,6 +54,9 @@ public class GerenciadorAdminController {
 	@Autowired
 	private GerenciadorService gerenciadorService;
 
+	@Autowired
+	private TecnologiaService tecnologiaService;
+	
 	@Autowired
 	private RoleService roleService;
 
@@ -100,7 +105,6 @@ public class GerenciadorAdminController {
 
 		Optional<Gerenciador> optional = gerenciadorService.obterPorId(id);
 		
-		
 		if (optional.isPresent()) {
 			Gerenciador gerenciador = optional.get();
 			
@@ -117,10 +121,12 @@ public class GerenciadorAdminController {
 			
 			List<TipoGerencidor> tipoGerenciador = Arrays.stream(TipoGerencidor.values())
 					.filter(tp -> tp.getCodigo() != TipoGerencidor.ADMIN_MASTER.getCodigo()).toList();
-
+			List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+			
 			mv.addObject("listaGerenciadores", pageGerenciador);
 			mv.addObject("id", gerenciador.getId());
 			mv.addObject("tipoGerenciador", tipoGerenciador);
+			mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 			return mv;
 
@@ -238,15 +244,20 @@ public class GerenciadorAdminController {
 
 		List<TipoGerencidor> tipoGerenciador = Arrays.stream(TipoGerencidor.values())
 				.filter(tp -> tp.getCodigo() != TipoGerencidor.ADMIN_MASTER.getCodigo()).toList();
-
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		
 		mv.addObject("tipoGerenciador", tipoGerenciador);
 		mv.addObject("listaGerenciadores", pageGerenciador);
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 		return mv;
 	}
 
 	private ModelAndView getIndexTemplate() {
 		ModelAndView mv = new ModelAndView("pg-admin-gerenciadores");
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
+		
 		return mv;
 	}
 
@@ -257,9 +268,11 @@ public class GerenciadorAdminController {
 
 		List<TipoGerencidor> tipoGerenciador = Arrays.stream(TipoGerencidor.values())
 				.filter(tp -> tp.getCodigo() != TipoGerencidor.ADMIN_MASTER.getCodigo()).toList();
-
+		List<Tecnologia> pricipaisTecnologias = tecnologiaService.getPricipaisTecnologias();
+		
 		mv.addObject("tipoGerenciador", tipoGerenciador);
 		mv.addObject("listaGerenciadores", pageGerenciador);
+		mv.addObject("principaisTecnologias", pricipaisTecnologias);
 
 		return mv;
 	}

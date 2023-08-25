@@ -14,7 +14,7 @@
 
 	</section>
 
-	<section class="d-flex flex-column align-items-center section-conteudo">
+	<section class="d-flex flex-column align-items-center secao section-conteudo">
 		<div class="dados-postagem mb-5">
 			<h1 th:text="${postagem.titulo}" class="titulo-postagem mb-2">As principais tecnologias da atualidade</h1>
 
@@ -52,7 +52,7 @@
 
 	</section>
 
-	<footer th:replace="~{fragmentos :: footer}"></footer>
+	<footer th:replace="~{fragmentos :: footer(${principaisTecnologias})}"></footer>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
