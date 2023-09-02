@@ -14,9 +14,6 @@
 			<span th:classappend="${mensagem.isError ? 'error-message' : 'success-message'}" th:text="${mensagem.msg}"></span>
 		</div>
 
-		<!--  th:text="${param.mensagem}" -> pega o valor do parametro que vem na url
-			th:styleappend="${param.errp != null ? 'display: none;' : ''}  -> adiciona um estilo ao componente"
-		 -->
 		<!--*****************************************************************
 							 INICIO DO FORM DE CADASTRO
 		*****************************************************************-->
@@ -37,9 +34,30 @@
 					<div class="invalid-feedback" th:errors="*{descricaoObjetivos}"></div>
 				</div>
 				
+				<div class="row">
+					<div class="col-12">
+						<label class="form-label" for="imagemBanner">Imagem de banner da disciplina</label>
+					</div>
+				</div>
+				<div class="row mb-2">
+					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-6">
+						<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da disciplina" class="img-banner"> 					
+					</div>
+				</div>
+				<div class="row mb-4">
+					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-6">
+						<div class="custom-file">
+							<input id="inputImagemBanner" type="file" name="imagemFile" accept="image/*" th:errorclass="is-invalid"> 
+							<label for="inputImagemBanner" class="custom-file-label" >Escolha uma imagem</label>
+							<div class="invalid-feedback" th:errors="*{imagemFile}"></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 
 				<div class="input-group mb-3">
+					
 					<label class="form-label" for="imagemBanner">Imagem de banner da disciplina</label>
-					<!-- <img id="imagemBanner" alt="Imagem da disciplina" class="img-fluid" width="100%" th:if="${disciplinaFormDTO.imagem}" th:src="*{imagem}"> --> 					
 					<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da disciplina" class="img-fluid" width="100%"> 					
 					
 					<div class="custom-file">
@@ -47,7 +65,7 @@
 						<label for="inputImagemBanner" class="custom-file-label" >Escolha uma imagem</label>
 						<div class="invalid-feedback" th:errors="*{imagemFile}"></div>
 					</div>
-				</div>
+				</div> -->
 				
 				<div class="row">
 					<div class="col-md-auto">

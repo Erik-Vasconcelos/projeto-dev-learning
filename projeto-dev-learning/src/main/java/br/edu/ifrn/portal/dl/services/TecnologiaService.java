@@ -44,6 +44,7 @@ public class TecnologiaService {
 	public Optional<Tecnologia> obterPorId(Long id) throws IllegalArgumentException{
 		return tecnologiaRepository.findById(id);
 	}
+	
 	public Optional<Tecnologia> obterPorNome(String nome) {
 		return tecnologiaRepository.findByNomeIgnoreCase(nome);
 	}
@@ -64,8 +65,6 @@ public class TecnologiaService {
 		return tecnologiaRepository.getPricipaisTecnologias();
 	}
 	
-	
-
 	/*---------------DELETE---------------*/
 
 	public void remover(Long id) {

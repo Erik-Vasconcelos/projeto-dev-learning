@@ -18,13 +18,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-//@EnableWebMvc //habilita todos os recursos de MVC do spring
 public class ProjetoDevLearningApplication {
-
 	
 	public static void main(String[] args) {
-		/*BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println(encoder.encode("12345"));*/
 		SpringApplication.run(ProjetoDevLearningApplication.class, args);
 	}
 	

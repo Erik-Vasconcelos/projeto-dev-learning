@@ -62,14 +62,11 @@
 	.footer-column {
 		margin-bottom: 1.5em;
 	}
-}
 
-@media (max-width: 767px) {
-
-	/*TODO*/
 	header .navbar-nav .nav-item {
-		border-bottom: 1px solid #303030;
+		/* border-bottom: 1px solid #303030; */
 		width: 100%;
+		padding: 0.5em;
 	}
 
 	.navbar-nav .ml-auto .align-items-center {
@@ -82,7 +79,9 @@
 	.navbar-nav .nav-item:hover {
 		background-color: #303030;
 	}
+}
 
+@media (max-width: 767px) {
 	.container-rodape {
 		padding: 2em 3em !important;
 	}
@@ -103,6 +102,12 @@
 
 	.container-rodape {
 		padding: 2em !important;
+	}
+}
+
+@media (max-width: 300px) {
+	#logoFull{
+		height: 30px !important;
 	}
 }
 
@@ -144,6 +149,14 @@ footer {
 	text-decoration: none;
 	color: rgba(124, 35, 240, 0.8);
 	transition: .5s;
+}
+
+#logoFull{
+	height: 40px;
+}
+
+.logo{
+	width: 2.5em;
 }
 
 /**************************** CABEÇALHO ****************************/
@@ -218,13 +231,15 @@ header nav a {
 }
 
 .btn-perfil:hover {
-	color: #7C23F0;
+	color: #FFF;
 }
 
 .img-user {
 	width: 2em;
+	height: 2em;
 	border-radius: 50%;
 	margin-right: 3px;
+	object-fit: cover;
 }
 
 .info-sair {
@@ -268,7 +283,7 @@ footer .navbar-nav .nav-item .link:hover {
 .item-nav-footer,
 .dropdown-toggle {
 	margin: 0;
-	font-size: 14px;
+	font-size: 1em;
 	line-height: 1.7;
 	color: #C7C7C7;
 }
@@ -413,18 +428,19 @@ textarea {
 
 /*----------- MUDANÇA EM CLASSES DO CABEÇALHO-------------*/
 
-.navbar-expand-md .navbar-nav .nav-link {
-	color: #FFF;
+.navbar-expand-lg .navbar-nav .nav-link {
+	/* color: #FFF; */
 	padding: 0px 0px;
 }
 
-.navbar-expand-md .navbar-nav .nav-link:hover {
-	color: #7C23F0;
+.navbar-expand-lg .navbar-nav .nav-link:hover {
+	color: #FFF;
+	transition: .5s;
 }
 
-.navbar-expand-md .navbar-nav .nav-link:focus {
+/* .navbar-expand-lg .navbar-nav .nav-link:focus {
 	color: #FFF;
-}
+} */
 
 .navbar-nav .nav-item {
 	list-style-type: none;
@@ -432,11 +448,10 @@ textarea {
 }
 
 header .nav-link {
-	font-family: "Open Sans", "Lato", sans-serif;
-	/* font-family: "Source-sans-pro"; */
-	color: #ffffff;
-	font-size: 14px;
+	font-family: Source-sans-pro;
+	font-size: 1em;
 	text-decoration: none;
+	color: #C7C7C7;
 }
 
 /*----------- DROPDOWN DO PERFIL-------------*/
@@ -459,6 +474,7 @@ nav.navbar-style {
 	padding: 0.5em 1em;
 	min-height: 70px;
 	background-color: #121212;
+	border-bottom: 1px solid #313131;
 }
 
 .col-md-5 {

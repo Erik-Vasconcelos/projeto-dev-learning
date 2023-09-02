@@ -96,7 +96,7 @@ body {
 
 .container-disciplina:hover {
     transform: scale(1.04);
-    transition: .4s all;
+    transition: .5s all;
     box-shadow: 3px 3px 8px #7C23F0,
         4px 4px 10px #7C23F0;
 }

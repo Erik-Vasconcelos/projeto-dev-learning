@@ -9,9 +9,10 @@
 
 	<section class="secao">
 		<h3 class="cbc-n3 cbc-style-primary">Administração dos gerenciadores</h3>
-		
-		<div class="col-md-auto" th:if="${mensagem}" >
-			<span th:classappend="${mensagem.isError ? 'error-message' : 'success-message'}" th:text="${mensagem.msg}"></span>
+
+		<div class="col-md-auto" th:if="${mensagem}">
+			<span th:classappend="${mensagem.isError ? 'error-message' : 'success-message'}"
+				th:text="${mensagem.msg}"></span>
 		</div>
 
 		<!--*****************************************************************
@@ -20,20 +21,29 @@
 		<div class="class-container container-fluid ">
 			<h5 class="cbc-n4 cbc-style-secundary">Novo Gerenciador</h5>
 
-			<form class="mb-3" action="/admin/gerenciadores/salvar" method="POST" enctype="multipart/form-data" th:object="${gerenciadorFormDTO}">
+			<form class="mb-3" action="/admin/gerenciadores/salvar" method="POST" enctype="multipart/form-data"
+				th:object="${gerenciadorFormDTO}">
 
 				<div class="mb-3">
 					<label class="form-label">Nome</label>
-					<input id="campoNome" type="text" name="nome" class="form-control" th:field="*{nome}" th:errorclass="is-invalid">
+					<input id="campoNome" type="text" name="nome" class="form-control" th:field="*{nome}"
+						th:errorclass="is-invalid">
 					<div class="invalid-feedback" th:errors="*{nome}"></div>
 				</div>
 
 				<div class="mb-3">
 					<label for="campoEmail" class="form-label">Email (login)</label>
-					<input id="campoEmail" type="email" name="email"  class="form-control" th:field="*{email}" th:errorclass="is-invalid">
+					<input id="campoEmail" type="email" name="email" class="form-control" th:field="*{email}"
+						th:errorclass="is-invalid">
 					<div class="invalid-feedback" th:errors="*{email}"></div>
 				</div>
-				
+
+				<div class="mb-3">
+					<label class="form-label">Senha</label>
+					<input id="campoSenha" type="password" name="senha" class="form-control" th:errorclass="is-invalid">
+					<div class="invalid-feedback" th:errors="*{senha}"></div>
+				</div>
+
 				<div class="mb-3">
 					<div class="form-group">
 						<label for="tipo" class="form-label">Tipo do gerenciador</label>
@@ -46,28 +56,33 @@
 						<div class="invalid-feedback" th:errors="*{tipoGerenciador}"></div>
 					</div>
 				</div>
-				
-				<div class="input-group mb-3">
-					<label class="form-label" for="imagemBanner">Imagem do gerenciador</label>
-					<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da gerenciador" class="img-fluid" width="100%"> 					
-					
-					<div class="custom-file">
-						<label for="inputImagemBanner" class="custom-file-label" >Escolha uma imagem</label>
-						<input id="inputImagemBanner" type="file" name="imagemFile" accept="image/*" th:errorclass="is-invalid"> 
-						<div class="invalid-feedback" th:errors="*{imagemFile}"></div>
+
+				<div class="row">
+					<div class="col-12">
+						<label class="form-label" for="imagemBanner">Imagem do gerenciador</label>
 					</div>
 				</div>
-				
-				<div class="mb-3">
-					<label class="form-label">Senha</label>
-					<input id="campoSenha" type="password" name="senha" class="form-control" th:errorclass="is-invalid">
-					<div class="invalid-feedback" th:errors="*{senha}"></div>
+				<div class="row mb-2">
+					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-6">
+						<img id="imagemBanner" src="/imagens/sem-imagem.jpg" alt="Imagem da postagem"
+							class="img-banner img-radius">
+					</div>
 				</div>
-				
+				<div class="row mb-4">
+					<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-6">
+						<div id="inputImgAutor" class="custom-file">
+							<label for="inputImagemBanner" class="custom-file-label">Escolha uma imagem</label>
+							<input id="inputImagemBanner" type="file" name="imagemFile" accept="image/*"
+								th:errorclass="is-invalid">
+							<div class="invalid-feedback" th:errors="*{imagemFile}"></div>
+						</div>
+					</div>
+				</div>
+
 				<div class="row">
 					<div class="col-md-auto">
 						<input class="btn btn-primary btn-md" type="submit" value="Salvar">
-						
+
 						<a th:href="@{/admin/gerenciadores}" th:if="${!gerenciadorFormDTO.isEmpty()}">
 							<button class="btn btn-primary btn-md" type="button">Cancelar</button>
 						</a>
@@ -93,19 +108,20 @@
 
 				<div class="row">
 					<div class="col-md">
-						<input type="search" name="nome" placeholder="Insira o nome" class="form-control" th:field="*{valor}" th:errorclass="is-invalid">
+						<input type="search" name="nome" placeholder="Insira o nome" class="form-control"
+							th:field="*{valor}" th:errorclass="is-invalid">
 						<div class="invalid-feedback" th:errors="*{valor}"></div>
 
 					</div>
 					<div class="col-md-auto">
-						<input class="btn btn-primary" type="submit" value="Pesquisar"> 
+						<input class="btn btn-primary" type="submit" value="Pesquisar">
 						<a th:href="@{/admin/gerenciadores}" th:if="${pesquisa.valor}">
 							<button class="btn btn-outline-secondary" type="button">Cancelar</button>
 						</a>
 					</div>
 				</div>
-				
-			</div> 
+
+			</div>
 
 		</form>
 
@@ -113,44 +129,46 @@
 								INICIO DA TABELA
 		*****************************************************************-->
 		<div class="table-responsive-md">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">Id</th>
-					<th scope="col">Nome</th>
-					<th scope="col">Email</th>
-					<th scope="col">Tipo</th>
-					<th scope="col">Ações</th>
-				</tr>
-			</thead>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Email</th>
+						<th scope="col">Tipo</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
 
-			<tbody>
-				<tr th:each="gerenciador : ${listaGerenciadores.content}"> 
-					<td th:text="${gerenciador.id}">
-					<td th:text="${gerenciador.nome}">
-					<td th:text="${gerenciador.email}">
-					<td th:text="${gerenciador.tipoGerenciador.descricao}">
+				<tbody>
+					<tr th:each="gerenciador : ${listaGerenciadores.content}">
+						<td th:text="${gerenciador.id}">
+						<td th:text="${gerenciador.nome}">
+						<td th:text="${gerenciador.email}">
+						<td th:text="${gerenciador.tipoGerenciador.descricao}">
 
-					<td>
-						<div class="content-acoes">
-							<a th:href="@{/admin/gerenciadores/{id}/editar(id=${gerenciador.id})}">
-								<img src="/icones/editar.png" alt="editar">
-							</a>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+						<td>
+							<div class="content-acoes">
+								<a th:href="@{/admin/gerenciadores/{id}/editar(id=${gerenciador.id})}">
+									<img src="/icones/editar.png" alt="editar">
+								</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 		<!--*****************************************************************
 							INICIO DO COMPONENTE DE PAGINAÇÃO
 		*****************************************************************-->
-		
+
 		<div th:if="${#httpServletRequest.getRequestURI().equals('/admin/gerenciadores/pesquisa')}">
-			<nav th:replace="~{fragmentos :: paginationWithParameter('listaGerenciadores', '/admin/gerenciadores/pesquisa', ${pesquisa.valor})}"></nav>
+			<nav
+				th:replace="~{fragmentos :: paginationWithParameter('listaGerenciadores', '/admin/gerenciadores/pesquisa', ${pesquisa.valor})}">
+			</nav>
 		</div>
-		
+
 		<div th:unless="${#httpServletRequest.getRequestURI().equals('/admin/gerenciadores/pesquisa')}">
 			<nav th:replace="~{fragmentos :: pagination('listaGerenciadores', '/admin/gerenciadores')}"></nav>
 		</div>

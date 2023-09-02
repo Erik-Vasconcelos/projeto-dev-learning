@@ -107,6 +107,12 @@
     }
 }
 
+@media (max-width: 300px) {
+	.cbc-n3 {
+	   	font-size: 1em !important;
+	}
+}
+
 /**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
 body {
     margin-top: 0;
