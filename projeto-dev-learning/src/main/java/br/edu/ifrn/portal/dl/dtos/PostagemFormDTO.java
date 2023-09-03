@@ -30,7 +30,7 @@ import lombok.ToString;
  * 
  * @author Erik Vasconcelos
  * @since 2023-06-29
- * @version A0.1
+ * @version 1.0 2023-09-03
  */
 
 @NoArgsConstructor

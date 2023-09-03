@@ -20,7 +20,7 @@ import br.edu.ifrn.portal.dl.utils.InfoPostagens;
  * 
  * @author Erik Vasconcelos
  * @since 2023-06-29
- * @version A0.1
+ * @version 1.0 2023-09-03
  */
 
 @Repository
@@ -30,16 +30,16 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 
 	public Optional<Postagem> findByTituloIgnoreCase(String titulo);
 
-	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.id ASC")
+	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE lower(concat('%', :titulo, '%')) ORDER BY p.id ASC")
 	public Page<Postagem> findByTituloPagined(@Param("titulo") String titulo, Pageable pageable);
 
-	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE  lower(concat('%', :titulo, '%')) ORDER BY p.dataPostagem DESC")
+	@Query("SELECT p FROM Postagem p WHERE lower(p.titulo) LIKE lower(concat('%', :titulo, '%')) ORDER BY p.dataPostagem DESC")
 	public Page<Postagem> findByTituloPaginedOrderData(@Param("titulo") String titulo, Pageable pageable);
 
 	@Query("SELECT p FROM Postagem p ORDER BY p.id ASC")
 	public Page<Postagem> findAllAsc(Pageable pageable);
 
-	@Query("SELECT p FROM Postagem p ORDER BY p.dataPostagem DESC")
+	@Query("SELECT p FROM Postagem p ORDER BY p.dataPostagem DESC, p.id DESC")
 	public Page<Postagem> findAllOrderDataDesc(Pageable pageable);
 
 	@Query("SELECT p FROM Postagem p WHERE p.autor.id = :id ORDER BY p.dataPostagem DESC")

@@ -13,7 +13,7 @@ import lombok.Setter;
  * 
  * @author Erik Vasconcelos
  * @since 2023-08-17
- * @version 0.1
+ * @version 1.0 2023-09-03
  */
 
 @NoArgsConstructor

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.ifrn.portal.dl.models.Role;
 import br.edu.ifrn.portal.dl.models.enuns.TipoGerencidor;
 import br.edu.ifrn.portal.dl.repositories.RoleRepository;
-import br.edu.ifrn.portal.dl.security.Role;
 
 /**
  * Classe responsável por encapsular o objeto de acesso a dados da <strong>entidade 
@@ -15,7 +15,7 @@ import br.edu.ifrn.portal.dl.security.Role;
  * 
  * @author Erik Vasconcelos
  * @since 2023-08-20
- * @version 0.1
+ * @version 1.0 2023-09-03
  */
 
 @Service

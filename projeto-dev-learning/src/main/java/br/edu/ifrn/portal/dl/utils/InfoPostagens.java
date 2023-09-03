@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+* Classe responsável por trafegar os dados das postagens para o painel de controler
 *
 * @author Erik Vasconcelos
 * @since 2023-07-20
-* @version A0.1
+* @version 1.0 2023-09-03
 */
 
 @Getter

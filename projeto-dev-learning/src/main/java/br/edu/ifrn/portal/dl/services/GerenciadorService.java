@@ -21,7 +21,7 @@ import br.edu.ifrn.portal.dl.repositories.GerenciadorRepository;
  * 
  * @author Erik Vasconcelos
  * @since 2023-07-21
- * @version A0.1
+ * @version 1.0 2023-09-03
  */
 
 @Service

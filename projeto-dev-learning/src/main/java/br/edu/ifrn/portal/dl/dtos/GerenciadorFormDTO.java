@@ -25,7 +25,7 @@ import lombok.ToString;
  * 
  * @author Erik Vasconcelos
  * @since 2023-08-20
- * @version 0.1
+ * @version 1.0 2023-09-03
  */
 
 @NoArgsConstructor

@@ -12,6 +12,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import br.edu.ifrn.portal.dl.services.GerenciadorService;
 
+/**
+ * Classe de configuração de segurança do sistema. O objetivo aqui é explicitar quais são
+ * os endpoints permitidos para cada tipo de usuário.
+ * 
+ * @author Erik Vasconcelos
+ * @since 2023-07-20
+ * @version 1.0 2023-09-03
+ */
+
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity

@@ -51,7 +51,7 @@ import br.edu.ifrn.portal.dl.utils.UtilPageable;
  * 
  * @author Erik Vasconcelos
  * @since 2023-06-28
- * @version 0.2
+ * @version 1.0 2023-09-03
  */
 
 //@SessionAttributes

@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * 
  * @author Erik Vasconcelos
  * @since 2023-08-11
- * @version 0.1
+ * @version 1.0 2023-09-03
  */
-
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceNotFountException extends RuntimeException{

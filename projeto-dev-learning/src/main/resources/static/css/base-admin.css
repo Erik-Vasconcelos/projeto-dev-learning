@@ -41,7 +41,7 @@
 }
 
 select option {
-	color: #7C23F0;
+	color: #7C23F0 !important;
 	background-color: #303030;
 }
 

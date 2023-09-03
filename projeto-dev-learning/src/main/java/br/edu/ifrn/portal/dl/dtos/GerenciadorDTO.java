@@ -6,11 +6,10 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.ifrn.portal.dl.models.Gerenciador;
+import br.edu.ifrn.portal.dl.models.Role;
 import br.edu.ifrn.portal.dl.models.enuns.TipoGerencidor;
-import br.edu.ifrn.portal.dl.security.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +22,7 @@ import lombok.ToString;
  * 
  * @author Erik Vasconcelos
  * @since 2023-07-24
- * @version 0.2
+ * @version 1.0 2023-09-03
  */
 
 @NoArgsConstructor

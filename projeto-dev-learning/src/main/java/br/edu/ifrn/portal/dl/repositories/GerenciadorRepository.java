@@ -17,7 +17,7 @@ import br.edu.ifrn.portal.dl.models.Gerenciador;
  * 
  * @author Erik Vasconcelos
  * @since 2023-07-21
- * @version A0.1
+ * @version 1.0 2023-09-03
  */
 
 @Repository

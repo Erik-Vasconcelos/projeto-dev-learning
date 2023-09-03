@@ -1,4 +1,4 @@
-package br.edu.ifrn.portal.dl.security;
+package br.edu.ifrn.portal.dl.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,15 @@ import org.springframework.security.core.GrantedAuthority;
 
 import lombok.Getter;
 import lombok.Setter;
+
+
+/**
+ * Classe modelo para a Role usada no spring security
+ * 
+ * @author Erik Vasconcelos
+ * @since 2023-07-20
+ * @version 1.0 2023-09-03
+ */
 
 @Getter
 @Setter
@@ -34,11 +43,5 @@ public class Role implements GrantedAuthority {
 	public String getAuthority() {
 		return this.nomeRole;
 	}
-
-	/*
-	 * Para inseir no banco de dados você precisa seguir o seguinte formato:
-	 * ROLE_<NOME-ROLE>. Para usar dentr do spring você só precisa colocar o nome da
-	 * role
-	 */
 
 }

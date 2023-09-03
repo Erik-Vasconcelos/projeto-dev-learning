@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
  * 
  * @author Erik Vasconcelos
  * @since 2023-06-08
- * @version A0.2 2023-06-22
+ * @version 1.0 2023-09-03
  */
 
 @NoArgsConstructor

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author Erik Vasconcelos
  * @since 2023-08-04
- * @version 0.1
+ * @version 1.0 2023-09-03
  */
 
 @Controller

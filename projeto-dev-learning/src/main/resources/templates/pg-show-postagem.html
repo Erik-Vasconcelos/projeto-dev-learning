@@ -16,10 +16,13 @@
 
 	<section class="d-flex flex-column align-items-center secao section-conteudo">
 		<div class="dados-postagem mb-5">
-			<h1 th:text="${postagem.titulo}" class="titulo-postagem mb-2">As principais tecnologias da atualidade</h1>
+			<h1 id="titulo" th:text="${postagem.titulo}" class="titulo-postagem mb-2">As principais tecnologias da
+				atualidade</h1>
 
 			<h3 class="text-center">
-				<a th:href="@{/disciplinas/{nome}(nome = ${#strings.toLowerCase(#strings.replace('__${postagem.disciplina.nome}__', ' ', '-' ))} )}" th:text="${ '<' + postagem.disciplina.nome + '/>'}" class="ref-disciplina"></a>
+				<a id="disciplina"
+					th:href="@{/disciplinas/{nome}(nome = ${#strings.toLowerCase(#strings.replace('__${postagem.disciplina.nome}__', ' ', '-' ))} )}"
+					th:text="${ '<' + postagem.disciplina.nome + '/>'}" class="ref-disciplina"></a>
 			</h3>
 
 			<h5 th:text="${ '{'+ postagem.tipoPostagem.descricao + '}'}" class="data ref-type-post"></h5>
@@ -40,7 +43,7 @@
 			<div class="ql-editor" th:utext="${postagem.html}"></div>
 		</div>
 
-		<div class="class-container container-fluid container-autor">
+		<div class="class-container container-fluid container-autor mb-5">
 			<div class="group-img_autor-name_autor d-flex flex-column align-items-center">
 				<img th:src="${postagem.autor.imagem}" onError="this.onerror=null;this.src='/icones/usuario-128.png';"
 					alt="imagem autor" class="img-autor">
@@ -50,6 +53,52 @@
 			<hr class="linha">
 		</div>
 
+		<hr class="divisao-section">
+	</section>
+
+	<section class="secao section-contato">
+		<div id="form-contato" class="container-contato">
+			<span class="titulo-form-contato">
+				Ficou com dúvida sobre o conteúdo? Entre em contato conosco!
+			</span>
+			<div class="group-input-contato">
+				<input id="nomeRemetente" class="form-control input-contato" type="text" name="nome"
+					placeholder="Seu nome">
+				<div class="invalid-feedback">
+					Insira um nome válido!
+				</div>
+			</div>
+			<div class="group-input-contato">
+				<input id="emailRemetente" class="form-control input-contato" type="text" name="email"
+					placeholder="Seu melhor email">
+				<div class="invalid-feedback">
+					Insira um email válido!
+				</div>
+			</div>
+			<div class="group-input-contato">
+				<input id="assunto" class="form-control input-contato" type="text" name="assunto" placeholder="Assunto">
+				<div class="invalid-feedback">
+					Por favor, insira o assunto da sua dúvida!
+				</div>
+			</div>
+			<div class="group-input-contato">
+				<textarea id="corpo" class="form-control input-contato" name="corpo"
+					placeholder="Nos explique sua dúvida com o máximo de detalhes para podermos ajudar"></textarea>
+				<div class="invalid-feedback">
+					Por favor, insira a sua dúvida!
+				</div>
+			</div>
+			<div class="mb-3">
+				<button class="btn bnt-primary btn-enviar-email" name="enviarEmail">
+					Enviar Email
+				</button>
+			</div>
+
+			<div id="loaderEnvioEmail">
+				<img src="/imagens/loadEmail.gif" alt="loader">
+				<label class="text-white">Enviando Email...</label>
+			</div>
+		</div>
 	</section>
 
 	<footer th:replace="~{fragmentos :: footer(${principaisTecnologias})}"></footer>
@@ -64,7 +113,9 @@
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 	<script src="/js/script-progress-bar.js" type="text/javascript"></script>
-	<script src="/js/preloader.js" type="text/javascript"></script>
+	<script src ="/js/preloader.js" type="text/javascript"></script>
+	<script src ="/js/script-show-postagem.js" type="text/javascript"></script>
+	
 </body>
 
 </html>

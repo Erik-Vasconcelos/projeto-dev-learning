@@ -18,7 +18,7 @@ import br.edu.ifrn.portal.dl.services.TecnologiaService;
  * 
  * @author Erik Vasconcelos
  * @since 2023-07-17
- * @version A0.1
+ * @version 1.0 2023-09-03
  */
 
 @Controller

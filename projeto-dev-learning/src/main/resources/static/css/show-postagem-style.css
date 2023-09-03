@@ -23,7 +23,6 @@
     src: url(../fontes/source-sans-pro/static/SourceSans3-Regular.ttf);
 }
 
-
 /**************************** FORMATAÇÃO DO DOCUMENTO ****************************/
 
 /*###################### MEDIA QUERIES ######################*/
@@ -33,7 +32,15 @@
     }
 
     .section-conteudo {
-        padding: 2em 3.2em 3.2em 3.2em;
+        padding: 2em 3.2em 3.2em 3.2em !important;
+    }
+
+    .section-contato {
+        padding: 0 3.2em 3.2em 3.2em !important;
+    }
+
+    .container-contato {
+        padding: 0.75em 4vw !important;
     }
 
     .titulo-postagem {
@@ -54,6 +61,7 @@
 
     .img-autor {
         width: 5em !important;
+        height: 5em !important;
     }
 
     .nome-autor {
@@ -61,13 +69,21 @@
     }
 }
 
+@media(max-width: 576px) {
+
+    .section-conteudo,
+    .section-contato {
+        padding: 0 1em 3em 1em !important;
+    }
+
+    .titulo-form-contato {
+        font-size: 20px !important;
+    }
+}
+
 @media(max-width: 425px) {
     .img-postagem {
         height: 35vh !important;
-    }
-
-    .section-conteudo {
-        padding: 0.5em 1em 3em 1em !important;
     }
 
     .dados-postagem {
@@ -85,6 +101,7 @@
 
     .img-autor {
         width: 4em !important;
+        height: 4em !important;
     }
 
     .nome-autor {
@@ -94,6 +111,21 @@
     .linha {
         margin: 0.5em 0em !important;
     }
+
+    .container-contato {
+        padding: 0.75em 0.8em !important;
+    }
+
+    .titulo-form-contato {
+        font-size: 18px !important;
+    }
+
+}
+
+@media(max-width: 340px) {
+    .container-autor {
+        padding: 1em 1.5em !important;
+    }
 }
 
 /*------------------------- FORMATAÇÃO PADRÃO -------------------------*/
@@ -101,12 +133,22 @@ body {
     margin-top: 0px;
 }
 
-.secao{
+.secao {
     padding: 2em 4em 4em 4em;
 }
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+
+.section-contato {
+    padding: 0 4em 4em 4em;
+}
+
+.divisao-section {
+    width: 100%;
+    background-color: #C7C7C7;
 }
 
 /*------------------------- CABECALHO: BARRA DE PROGRESSO -------------------------*/
@@ -255,8 +297,10 @@ body {
 }
 
 .img-autor {
-    width: 100px;
+    width: 6.25em;
+    height: 6.25em;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .nome-autor {
@@ -267,4 +311,81 @@ body {
 .linha {
     background-color: #7C23F0;
     width: 100%;
+}
+
+/*------------------------- CONTAINER PARA CONTATO -------------------------*/
+.container-contato {
+    padding: 0.75em 8vw;
+}
+
+.titulo-form-contato {
+    display: block;
+    padding-bottom: 30px;
+    font-family: Montserrat-Bold;
+    font-size: 24px;
+    line-height: 1.2;
+    text-align: center;
+    color: #FFF;
+}
+
+.group-input-contato {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-contato {
+    height: 40px;
+    width: 100%;
+    border-radius: 22px;
+    padding: 0 2em;
+    display: block;
+    font-family: Montserrat-bold;
+    font-size: 15px;
+    line-height: 1.5;
+    border: 1px solid transparent;
+    background-color: #212125;
+    color: #C7C7C7;
+}
+
+textarea.input-contato {
+    min-height: 150px;
+    border-radius: 25px;
+    padding: 12px 30px;
+}
+
+.btn-enviar-email {
+    height: 40px;
+    min-width: 193px;
+    border-radius: 22px;
+    padding: 0 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    line-height: 1.5;
+    background-color: #7C23F0;
+    color: #fff;
+    transition: all .4s;
+    -webkit-transition: all .4s;
+}
+
+.form-control:focus {
+    outline: 1px solid #FFF;
+    box-shadow: none;
+    background-color: #212125;
+    color: #C7C7C7;
+}
+
+input:-webkit-autofill,
+.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #212125e6 inset;
+}
+
+input:-webkit-autofill,
+.form-control:-webkit-autofill {
+    -webkit-text-fill-color: #FFF !important;
+}
+
+#loaderEnvioEmail {
+    display: none;
 }

@@ -17,7 +17,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import br.edu.ifrn.portal.dl.models.enuns.TipoGerencidor;
-import br.edu.ifrn.portal.dl.security.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +25,7 @@ import lombok.NoArgsConstructor;
  * 
  * @author Erik Vasconcelos
  * @since 2023-07-21
- * @version A0.1
+ * @version 1.0 2023-09-03
  */
 
 @NoArgsConstructor
