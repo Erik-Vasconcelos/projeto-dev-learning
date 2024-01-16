@@ -1,4 +1,4 @@
-# Dev Learning - Blog para aluno do IFRN
+# Blog Dev Learning - Tutoriais e artigos para alunos do IFRN
 
 Este projeto cria um blog para auxiliar os alunos do curso técnico em informática do IFRN, proporcionando um espaço centralizado para a publicação de artigos e tutoriais. Utilizando as melhores práticas de desenvolvimento de software, o processo de construção inicia-se com uma análise detalhada de requisitos, documentados de forma clara, para a compreensão das necessidades do software. A Unified Modeling Language (UML) será empregada para representar visualmente a arquitetura do sistema e facilitar o entendimento. A aplicação foi desenvolvida em Java 17, aproveitando as capacidades do Spring Framework, e para a parte visual, Bootstrap e Thymeleaf.
 
@@ -66,7 +66,7 @@ dev_learning
 
 Dentro do **src/main/resources** abra o arquivo **application.properties** e dentro dele realize as seguintes configurações:
 
-##### Conexão com o banco de dados
+#### Conexão com o banco de dados
 
 - Insira o usuário do banco (o padrão é 'postgres'):
 
@@ -88,11 +88,11 @@ spring.datasource.url=jdbc:postgresql://localhost:<porta>/dev_learning
 
 
 
-##### Envio de email
+#### Envio de email
 
 Para usar a funcionalidade de envio de email, realize as seguintes configurações:
 
-###### Realize a configuração da sua conta para o Java poder enviar email: **[Vídeo no youtube](https://youtu.be/vbKzXIiwe1k?t=356)** 
+**Realize a configuração da sua conta para o Java poder enviar email: [Vídeo no youtube](https://youtu.be/vbKzXIiwe1k?t=356)** 
 
 Após realizar a configuração e cria a senha de app, insira o seu email onde você realizou a configuração:
 
@@ -124,11 +124,11 @@ Dentro do pacote **src/main/java** acesse a classe **ProjetoDevLearningApplicati
 
 **OBS 2**: Após executar a aplicação pela primeira vez, comente o método **run()** dentro da classe  **ProjetoDevLearningApplication** para que ao executar a aplicação novamente não venha dar um **erro ao tentar inserir os mesmos registros**.
 
-##### Acessando o sistema
+#### Acessando o sistema
 
 Abra o navegador e digite **localhost:8080** e você poderá navegar pelo sistema.
 
-#####  Acessando a área administrativa 
+#### Acessando a área administrativa 
 
  No navegador digite **localhost:8080/admin** e você poderá acessar com os seguintes usuários: 
 
@@ -148,21 +148,21 @@ Você irá acessar o painel com as funcionalidades administrativas do sistema, p
 
 #### Classes de domínio
 
-![Diagrama de classes de domínio](https://github.com/Erik-Vasconcelos/projeto-dev-learning/tree/main/projeto-dev-learning/domínio.png)
+![Diagrama de classes de domínio](https://github.com/Erik-Vasconcelos/projeto-dev-learning/blob/main/dominio.png)
 
 #### Pacotes
 
-![Diagrama de pacotes](https://github.com/Erik-Vasconcelos/projeto-dev-learning/tree/main/projeto-dev-learning/pacotes.png)
+![Diagrama de pacotes](https://github.com/Erik-Vasconcelos/projeto-dev-learning/blob/main/pacotes.png)
 
 ## :camera: Imagens
 
 #### Página inicial do blog
 
-![Página inicial](https://github.com/Erik-Vasconcelos/projeto-dev-learning/tree/main/projeto-dev-learning/inicio.png)
+![Página inicial](https://github.com/Erik-Vasconcelos/projeto-dev-learning/blob/main/inicio.png)
 
 #### Área administrativa
 
-![Painel administrativo](https://github.com/Erik-Vasconcelos/projeto-dev-learning/tree/main/projeto-dev-learning/admin.png)
+![Painel administrativo](https://github.com/Erik-Vasconcelos/projeto-dev-learning/blob/main/admin.png)
 
 ## ✒️ Autores
 
