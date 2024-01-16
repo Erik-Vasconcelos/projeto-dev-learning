@@ -7,9 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
@@ -21,6 +24,9 @@ import lombok.Setter;
  * @version 1.0 2023-09-03
  */
 
+
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -33,9 +39,11 @@ public class Role implements GrantedAuthority {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NonNull
 	@Column(nullable = false, unique = true)
 	private String nomeRole;
 	
+	@NonNull
 	@Column(unique = true)
 	private int nivelPermissao;
 

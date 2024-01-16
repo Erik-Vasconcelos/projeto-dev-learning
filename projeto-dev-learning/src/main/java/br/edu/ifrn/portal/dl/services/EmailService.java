@@ -23,7 +23,7 @@ import br.edu.ifrn.portal.dl.models.enuns.StatusEmail;
 @Service
 public class EmailService {
 
-	private static final String EMAIL_BLOG = "devlearningblog@gmail.com";
+	private static final String EMAIL_BLOG = "<email_destino>";
 	
 	@Autowired
 	private JavaMailSender emailSender;
