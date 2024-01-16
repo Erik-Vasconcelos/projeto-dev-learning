@@ -4,7 +4,7 @@ Este projeto cria um blog para auxiliar os alunos do curso técnico em informát
 
 ## :computer: Acesso ao sistema
 
-Os sistesma está disponível na web através do seguinte link: **http://devlearning.tech**
+O sistema está disponível na web através do seguinte link: **http://devlearning.tech**
 
 ## 🛠️ Tecnologias e Ferramentas Utilizadas
 
