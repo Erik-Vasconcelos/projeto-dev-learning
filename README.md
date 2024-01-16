@@ -2,6 +2,10 @@
 
 Este projeto cria um blog para auxiliar os alunos do curso técnico em informática do IFRN, proporcionando um espaço centralizado para a publicação de artigos e tutoriais. Utilizando as melhores práticas de desenvolvimento de software, o processo de construção inicia-se com uma análise detalhada de requisitos, documentados de forma clara, para a compreensão das necessidades do software. A Unified Modeling Language (UML) será empregada para representar visualmente a arquitetura do sistema e facilitar o entendimento. A aplicação foi desenvolvida em Java 17, aproveitando as capacidades do Spring Framework, e para a parte visual, Bootstrap e Thymeleaf.
 
+## :computer: Acesso ao sistema
+
+Os sistesma está disponível na web através do seguinte link: **http://devlearning.tech**
+
 ## 🛠️ Tecnologias e Ferramentas Utilizadas
 
 O Blog Dev Learning foi desenvolvido utilizando as seguintes tecnologias, ferramentas e processos:
@@ -120,7 +124,7 @@ private static final String EMAIL_BLOG = "<email_destino>";
 
 Dentro do pacote **src/main/java** acesse a classe **ProjetoDevLearningApplication** e execute ela.
 
-**OBS 1**: Por padrão o sistema irá inserir os registros padrões conforme o diagrama de objetos do projeto disponível no **[Doc. de requisitos](https://drive.google.com/file/d/18GMYi8PQdijCyC6iQ3byb86NAImB9gzo/view)**. Esse registros são inseridos no método **run()** dentro da classe  **ProjetoDevLearningApplication**.
+**OBS 1**: Por padrão o sistema irá inserir os registros padrões conforme o diagrama de objetos do projeto, disponível no **[Doc. de requisitos](https://drive.google.com/file/d/18GMYi8PQdijCyC6iQ3byb86NAImB9gzo/view)**. Esse registros são inseridos no método **run()** dentro da classe  **ProjetoDevLearningApplication**.
 
 **OBS 2**: Após executar a aplicação pela primeira vez, comente o método **run()** dentro da classe  **ProjetoDevLearningApplication** para que ao executar a aplicação novamente não venha dar um **erro ao tentar inserir os mesmos registros**.
 
